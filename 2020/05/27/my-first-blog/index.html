@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>my-first-blog | Hexo</title>
+  <title>Hexo+GitHub搭建自己的博客网站 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言使用github pages服务搭建博客的好处有：  全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的；">
+  <meta name="description" content="使用github pages服务搭建博客的好处有：  全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的； 数据绝对安全，基于github的版本管理，想恢复到哪个历史版本都行； 博客内容可以轻松打包、转移、发布到其它平台">
 <meta property="og:type" content="article">
-<meta property="og:title" content="my-first-blog">
+<meta property="og:title" content="Hexo+GitHub搭建自己的博客网站">
 <meta property="og:url" content="http://yoursite.com/2020/05/27/my-first-blog/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前言使用github pages服务搭建博客的好处有：  全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的；">
+<meta property="og:description" content="使用github pages服务搭建博客的好处有：  全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的； 数据绝对安全，基于github的版本管理，想恢复到哪个历史版本都行； 博客内容可以轻松打包、转移、发布到其它平台">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-05-27T12:47:15.000Z">
-<meta property="article:modified_time" content="2020-05-27T13:46:56.133Z">
+<meta property="article:modified_time" content="2020-05-28T00:47:05.469Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="blog">
 <meta name="twitter:card" content="summary">
@@ -162,7 +162,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      my-first-blog
+      Hexo+GitHub搭建自己的博客网站
     </h1>
   
 
@@ -175,22 +175,39 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>使用github pages服务搭建博客的好处有：</p>
+        <p>使用github pages服务搭建博客的好处有：</p>
 <ol>
 <li>全是静态文件，访问速度快；</li>
 <li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
 <li>可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的；</li>
-</ol>
-<a id="more"></a>
-
-<ol start="4">
 <li>数据绝对安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
-<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
-<li>等等；<br>
+<li>博客内容可以轻松打包、转移、发布到其它平台<a id="more"></a>
+<br>
+Hexo是帮助生成动态页面的,自己只需要书写相关的博客,剩下该博客相关的动态页面包括加入搜索等都由Hexo给你生成部署,本地生成部署完成之后,还可以使用命令推送到github上,这样就可以让别人访问了,十分的方便<br>
+具体的步骤参见链接<br>
+[使用hexo+github搭建免费个人博客详细教程](http://blog.haoji.me/build-blog-website-by-hexo-github.html?from=xa)
 
 </li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">     System.out.println(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这篇文章详细介绍了如何搭建个人博客网站,但是还有一些问题需要解决,就是前面node.js环境搭建和可视化博客没有介绍,在这里补上</p>
+<ul>
+<li><p>环境搭建 <br>
+　</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ 　npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>使用这条命令是安装Ｈｅｘｏ，但是在这之前需要安装ｎｐｍ和Ｎｏｄｅ．ｊｓ环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install npm</span><br><span class="line">sudo apt-get install nodejs-legacy</span><br></pre></td></tr></table></figure>
+<p>如果安装出错，就ｕｐｄａｔｅ下<br>然后在执行开始的命令安装，有可能会显示ｎｏｄｅ．ｊｓ的版本低的问题，就升级ｎｏｄｅ．ｊｓ的版本，<a href="https://www.cnblogs.com/flying_bat/p/8671816.html" target="_blank" rel="noopener">升级node.js的版本</a><br></p>
+</li>
+<li><p>可视化MarkDown书写博客<br><br>Hexo_admin是为了可视化博客编辑,写的博客可以马上看到效果,还可以用它远程推送到github,其实就是加入可hexo d这条命令,具体的步骤 <a href="https://www.jianshu.com/p/ee47432c7e37" target="_blank" rel="noopener">Hexo_admin的安装使用</a>,</p>
+<p>Linux环境下使用hexo-admin和github实现推送,需要添加如下的代码<br><br>create deploy-script in project dir:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ touch hexo-deploy.sh; chmod a+x hexo-deploy.sh</span><br></pre></td></tr></table></figure>
+<p>with such 2 lines for example or any custom code:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env sh</span></span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+<p>and edit _config.yml:注意yml缩进和空格</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">admin:</span></span><br><span class="line">    <span class="attr">deployCommand:</span> <span class="string">'./hexo-deploy.sh'</span></span><br></pre></td></tr></table></figure>
+<p>如果觉得博客的主题不是很酷炫,可以下载更好看的主题,还可以往里面添加一些小的功能,在下载的主题里修改里面的yml配置文件就可以,比如开启打赏的功能,赋上自己的二维码等功能</p>
+</li>
+</ul>
 
       
 
@@ -339,7 +356,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li></ol>
+                    目录，不存在的…
                     </div>
                 </span>
             </div>
@@ -353,7 +370,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="my-first-blog" data-title="my-first-blog" data-url="http://yoursite.com/2020/05/27/my-first-blog/"></div>
+	<div class="ds-thread" data-thread-key="my-first-blog" data-title="Hexo+GitHub搭建自己的博客网站" data-url="http://yoursite.com/2020/05/27/my-first-blog/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
