@@ -8,17 +8,23 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>JVM GC | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="GC (垃圾回收机制)">
+  <meta name="description" content="GC (垃圾回收机制)前言  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)  垃圾回收主要解决的问题：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM GC">
 <meta property="og:url" content="http://yoursite.com/2020/05/27/JVM-GC/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="GC (垃圾回收机制)">
+<meta property="og:description" content="GC (垃圾回收机制)前言  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)  垃圾回收主要解决的问题：">
 <meta property="og:locale" content="zh">
+<meta property="og:image" content="http://yoursite.com/images/2.png">
+<meta property="og:image" content="http://yoursite.com/images/3.png">
+<meta property="og:image" content="http://yoursite.com/images/4.png">
+<meta property="og:image" content="http://yoursite.com/images/5.png">
 <meta property="article:published_time" content="2020-05-27T15:20:08.000Z">
-<meta property="article:modified_time" content="2020-05-27T15:20:55.257Z">
+<meta property="article:modified_time" content="2020-05-28T13:31:16.260Z">
 <meta property="article:author" content="CodeXi">
+<meta property="article:tag" content="jvm">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/2.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -174,7 +180,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="GC-垃圾回收机制"><a href="#GC-垃圾回收机制" class="headerlink" title="GC (垃圾回收机制)"></a>GC (垃圾回收机制)</h3>
+        <h3 id="GC-垃圾回收机制"><a href="#GC-垃圾回收机制" class="headerlink" title="GC (垃圾回收机制)"></a>GC (垃圾回收机制)</h3><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)<br><br>  垃圾回收主要解决的问题：<br><br>  <a id="more"></a><br>    * 什么时间回收（到达安全点［某段程序执行时间比较长])<br>    * 哪些内存需要回收 (主要是堆和方法区的对象,栈中的内存在编译阶段就已经确定好而且虽然方法的执行栈帧的进进出出就释放了,所以不需要回收;程序计数器忽略不计)<br>    * 如何回收(分代的垃圾回收算法,主要使用 标记整理 标记清除 复制算法这三种)</p>
+<h4 id="判断对象已死"><a href="#判断对象已死" class="headerlink" title="判断对象已死"></a>判断对象已死</h4><h5 id="1-引用计数法"><a href="#1-引用计数法" class="headerlink" title="1.引用计数法"></a>1.引用计数法</h5><p>  所谓的引用计数法,就是当有引用指向自己的时候,引用数+1,如果句柄(引用)赋值为Null,引用-1.当应用是0的时候就去清除该对象.<br>  优点:方便简单易于实现<br>  缺点:无法解决相互引用的问题<br> <img src="/images/2.png" alt=""><br> 执行obj1=obj2=null后的内存布局如上图所示,但是二者相互引用,引用计数都等于1,无法被GC回收.</p>
+<h5 id="2-可达性分析"><a href="#2-可达性分析" class="headerlink" title="2. 可达性分析"></a>2. 可达性分析</h5><p>  JVM采用的是可达性分析的算法,看对象和GC roots是否有关联判断对象是否需要被回收<br>  <img src="/images/3.png" alt=""><br>  可以看到尽管两者相互引用,但是jvm会判断这两个对象没有关联到gc roots的任何一个对象,所以就会回收它们.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以作为gc roots对象的有:栈内的局部变量引用 方法区的对象引用(被staic修饰和被final修饰)等</span><br></pre></td></tr></table></figure><br>  java中的引用还可以细分为强引用(Obejct o=new Object() 即使内存紧张也不会回收)<br>  软引用(内存紧张就会回收这类引用指向的对象,比如缓存) 弱引用(紧不紧张都回收) 虚引用(标识作用)</p>
+<h4 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h4><h5 id="1-标记清除算法"><a href="#1-标记清除算法" class="headerlink" title="1 标记清除算法"></a>1 标记清除算法</h5><p>  标记内存中无用的对象,然后清除,看起来简单粗暴,但是会造成许多内存碎片(整片内存中就会一个窟窿一个窟窿,不再是连成片的),导致下一次如果new一个大点的对象这些内存锁片放不下就会导致新一轮的GC,程序性能下降.(我们优化GC就是想办法减少gc的次数,尤其是full gc的次数,因为它比较浪费时间)</p>
+<h5 id="2-复制算法"><a href="#2-复制算法" class="headerlink" title="2.复制算法"></a>2.复制算法</h5><p>  简单的复制算法就是将对象存放的内存(堆内存和方法区内存)平均分两块,一块用于存储对象,另一块在没有发生gc的时候就空着,不能放任何对象,当发生gc的时候,就把gc存活的对象放到这一块,另一快之前存放对象的清空,二者再调换角色.<br><br>  显然这种方法浪费了一半的内存,JVM采取的是将年轻代内存分割成8:1:1的区域,eden from to三块.eden gc后就把存活的放到from ,再一次gc就把eden 和from存活的对象放到to,清空from和eden,交换from和to的角色,这样就只浪费10%的内存. 当from或者to的内存放不下存活的对象的时候,对象就会进入老年代(内存担保)</p>
+<h5 id="3-标记整理算法"><a href="#3-标记整理算法" class="headerlink" title="3.标记整理算法"></a>3.标记整理算法</h5><p>  和标记清除算法类似,只不过在标注后会把标记的对象都移动到一端,这样清除后就会产生一块连续的内存空间,不会产生内存碎片</p>
+<h5 id="4-分代回收算法"><a href="#4-分代回收算法" class="headerlink" title="4 分代回收算法"></a>4 分代回收算法</h5><p>  不是新的算法,只是在对于不同的内存采取不同的垃圾回收算法,年轻代内存采取复制算法(这里的对象基本用完就废了),老年代一般采用剩下其他两种算法</p>
+<h4 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h4><p>   <img src="/images/4.png" alt=""><br>   上图标识了7种垃圾回收器,以及它们所作用的内存(年轻代还是老年代)和相互之间的搭配使用关系</p>
+<h5 id="serial垃圾回收器"><a href="#serial垃圾回收器" class="headerlink" title="serial垃圾回收器"></a>serial垃圾回收器</h5><p>   用单线程进行垃圾回收,在进行垃圾回收的时候会暂停所有正在运行的线程.垃圾收集器的改进就是不断的缩短暂停用户线程的时间,让用户尽可能感受不到,提高用户的使用体验</p>
+<h5 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h5><p>  Serial收集器的多线程版本,使用多线程来进行GC(很多时候并不是线程越多越好,线程切换需要花费时间,对于单核CPU多线程反而不如单线程处理速度快)<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">解释下并行收集器和并发收集器:</span><br><span class="line">   并行:用户线程等待,多个GC线程并行进行垃圾回收</span><br><span class="line">   并发:用户线程和GC线程同时执行(可能并发交替执行,可能并行在不同CPU上)</span><br></pre></td></tr></table></figure></p>
+<h5 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h5><p>  和CMS以及ParNew关注的不同,这两者关注的都是如何缩短用户线程等待的时间,尽可能提高用户的体验(响应请求的速度快),而 Parallel Scavenge主要目的就是为了提高吞吐量,就是垃圾回收的时间占总的虚拟机运行时间的比例,例子:虚拟机运行了100分钟,垃圾回收1分钟,吞吐量就是99%. 提高吞吐量是为了尽可能快的完成运算任务,主要用于运算任务,不需要和用户有很多的交互,如果垃圾回收频繁发生,就会导致运算任务花费的时间要比不打断的时间长.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gc停顿时间的变小的代价就是牺牲吞吐量和新生代的空间为代价.为了更快的处理新生代的垃圾对象,新生代的空间变小(小就处理的快),代价就是gc频繁发生,吞吐量下降,比如原来是10s收集一下,每次停顿100ms,现在5s一次,每次停顿70ms 停顿时间虽然减少了,但是吞吐量下来了</span><br></pre></td></tr></table></figure><br>  还有就是Parallel Scavenge 有参数可以自动调节参数(eden和from to的比例,年轻代晋升到老年代的参数等),也是和ParNew的区别</p>
+<h5 id="Serial-Old和-Parallel-Old"><a href="#Serial-Old和-Parallel-Old" class="headerlink" title="Serial Old和 Parallel Old"></a>Serial Old和 Parallel Old</h5><p>  是之前介绍的垃圾回收器的老年代版本,Parallel old主要是为了和年轻代的Parallel Scavenge垃圾回收器配合吞吐量大的场景,没有它之前Parallel Scavenge只能呢选择Serial Old</p>
+<h5 id="CMS收集器-重点"><a href="#CMS收集器-重点" class="headerlink" title="CMS收集器(重点)"></a>CMS收集器(重点)</h5><p>  CMS收集器作用在老年代,采用的是标记-清除算法,它大大减少了STW的时间,保证用户线程和gc线程并发执行,所以在B/S架构的服务器端这种很看中用户体验的场景下被采用.<br>  它主要的收集过程分为以下:<br>  <img src="/images/5.png" alt=""><br>  (1)初始标记:标记和gc roots直连(第一层)的对象,需要STW,但是时间很短<br><br>  (2)并发标记:GC roots链的继续向下标记,和用户线程并发执行<br><br>  (3)重新标记:在并发标记阶段程序继续运行导致之前标记变化的需要重新标记.需要STW,但是时间同样很短<br><br>  (4)并发清除:开始清除垃圾对象,过程和用户线程并发执行.<br><br>  可以看到最花费时间的并发标记和清除都是和用户线程并行的,STW的时间就会很短,对应的就是响应请求的速度很快.<br><br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CMS的缺点:</span><br><span class="line">(1)对CPU敏感:占用CPU的运行,对于CPU数量少的就会导致程序变慢,因为CPU的大量时间都去gc了,用户的请求没有得到有效的处理.</span><br><span class="line">(2)浮动垃圾:在并发清理阶段和用户线程一块运行,就不像别的垃圾处理器等到老年代都满了才gc,余姚预留一部分内存留给用户线程,full gc的次数就增加了,可以使用参数调整出发full gc的内存阈值,默认是68%的内存就出发Full gc</span><br><span class="line">(3)内存碎片:采用标记-清除算法</span><br><span class="line">&#39;</span><br></pre></td></tr></table></figure></p>
+<h5 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h5><p>G1收集器不需要和其他垃圾回收器配合,自己就可以完成分代回收的任务.它比较复杂,简单介绍下相比CMS,它的优势主要在:<br><br>(1)可以更好的发挥多CPU 多核的优势<br><br>(2)使用标记-整理算法,不会产生内存碎片<br><br>(3)可预测的停顿:可以设置某段时间内垃圾回收的时间不超过多少<br><br>(4)独立完成垃圾回收,不需要配合其他垃圾回收器</p>
+<h5 id="理解GC日志和常见的GC参数"><a href="#理解GC日志和常见的GC参数" class="headerlink" title="理解GC日志和常见的GC参数"></a>理解GC日志和常见的GC参数</h5><p>详见&lt;&lt;深入理解java虚拟机 第二版&gt;&gt; P89,人为规定的一些规则</p>
+<h5 id="内存分配和回收策略"><a href="#内存分配和回收策略" class="headerlink" title="内存分配和回收策略"></a>内存分配和回收策略</h5><p>回收策略是上面介绍的,以下介绍下内存是如何分配的.<br  ><br>1.对象是优先分配到Eden区域,当对象无法放在Eden区域的时候就触发一次MinorGc<BR><br>2.大对象直接进入老年代,防止在新生代中多次复制,可以使用参数规定大于一定大小的对象直接分配到老年代,在写程序的时候也要避免定义朝生夕死的大对象,这样只会频繁发生gc<br><br>3.长期存活的对象会进入老年代,在from和to之间来回复制超过一定次数的对象就会进入老年代(认为它或许是长期存在的)<br>4. 动态对象年龄判断,在Surivor区域中相同年龄的对象大于Servior大小的一般的时候,那么大于等于该年龄的对象会被分配到老年代<br><br>5,空间担保.当eden区域的对象在surivor区域无法放开的时候,对象就会进入老年代,由老年代进行担保.一般情况下就是老年代剩余的连续内存空间是否大于年轻代的所有对象内存的总大小,如果大于,担保是安全的.如果小于,就有担保风险,看jvm是否允许担保风险.如果允许,就看历次由年轻代晋升到老年代的对象的平均大小,如果大于剩余老年代的大小,就担保失败,如果大于平均仍然有失败的风险,只不过是进行一次FullGC,这样兜了一圈就是为了减少FullGC发生的次数.</p>
+<h4 id="虚拟机监控和故障处理工具"><a href="#虚拟机监控和故障处理工具" class="headerlink" title="虚拟机监控和故障处理工具"></a>虚拟机监控和故障处理工具</h4><p>1.命令行:jps jstat jinfo jmapjhat <br><br>2.可视化 :Jconsole(这个使用过,还可以)  VisualVM<br><br>3.调优实战的话就看周的书上的例子,由于现在知识储量的问题,还没有办法完全看懂,等看懂了再写.</p>
+
       
 
       
@@ -203,6 +226,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -296,7 +330,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GC-垃圾回收机制"><span class="toc-number">1.</span> <span class="toc-text">GC (垃圾回收机制)</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GC-垃圾回收机制"><span class="toc-number">1.</span> <span class="toc-text">GC (垃圾回收机制)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判断对象已死"><span class="toc-number">1.2.</span> <span class="toc-text">判断对象已死</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-引用计数法"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.引用计数法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-可达性分析"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 可达性分析</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收算法"><span class="toc-number">1.3.</span> <span class="toc-text">垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-标记清除算法"><span class="toc-number">1.3.1.</span> <span class="toc-text">1 标记清除算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-复制算法"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.复制算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-标记整理算法"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.标记整理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-分代回收算法"><span class="toc-number">1.3.4.</span> <span class="toc-text">4 分代回收算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收器"><span class="toc-number">1.4.</span> <span class="toc-text">垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#serial垃圾回收器"><span class="toc-number">1.4.1.</span> <span class="toc-text">serial垃圾回收器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ParNew"><span class="toc-number">1.4.2.</span> <span class="toc-text">ParNew</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Parallel-Scavenge"><span class="toc-number">1.4.3.</span> <span class="toc-text">Parallel Scavenge</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Serial-Old和-Parallel-Old"><span class="toc-number">1.4.4.</span> <span class="toc-text">Serial Old和 Parallel Old</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CMS收集器-重点"><span class="toc-number">1.4.5.</span> <span class="toc-text">CMS收集器(重点)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G1-收集器"><span class="toc-number">1.4.6.</span> <span class="toc-text">G1 收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#理解GC日志和常见的GC参数"><span class="toc-number">1.4.7.</span> <span class="toc-text">理解GC日志和常见的GC参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内存分配和回收策略"><span class="toc-number">1.4.8.</span> <span class="toc-text">内存分配和回收策略</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟机监控和故障处理工具"><span class="toc-number">1.5.</span> <span class="toc-text">虚拟机监控和故障处理工具</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
