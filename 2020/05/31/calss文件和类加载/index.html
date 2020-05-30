@@ -6,25 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>JVM GC | Hexo</title>
+  <title>Class文件和类加载 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="GC (垃圾回收机制)前言  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)  垃圾回收主要解决的问题：">
+  <meta name="description" content="前言前面已经介绍了虚拟机的内存分布和垃圾回收机制,本节主要介绍class文件的结构,class文件是如何被加载到内存的以及虚拟机执行引擎是如何一步步解释执行代码.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM GC">
-<meta property="og:url" content="http://yoursite.com/2020/05/27/JVM-GC/index.html">
+<meta property="og:title" content="Class文件和类加载">
+<meta property="og:url" content="http://yoursite.com/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="GC (垃圾回收机制)前言  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)  垃圾回收主要解决的问题：">
+<meta property="og:description" content="前言前面已经介绍了虚拟机的内存分布和垃圾回收机制,本节主要介绍class文件的结构,class文件是如何被加载到内存的以及虚拟机执行引擎是如何一步步解释执行代码.">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="http://yoursite.com/images/2.png">
-<meta property="og:image" content="http://yoursite.com/images/3.png">
-<meta property="og:image" content="http://yoursite.com/images/4.png">
-<meta property="og:image" content="http://yoursite.com/images/5.png">
-<meta property="article:published_time" content="2020-05-27T15:20:08.000Z">
-<meta property="article:modified_time" content="2020-05-28T13:31:16.260Z">
+<meta property="og:image" content="http://yoursite.com/images/10.webp">
+<meta property="og:image" content="http://yoursite.com/images/11.png">
+<meta property="og:image" content="http://yoursite.com/images/12.png">
+<meta property="og:image" content="http://yoursite.com/images/13.png">
+<meta property="article:published_time" content="2020-05-30T16:54:15.000Z">
+<meta property="article:modified_time" content="2020-05-30T16:57:23.649Z">
 <meta property="article:author" content="CodeXi">
-<meta property="article:tag" content="jvm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/2.png">
+<meta name="twitter:image" content="http://yoursite.com/images/10.webp">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,43 +159,100 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JVM-GC" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-calss文件和类加载" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JVM GC
+      Class文件和类加载
     </h1>
   
 
         
-        <a href="/2020/05/27/JVM-GC/" class="archive-article-date">
-  	<time datetime="2020-05-27T15:20:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
+        <a href="/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/" class="archive-article-date">
+  	<time datetime="2020-05-30T16:54:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-31</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="GC-垃圾回收机制"><a href="#GC-垃圾回收机制" class="headerlink" title="GC (垃圾回收机制)"></a>GC (垃圾回收机制)</h3><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)<br><br>  垃圾回收主要解决的问题：<br><br>  <a id="more"></a><br>    * 什么时间回收（到达安全点［某段程序执行时间比较长])<br>    * 哪些内存需要回收 (主要是堆和方法区的对象,栈中的内存在编译阶段就已经确定好而且虽然方法的执行栈帧的进进出出就释放了,所以不需要回收;程序计数器忽略不计)<br>    * 如何回收(分代的垃圾回收算法,主要使用 标记整理 标记清除 复制算法这三种)</p>
-<h4 id="判断对象已死"><a href="#判断对象已死" class="headerlink" title="判断对象已死"></a>判断对象已死</h4><h5 id="1-引用计数法"><a href="#1-引用计数法" class="headerlink" title="1.引用计数法"></a>1.引用计数法</h5><p>  所谓的引用计数法,就是当有引用指向自己的时候,引用数+1,如果句柄(引用)赋值为Null,引用-1.当应用是0的时候就去清除该对象.<br>  优点:方便简单易于实现<br>  缺点:无法解决相互引用的问题<br> <img src="/images/2.png" alt=""><br> 执行obj1=obj2=null后的内存布局如上图所示,但是二者相互引用,引用计数都等于1,无法被GC回收.</p>
-<h5 id="2-可达性分析"><a href="#2-可达性分析" class="headerlink" title="2. 可达性分析"></a>2. 可达性分析</h5><p>  JVM采用的是可达性分析的算法,看对象和GC roots是否有关联判断对象是否需要被回收<br>  <img src="/images/3.png" alt=""><br>  可以看到尽管两者相互引用,但是jvm会判断这两个对象没有关联到gc roots的任何一个对象,所以就会回收它们.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以作为gc roots对象的有:栈内的局部变量引用 方法区的对象引用(被staic修饰和被final修饰)等</span><br></pre></td></tr></table></figure><br>  java中的引用还可以细分为强引用(Obejct o=new Object() 即使内存紧张也不会回收)<br>  软引用(内存紧张就会回收这类引用指向的对象,比如缓存) 弱引用(紧不紧张都回收) 虚引用(标识作用)</p>
-<h4 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h4><h5 id="1-标记清除算法"><a href="#1-标记清除算法" class="headerlink" title="1 标记清除算法"></a>1 标记清除算法</h5><p>  标记内存中无用的对象,然后清除,看起来简单粗暴,但是会造成许多内存碎片(整片内存中就会一个窟窿一个窟窿,不再是连成片的),导致下一次如果new一个大点的对象这些内存锁片放不下就会导致新一轮的GC,程序性能下降.(我们优化GC就是想办法减少gc的次数,尤其是full gc的次数,因为它比较浪费时间)</p>
-<h5 id="2-复制算法"><a href="#2-复制算法" class="headerlink" title="2.复制算法"></a>2.复制算法</h5><p>  简单的复制算法就是将对象存放的内存(堆内存和方法区内存)平均分两块,一块用于存储对象,另一块在没有发生gc的时候就空着,不能放任何对象,当发生gc的时候,就把gc存活的对象放到这一块,另一快之前存放对象的清空,二者再调换角色.<br><br>  显然这种方法浪费了一半的内存,JVM采取的是将年轻代内存分割成8:1:1的区域,eden from to三块.eden gc后就把存活的放到from ,再一次gc就把eden 和from存活的对象放到to,清空from和eden,交换from和to的角色,这样就只浪费10%的内存. 当from或者to的内存放不下存活的对象的时候,对象就会进入老年代(内存担保)</p>
-<h5 id="3-标记整理算法"><a href="#3-标记整理算法" class="headerlink" title="3.标记整理算法"></a>3.标记整理算法</h5><p>  和标记清除算法类似,只不过在标注后会把标记的对象都移动到一端,这样清除后就会产生一块连续的内存空间,不会产生内存碎片</p>
-<h5 id="4-分代回收算法"><a href="#4-分代回收算法" class="headerlink" title="4 分代回收算法"></a>4 分代回收算法</h5><p>  不是新的算法,只是在对于不同的内存采取不同的垃圾回收算法,年轻代内存采取复制算法(这里的对象基本用完就废了),老年代一般采用剩下其他两种算法</p>
-<h4 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h4><p>   <img src="/images/4.png" alt=""><br>   上图标识了7种垃圾回收器,以及它们所作用的内存(年轻代还是老年代)和相互之间的搭配使用关系</p>
-<h5 id="serial垃圾回收器"><a href="#serial垃圾回收器" class="headerlink" title="serial垃圾回收器"></a>serial垃圾回收器</h5><p>   用单线程进行垃圾回收,在进行垃圾回收的时候会暂停所有正在运行的线程.垃圾收集器的改进就是不断的缩短暂停用户线程的时间,让用户尽可能感受不到,提高用户的使用体验</p>
-<h5 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h5><p>  Serial收集器的多线程版本,使用多线程来进行GC(很多时候并不是线程越多越好,线程切换需要花费时间,对于单核CPU多线程反而不如单线程处理速度快)<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">解释下并行收集器和并发收集器:</span><br><span class="line">   并行:用户线程等待,多个GC线程并行进行垃圾回收</span><br><span class="line">   并发:用户线程和GC线程同时执行(可能并发交替执行,可能并行在不同CPU上)</span><br></pre></td></tr></table></figure></p>
-<h5 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h5><p>  和CMS以及ParNew关注的不同,这两者关注的都是如何缩短用户线程等待的时间,尽可能提高用户的体验(响应请求的速度快),而 Parallel Scavenge主要目的就是为了提高吞吐量,就是垃圾回收的时间占总的虚拟机运行时间的比例,例子:虚拟机运行了100分钟,垃圾回收1分钟,吞吐量就是99%. 提高吞吐量是为了尽可能快的完成运算任务,主要用于运算任务,不需要和用户有很多的交互,如果垃圾回收频繁发生,就会导致运算任务花费的时间要比不打断的时间长.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gc停顿时间的变小的代价就是牺牲吞吐量和新生代的空间为代价.为了更快的处理新生代的垃圾对象,新生代的空间变小(小就处理的快),代价就是gc频繁发生,吞吐量下降,比如原来是10s收集一下,每次停顿100ms,现在5s一次,每次停顿70ms 停顿时间虽然减少了,但是吞吐量下来了</span><br></pre></td></tr></table></figure><br>  还有就是Parallel Scavenge 有参数可以自动调节参数(eden和from to的比例,年轻代晋升到老年代的参数等),也是和ParNew的区别</p>
-<h5 id="Serial-Old和-Parallel-Old"><a href="#Serial-Old和-Parallel-Old" class="headerlink" title="Serial Old和 Parallel Old"></a>Serial Old和 Parallel Old</h5><p>  是之前介绍的垃圾回收器的老年代版本,Parallel old主要是为了和年轻代的Parallel Scavenge垃圾回收器配合吞吐量大的场景,没有它之前Parallel Scavenge只能呢选择Serial Old</p>
-<h5 id="CMS收集器-重点"><a href="#CMS收集器-重点" class="headerlink" title="CMS收集器(重点)"></a>CMS收集器(重点)</h5><p>  CMS收集器作用在老年代,采用的是标记-清除算法,它大大减少了STW的时间,保证用户线程和gc线程并发执行,所以在B/S架构的服务器端这种很看中用户体验的场景下被采用.<br>  它主要的收集过程分为以下:<br>  <img src="/images/5.png" alt=""><br>  (1)初始标记:标记和gc roots直连(第一层)的对象,需要STW,但是时间很短<br><br>  (2)并发标记:GC roots链的继续向下标记,和用户线程并发执行<br><br>  (3)重新标记:在并发标记阶段程序继续运行导致之前标记变化的需要重新标记.需要STW,但是时间同样很短<br><br>  (4)并发清除:开始清除垃圾对象,过程和用户线程并发执行.<br><br>  可以看到最花费时间的并发标记和清除都是和用户线程并行的,STW的时间就会很短,对应的就是响应请求的速度很快.<br><br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CMS的缺点:</span><br><span class="line">(1)对CPU敏感:占用CPU的运行,对于CPU数量少的就会导致程序变慢,因为CPU的大量时间都去gc了,用户的请求没有得到有效的处理.</span><br><span class="line">(2)浮动垃圾:在并发清理阶段和用户线程一块运行,就不像别的垃圾处理器等到老年代都满了才gc,余姚预留一部分内存留给用户线程,full gc的次数就增加了,可以使用参数调整出发full gc的内存阈值,默认是68%的内存就出发Full gc</span><br><span class="line">(3)内存碎片:采用标记-清除算法</span><br><span class="line">&#39;</span><br></pre></td></tr></table></figure></p>
-<h5 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h5><p>G1收集器不需要和其他垃圾回收器配合,自己就可以完成分代回收的任务.它比较复杂,简单介绍下相比CMS,它的优势主要在:<br><br>(1)可以更好的发挥多CPU 多核的优势<br><br>(2)使用标记-整理算法,不会产生内存碎片<br><br>(3)可预测的停顿:可以设置某段时间内垃圾回收的时间不超过多少<br><br>(4)独立完成垃圾回收,不需要配合其他垃圾回收器</p>
-<h5 id="理解GC日志和常见的GC参数"><a href="#理解GC日志和常见的GC参数" class="headerlink" title="理解GC日志和常见的GC参数"></a>理解GC日志和常见的GC参数</h5><p>详见&lt;&lt;深入理解java虚拟机 第二版&gt;&gt; P89,人为规定的一些规则</p>
-<h5 id="内存分配和回收策略"><a href="#内存分配和回收策略" class="headerlink" title="内存分配和回收策略"></a>内存分配和回收策略</h5><p>回收策略是上面介绍的,以下介绍下内存是如何分配的.<br  ><br>1.对象是优先分配到Eden区域,当对象无法放在Eden区域的时候就触发一次MinorGc<BR><br>2.大对象直接进入老年代,防止在新生代中多次复制,可以使用参数规定大于一定大小的对象直接分配到老年代,在写程序的时候也要避免定义朝生夕死的大对象,这样只会频繁发生gc<br><br>3.长期存活的对象会进入老年代,在from和to之间来回复制超过一定次数的对象就会进入老年代(认为它或许是长期存在的)<br>4. 动态对象年龄判断,在Surivor区域中相同年龄的对象大于Servior大小的一般的时候,那么大于等于该年龄的对象会被分配到老年代<br><br>5,空间担保.当eden区域的对象在surivor区域无法放开的时候,对象就会进入老年代,由老年代进行担保.一般情况下就是老年代剩余的连续内存空间是否大于年轻代的所有对象内存的总大小,如果大于,担保是安全的.如果小于,就有担保风险,看jvm是否允许担保风险.如果允许,就看历次由年轻代晋升到老年代的对象的平均大小,如果大于剩余老年代的大小,就担保失败,如果大于平均仍然有失败的风险,只不过是进行一次FullGC,这样兜了一圈就是为了减少FullGC发生的次数.</p>
-<h4 id="虚拟机监控和故障处理工具"><a href="#虚拟机监控和故障处理工具" class="headerlink" title="虚拟机监控和故障处理工具"></a>虚拟机监控和故障处理工具</h4><p>1.命令行:jps jstat jinfo jmapjhat <br><br>2.可视化 :Jconsole(这个使用过,还可以)  VisualVM<br><br>3.调优实战的话就看周的书上的例子,由于现在知识储量的问题,还没有办法完全看懂,等看懂了再写.</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面已经介绍了虚拟机的内存分布和垃圾回收机制,本节主要介绍class文件的结构,class文件是如何被加载到内存的以及虚拟机执行引擎是如何一步步解释执行代码.<br>  <a id="more"></a></p>
+<h5 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h5><p>  对于c或者从c++它们是编译型语言,代码在编译阶段被直接编译成机器码(0 1),下次运行,所以c语言编写的代码跑起来快;对于python,是解释性语言,在运行阶段才会解析代码,每次运行都要解析一遍,速度慢;java属于半编译半解释语言,编译阶段才码会变为class字节码文件,运行的时候在解释,由于class文件虽然不是机器码,但是解释还是快于高级语言<br><a href="https://blog.csdn.net/lxlong89940101/article/details/82944156" target="_blank" rel="noopener">编译性语言和解释性语言的区别</a><br><br>使用class字节码文件最主要的不是它速度有多快,而是它的最大的优势:平台无关性 针对不同的操作系统编写一套代码就可以运行在任何地方.不仅仅是平台无关性,语言无关性也是其一大特点,越来越多的语言运行在JVM上,例如 Scala Groovy Jpthon等.calss文件包含了java虚拟机指令集和符号表以及若干其他的辅助信息.java中的各种变量 关键字和运算发好的语义就是通过多条字节码组合成的,所以说字节码能描述的语义远大于java语言,这也是其他运行在jvm上的语言了有别于java的基础.</p>
+<h5 id="class文件结构"><a href="#class文件结构" class="headerlink" title="class文件结构"></a>class文件结构</h5><p>在jvm内存文章中就通过java饭编译得到class文件的代码,正常情况下class文件是16进制的一串代码,里面就包含了类的各种信息.<br><img src="/images/10.webp" alt=""></p>
+<ul>
+<li>魔数和class文件的版本<br><br>高版本的jdk可以向下兼容低版本的class文件,但不能运行以后版本的class文件</li>
+<li>常量池<br>主要存放两大类常量:字面两(字符串 声明为final) 和符号引用(类和接口的全限定名 字段的名称和描述 方法的名称和描述符);这里在提一下动态链接,java不像c c++一样编译后就连接,而是在运行过程中加载class文件的时候进行动态链接,也就是class文件不会保存字段和方法在内存中的最终布局,当虚拟机运行的时候,需要从常量池获得对应的符号引用(#1),再在类创建或者运行时翻译解析到真正的内存地址,也就是当一个方法调用另一个方法在真正调用的时候才知道方法的具体内存地址.</li>
+<li>访问标志<br><br>class是类还是接口 是否public 是否private等</li>
+<li>类索引 父类索引 接口索引集合<br><br>明确类的继承关系.类索引用于确定该类的全限定名 父类索引用于确定父类的全限定名 接口索引就是该类实现了哪些接口<br>这些都是常量池的常量</li>
+<li>字段表集合<br><br>描述接口或者类定义的变量,包括类级变量(static修饰)和实例级变量(类的成员变量),但不包含方法内定义的变量(那是栈中存储的);还有就是字段的修饰符(public private volatile fial transient等)</li>
+<li>方法表集合<br><br>方法的描述信息,代码在属性表的code属性里,在code属性里,栈的最大深度,所使用的内存空间都会被确定下来.code书香用于描述代码,其他数据(类 字段 方法定义)用于描述元数据.code属性存储的就是每行代码的字节码指令集合</li>
+<li>属性表集合 <br><br>classs文件扩展的部分,有方法表(java编译成的字节码指令 代码是在code属性里), 字段表等</li>
+</ul>
+<h5 id="字节码指令"><a href="#字节码指令" class="headerlink" title="字节码指令"></a>字节码指令</h5><p>由java虚拟机生成,比如加载和存储指令,类型转化,控制指令(条件分支等),方法调用和返回指令(invokexxx),同步指令(方法级别同步和方法内部一段指令的同步[同步方法和同步代码快]),异常处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">方法同步是隐式的,无需通过字节码指令控制,方法有ACC_SYNCHRONIZED访问标识.</span><br><span class="line">同步代码快由monitoerenter和monitorexit两条指令来支持synchronized语义.</span><br></pre></td></tr></table></figure>
+
+<h5 id="虚拟机类加载机制"><a href="#虚拟机类加载机制" class="headerlink" title="虚拟机类加载机制"></a>虚拟机类加载机制</h5><p>虚拟机是如何加载class文件的?class文件被加载后会发生怎样的变化?<br><br><img src="/images/11.png" alt=""></p>
+<h6 id="java类的声明周期"><a href="#java类的声明周期" class="headerlink" title="java类的声明周期"></a><center>java类的声明周期</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">加载 验证 准备和初始化是严格按照顺序执行的,但是解析阶段有可能在初始化之后,对于类似动态代理这种情况,是先创建对象,在程序运行过程中才解析,或者方法之间的调用在class文件加载后还没有转化为真正的内存地址,要真正执行的时候才会进行解析;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>加载 <br><br>加载就是加载class文件,可以是文件 网络,运行过程产生的(动态代理)的.<br><br>什么情况下类会被加载?<br><ul>
+<li>使用new 关键字创建对象的时候,读取或者设置静态字段 以及调用一个类的静态方法的时候</li>
+<li>反射创建对象 Class.forName()</li>
+<li>当初始话子类,其父类还没有初始化的时候会先去初始化父类</li>
+<li>虚拟机启动的时候,用户需要指定一个要执行的主类(包含Main()方法的类),虚拟机会先加载这个类<br><br>以上4种称之为对类的主动引用,还有一种也是,比较复杂,也就是除了以上5中情况,其余情况不会导致一个类的主动加载,不到值主动加载称为被动引用,主要例子有:<ul>
+<li>通过子类引用父类的静态字段,不会导致子类的初始化(对于静态字段,只有直接定义这个类的字段才会发生初始化)</li>
+<li>通过数组定义引用类,不会导致此类初始化<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class NotInitalization&#123;</span><br><span class="line">   public static void main(String[] args)&#123;</span><br><span class="line">       SuperClass[] sca&#x3D;new SuperClass[10];</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>常量子编译阶段就进入调用类的常量池,本质上并没有直接引用到定义常量的类,因此不会出发定义常量的类<br>ps:对于接口,以上的5中主动引用做一些修改:接口初始化的时候,不要求父接口也初始化,只有子接口真正用到父接口的石斛才会初始化父接口.<br>
+
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>加载阶段虚拟机需要做的事情:<br><br> (1) 通过一个类的全限定名获得类的二进制字节流.<br><br> (2) 字节流的静态存储结构转化为内存的动态数据结构<br><br> (3) 在内存中生成这个类的java.lang.Class对象,作为方法区各种数据结构访问的入口(反射就是class.forName or 对象.getClass)</p>
+<ul>
+<li><p>连接<br><br>java不同于c语言,在编译阶段就完成连接,java的连接是在运行阶段,这就是java动态语言的特点,可以在运行的过程中连接其他类整合到代码里(动态代理)<br></p>
+<ul>
+<li><p>验证<br>主要检查class文件是否符合虚拟机的要求,没有对虚拟机产生危害(有的16进制的文件可能是病毒)</p>
+</li>
+<li><p>准备<br><br>准备阶段是正式微类变量分配内存并且设置变量的初始化值的阶段(例如public static int m;)m会被赋值成0,如果是在定义的时候m=123,那么赋值还是0,只有在代码真正执行putstatic指令的时候才会赋值成123.,但是对于常量就要赋值成常量的值(public static final int a=123,那就赋值为123).</p>
+</li>
+<li><p>解析<br><br>将常量池的符号引用转化为直接引用(内存的地址)</p>
+</li>
+<li><p>初始化<br><br>执行程序为对象成员变量的赋值</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h5><p><img src="/images/12.png" alt=""><br>类加载器就是加载class文件的二进制字节流,是在jvm虚拟机外部完成的.对于任何一个类,都需要由加载它的类加载器和这个类来确立其在虚拟机的唯一性.也就是说相同的类被不同的类加载器加载就会在虚拟机出现多份该类.那么java语言的isInstanceof和equal()方法等都会收到影响.<br><br>双亲委派模型<br><br>jvm存在多个类加载器,每个类加载器都有自己加载的范围,当一个类加载器接到类加载的请求的时候,自己不会先加载,直接向顶层的类加载器传递,每一个层次的都是这样,当到达最顶层的加载器,然后判断该类是不是在自己的加载范围,不在的话就向下传递.在的话就加载,这样就避免了一个类被不同的类加载器加载的情况<br></p>
+<h4 id="虚拟机的执行引擎"><a href="#虚拟机的执行引擎" class="headerlink" title="虚拟机的执行引擎"></a>虚拟机的执行引擎</h4><h6 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h6><p><img src="/images/13.png" alt=""><br>执行引擎运行的所有字节码指令都只针对当前栈帧进行操作(栈顶栈帧),执行完了就出栈,每个栈帧就是一个方法.</p>
+<ul>
+<li>局部变量表<br><br>存储基本数据类型和reference(引用)的局部变量.通过引用可以直接或者间接的找到java堆中的对象,然后直接或者间接找到方法区中存储的该类的信息(xx.getclass()),这样才能实现java的语义规范和约束.</li>
+<li>操作数栈<br><br>算数远算的时候可能用来存储中间结果或者调用其他方法的时候用它来进行传参</li>
+<li>动态链接<br><br>每个栈帧代表一个方法,都包含指向运行常量池该栈帧所属方法的引用,目的就是支持方法调用时的动态链接,在真正调用方法的时候才会把被调用方法的实际内存地址解析,这就是动态链接</li>
+<li>方法返回地址<br><br>方法执行结束后返回调用该方法的地址,如果方法执行遇到异常,是不会给上层调用者返回任何值</li>
+</ul>
+<h5 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">方法调用就是确定运行的时候调用哪一个方法.不设计方法内部的具体实现过程.</span><br><span class="line">class文件的编译或称不包含传统编译的链接步骤,一切方法调用在class文件里存储的只是符号引用(#1),而不是方法在实际运行过程时内存布局中的入口地址(直接引用),使得java获得了更大的动态扩展能力,但也使得java方法的调用变得复杂,有的在类加载或者运行器件才能确定方法的直接引用(动态链接)</span><br></pre></td></tr></table></figure>
+<p>方法的解析有的在编译阶段,有的在运行阶段.在编译阶段就确定的那就说明方法只有一个确认的调用版本,主要有静态方法(和类直接关联)和私有方法(外部访问不了,没法继承和重写)<br><br>调用方法的自字节码指令:<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">invokestatic:调用静态方法</span><br><span class="line">invikespecial:调用构造方法 私有方法和父类方法</span><br><span class="line">invokevirtual:调用虚方法(除了静态 构造 私有 父类和fianl方法以外的方法)</span><br><span class="line">invokeinterface:调用接口方法</span><br><span class="line">invokedynamic:运行期间解析方法的地址然后调用.前面4种分派逻辑在java虚拟机内部,这条指令分派逻辑由用户所设计的引导方法决定.</span><br></pre></td></tr></table></figure>
+<p>想调用静态方法或者私有方法这种调用称为解析调用,在编译阶段就把方法的内存地址明确了;延迟到运行期的称为分派调用.</p>
+<ul>
+<li>静态分派<br><br>依照静态类型(Human) 类型来定位方法的执行版本,典型就是方法重载.在编译阶段就根据参数的静态类型决定使用哪一个重载版本.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;new Man()是在运行阶段才会确定对象的类型,但在编译阶段我们只知道他是Human类型的</span><br><span class="line">Human man&#x3D;new Man();</span><br></pre></td></tr></table></figure></li>
+<li>动态分派<br><br>动态分配的典型体现就是重写,是java多态性的体现.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DynamicSidspatch</span></span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">static</span> <span class="keyword">abstract</span> class <span class="title">Human</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function"><span class="keyword">static</span> vlass Man extends <span class="title">Human</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"man say hello"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function"><span class="keyword">static</span> vlass Women extends <span class="title">Human</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"women say hello"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] args)</span></span>&#123;</span><br><span class="line">        Human man=<span class="keyword">new</span> Man();</span><br><span class="line">        Human women=<span class="keyword">new</span> Women();</span><br><span class="line">        man.sayHello();<span class="comment">//man say hello</span></span><br><span class="line">        women.sayHello();<span class="comment">//women say hello </span></span><br><span class="line">        man=<span class="keyword">new</span> Women();</span><br><span class="line">        man.sayHello()l<span class="comment">//women say hello</span></span><br><span class="line">      &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+如果使用静态分派来思考,那么输出的结果应该是一样的,但是结果不一致,这就是动态分派;入伙使用javap得到字节码指令,就会发现它们都是 invokevirtual #xx,都是调用的Human.sayHello().但在运行过程中,会根据栈帧所指向的实际类型,调用里面的方法,没有就去父类找. 所以有一句”编译看左边,运行看右边”,左边是编译时期的静态类型,右边是运行时期的动态类型.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">宗量:方法的接收者(Son or Father) 和参数统称.</span><br><span class="line">java是静态多分派(Father.hardchoice(QQ)  Father.hardchoice(360),依照静态类型(Father还是Son)和方法参数(QQ 360) 产生了两个宗量)</span><br><span class="line">动态单分派(编译期间就决定调用hardchoice(QQ),唯一影响调哪个方法就是对象的实际类型[右边])</span><br></pre></td></tr></table></figure>
+java jvm中如果某个方法的子类没有被重写,那么子类虚方法表里的地址入口和父类相同方法的入口地址一致.意思就是子类没有在重新分配内存存储方法,直接调用父类的方法.如果重写了,子类方法表的地址就指向子类实现版本的入口地址.</li>
+</ul>
+<h5 id="动态语言的支持-invokedynamic"><a href="#动态语言的支持-invokedynamic" class="headerlink" title="动态语言的支持(invokedynamic)"></a>动态语言的支持(invokedynamic)</h5><p>动态类型语言:类型检查的主体过程是在运行期,而不是编译期;静态类型语言(比如c),类型检查在编译期.<br><br>之前的四种invoke*,会规定方法的参数,名字,参数类型,方法的返回值和具体哪个类的方法,但是invokedynamic不会有具体的哪个类的方法,使用它类似反射获取class文件,然后调用指定的方法,只不过反射是重量级的而且其只针对java,invokedynamic是针对所有运行在jvm的语言,是轻量级的,包含对象的信息是有限的<br></p>
+<h5 id="基于栈的解释器执行过程"><a href="#基于栈的解释器执行过程" class="headerlink" title="基于栈的解释器执行过程"></a>基于栈的解释器执行过程</h5><p>主要描述的是栈帧中局部变量表,操作数栈,程序计数器在执行字节码指令的变化情况,每当执行完一行指令,程序计数器+1,解释器获得下一行代码的指令继续执行,直到执行完毕.具体过程可以参照 P273&lt;&lt;深入了解java虚拟机 第二版&gt;&gt;</p>
+<h5 id=""><a href="#" class="headerlink" title=""></a></h5><p>在class文件格式和虚拟机执行引擎,用户可以进行操作的主要就是字节码的生成和类加载器.用户可以自己定义类加载器和按照代码逻辑生成字节码文件.<br><br><br>Tmocat服务器的类加载结构(双亲委任模型),不同目录有不同的类加载器负责. OSGI类加载器<br></p>
+<ul>
+<li>字节码生成技术以及动态代理的实现<br>字节码生成最原始的是javac,生成字节码还用在动态代理技术,编译时植入的AOP框架(动态代理技术).动态代理不在于省了多少工作量,而是实现了在原始类和接口还未知的时候就确定了代理的逻辑,当代理类和原始类脱离直接联系的时候,.可以很灵活的复用(复用是主要的).<br><br>动态代理的实现有两种:jdk动态代理(代理类和被代理类实现相同的接口),代理类就是实现了和被代理类相同的接口并且传入InvocationHdanler实例;Cglib动态代理,主要适用于被代理类没有实现接口,那么代理类就继承被代理类并且重写方法来实现动态代理.会写专门的一篇介绍动态代理.动态代理是spring AOP的核心,spring里面这两种代理都有.<br><br>反射 注解 代理 都是一脉相承,最核心就是反射.</li>
+</ul>
 
       
 
@@ -226,17 +282,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -287,7 +332,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/27/JVM-GC/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -301,18 +346,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Class文件和类加载
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/27/JVM%E5%86%85%E5%AD%98%E5%88%92%E5%88%86%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%BA%94%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM内存划分以及相应的内存问题</div>
+    <a href="/2020/05/27/JVM-GC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JVM GC</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -339,7 +375,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GC-垃圾回收机制"><span class="toc-number">1.</span> <span class="toc-text">GC (垃圾回收机制)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判断对象已死"><span class="toc-number">1.2.</span> <span class="toc-text">判断对象已死</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-引用计数法"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.引用计数法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-可达性分析"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 可达性分析</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收算法"><span class="toc-number">1.3.</span> <span class="toc-text">垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-标记清除算法"><span class="toc-number">1.3.1.</span> <span class="toc-text">1 标记清除算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-复制算法"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.复制算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-标记整理算法"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.标记整理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-分代回收算法"><span class="toc-number">1.3.4.</span> <span class="toc-text">4 分代回收算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收器"><span class="toc-number">1.4.</span> <span class="toc-text">垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#serial垃圾回收器"><span class="toc-number">1.4.1.</span> <span class="toc-text">serial垃圾回收器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ParNew"><span class="toc-number">1.4.2.</span> <span class="toc-text">ParNew</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Parallel-Scavenge"><span class="toc-number">1.4.3.</span> <span class="toc-text">Parallel Scavenge</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Serial-Old和-Parallel-Old"><span class="toc-number">1.4.4.</span> <span class="toc-text">Serial Old和 Parallel Old</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CMS收集器-重点"><span class="toc-number">1.4.5.</span> <span class="toc-text">CMS收集器(重点)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G1-收集器"><span class="toc-number">1.4.6.</span> <span class="toc-text">G1 收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#理解GC日志和常见的GC参数"><span class="toc-number">1.4.7.</span> <span class="toc-text">理解GC日志和常见的GC参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内存分配和回收策略"><span class="toc-number">1.4.8.</span> <span class="toc-text">内存分配和回收策略</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟机监控和故障处理工具"><span class="toc-number">1.5.</span> <span class="toc-text">虚拟机监控和故障处理工具</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#class文件结构"><span class="toc-number">1.2.</span> <span class="toc-text">class文件结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字节码指令"><span class="toc-number">1.3.</span> <span class="toc-text">字节码指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#虚拟机类加载机制"><span class="toc-number">1.4.</span> <span class="toc-text">虚拟机类加载机制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#java类的声明周期"><span class="toc-number">1.4.1.</span> <span class="toc-text">java类的声明周期</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#类加载器"><span class="toc-number">1.5.</span> <span class="toc-text">类加载器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟机的执行引擎"><span class="toc-number">2.</span> <span class="toc-text">虚拟机的执行引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#运行时栈帧结构"><span class="toc-number">2.0.1.</span> <span class="toc-text">运行时栈帧结构</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#方法调用"><span class="toc-number">2.1.</span> <span class="toc-text">方法调用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#动态语言的支持-invokedynamic"><span class="toc-number">2.2.</span> <span class="toc-text">动态语言的支持(invokedynamic)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#基于栈的解释器执行过程"><span class="toc-number">2.3.</span> <span class="toc-text">基于栈的解释器执行过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#"><span class="toc-number">2.4.</span> <span class="toc-text"></span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -353,7 +389,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="JVM-GC" data-title="JVM GC" data-url="http://yoursite.com/2020/05/27/JVM-GC/"></div>
+	<div class="ds-thread" data-thread-key="calss文件和类加载" data-title="Class文件和类加载" data-url="http://yoursite.com/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
