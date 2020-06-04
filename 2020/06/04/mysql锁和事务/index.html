@@ -6,25 +6,37 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>JVM GC | Hexo</title>
+  <title>mysql锁和事务 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="GC (垃圾回收机制)前言  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)  垃圾回收主要解决的问题：">
+  <meta name="description" content="数据库的事务是建立在底层数据库锁的基础之上的,所以先介绍存在mysql的各种锁. Mysql中的锁mysql的主要的锁的种类按照不同的标准,可以划分如图所示:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM GC">
-<meta property="og:url" content="http://yoursite.com/2020/05/27/JVM-GC/index.html">
+<meta property="og:title" content="mysql锁和事务">
+<meta property="og:url" content="http://yoursite.com/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="GC (垃圾回收机制)前言  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)  垃圾回收主要解决的问题：">
+<meta property="og:description" content="数据库的事务是建立在底层数据库锁的基础之上的,所以先介绍存在mysql的各种锁. Mysql中的锁mysql的主要的锁的种类按照不同的标准,可以划分如图所示:">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="http://yoursite.com/images/2.png">
-<meta property="og:image" content="http://yoursite.com/images/3.png">
-<meta property="og:image" content="http://yoursite.com/images/4.png">
-<meta property="og:image" content="http://yoursite.com/images/5.png">
-<meta property="article:published_time" content="2020-05-27T15:20:08.000Z">
-<meta property="article:modified_time" content="2020-05-28T13:31:16.260Z">
+<meta property="og:image" content="http://yoursite.com/images/44.png">
+<meta property="og:image" content="http://yoursite.com/images/46.png">
+<meta property="og:image" content="http://yoursite.com/images/47.png">
+<meta property="og:image" content="http://yoursite.com/images/48.png">
+<meta property="og:image" content="http://yoursite.com/images/61.png">
+<meta property="og:image" content="http://yoursite.com/images/62.png">
+<meta property="og:image" content="http://yoursite.com/images/63.png">
+<meta property="og:image" content="http://yoursite.com/images/52.png">
+<meta property="og:image" content="http://yoursite.com/images/50.png">
+<meta property="og:image" content="http://yoursite.com/images/53.png">
+<meta property="og:image" content="http://yoursite.com/images/54.png">
+<meta property="og:image" content="http://yoursite.com/images/55.png">
+<meta property="og:image" content="http://yoursite.com/images/59.png">
+<meta property="og:image" content="http://yoursite.com/images/60.png">
+<meta property="og:image" content="http://yoursite.com/images/58.png">
+<meta property="og:image" content="http://yoursite.com/images/65.png">
+<meta property="article:published_time" content="2020-06-04T10:07:05.000Z">
+<meta property="article:modified_time" content="2020-06-04T10:09:34.329Z">
 <meta property="article:author" content="CodeXi">
-<meta property="article:tag" content="jvm">
+<meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/2.png">
+<meta name="twitter:image" content="http://yoursite.com/images/44.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,43 +172,74 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JVM-GC" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-mysql锁和事务" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JVM GC
+      mysql锁和事务
     </h1>
   
 
         
-        <a href="/2020/05/27/JVM-GC/" class="archive-article-date">
-  	<time datetime="2020-05-27T15:20:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
+        <a href="/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/" class="archive-article-date">
+  	<time datetime="2020-06-04T10:07:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="GC-垃圾回收机制"><a href="#GC-垃圾回收机制" class="headerlink" title="GC (垃圾回收机制)"></a>GC (垃圾回收机制)</h3><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)<br><br>  垃圾回收主要解决的问题：<br><br>  <a id="more"></a><br>    * 什么时间回收（到达安全点［某段程序执行时间比较长])<br>    * 哪些内存需要回收 (主要是堆和方法区的对象,栈中的内存在编译阶段就已经确定好而且虽然方法的执行栈帧的进进出出就释放了,所以不需要回收;程序计数器忽略不计)<br>    * 如何回收(分代的垃圾回收算法,主要使用 标记整理 标记清除 复制算法这三种)</p>
-<h4 id="判断对象已死"><a href="#判断对象已死" class="headerlink" title="判断对象已死"></a>判断对象已死</h4><h5 id="1-引用计数法"><a href="#1-引用计数法" class="headerlink" title="1.引用计数法"></a>1.引用计数法</h5><p>  所谓的引用计数法,就是当有引用指向自己的时候,引用数+1,如果句柄(引用)赋值为Null,引用-1.当应用是0的时候就去清除该对象.<br>  优点:方便简单易于实现<br>  缺点:无法解决相互引用的问题<br> <img src="/images/2.png" alt=""><br> 执行obj1=obj2=null后的内存布局如上图所示,但是二者相互引用,引用计数都等于1,无法被GC回收.</p>
-<h5 id="2-可达性分析"><a href="#2-可达性分析" class="headerlink" title="2. 可达性分析"></a>2. 可达性分析</h5><p>  JVM采用的是可达性分析的算法,看对象和GC roots是否有关联判断对象是否需要被回收<br>  <img src="/images/3.png" alt=""><br>  可以看到尽管两者相互引用,但是jvm会判断这两个对象没有关联到gc roots的任何一个对象,所以就会回收它们.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以作为gc roots对象的有:栈内的局部变量引用 方法区的对象引用(被staic修饰和被final修饰)等</span><br></pre></td></tr></table></figure><br>  java中的引用还可以细分为强引用(Obejct o=new Object() 即使内存紧张也不会回收)<br>  软引用(内存紧张就会回收这类引用指向的对象,比如缓存) 弱引用(紧不紧张都回收) 虚引用(标识作用)</p>
-<h4 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h4><h5 id="1-标记清除算法"><a href="#1-标记清除算法" class="headerlink" title="1 标记清除算法"></a>1 标记清除算法</h5><p>  标记内存中无用的对象,然后清除,看起来简单粗暴,但是会造成许多内存碎片(整片内存中就会一个窟窿一个窟窿,不再是连成片的),导致下一次如果new一个大点的对象这些内存锁片放不下就会导致新一轮的GC,程序性能下降.(我们优化GC就是想办法减少gc的次数,尤其是full gc的次数,因为它比较浪费时间)</p>
-<h5 id="2-复制算法"><a href="#2-复制算法" class="headerlink" title="2.复制算法"></a>2.复制算法</h5><p>  简单的复制算法就是将对象存放的内存(堆内存和方法区内存)平均分两块,一块用于存储对象,另一块在没有发生gc的时候就空着,不能放任何对象,当发生gc的时候,就把gc存活的对象放到这一块,另一快之前存放对象的清空,二者再调换角色.<br><br>  显然这种方法浪费了一半的内存,JVM采取的是将年轻代内存分割成8:1:1的区域,eden from to三块.eden gc后就把存活的放到from ,再一次gc就把eden 和from存活的对象放到to,清空from和eden,交换from和to的角色,这样就只浪费10%的内存. 当from或者to的内存放不下存活的对象的时候,对象就会进入老年代(内存担保)</p>
-<h5 id="3-标记整理算法"><a href="#3-标记整理算法" class="headerlink" title="3.标记整理算法"></a>3.标记整理算法</h5><p>  和标记清除算法类似,只不过在标注后会把标记的对象都移动到一端,这样清除后就会产生一块连续的内存空间,不会产生内存碎片</p>
-<h5 id="4-分代回收算法"><a href="#4-分代回收算法" class="headerlink" title="4 分代回收算法"></a>4 分代回收算法</h5><p>  不是新的算法,只是在对于不同的内存采取不同的垃圾回收算法,年轻代内存采取复制算法(这里的对象基本用完就废了),老年代一般采用剩下其他两种算法</p>
-<h4 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h4><p>   <img src="/images/4.png" alt=""><br>   上图标识了7种垃圾回收器,以及它们所作用的内存(年轻代还是老年代)和相互之间的搭配使用关系</p>
-<h5 id="serial垃圾回收器"><a href="#serial垃圾回收器" class="headerlink" title="serial垃圾回收器"></a>serial垃圾回收器</h5><p>   用单线程进行垃圾回收,在进行垃圾回收的时候会暂停所有正在运行的线程.垃圾收集器的改进就是不断的缩短暂停用户线程的时间,让用户尽可能感受不到,提高用户的使用体验</p>
-<h5 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h5><p>  Serial收集器的多线程版本,使用多线程来进行GC(很多时候并不是线程越多越好,线程切换需要花费时间,对于单核CPU多线程反而不如单线程处理速度快)<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">解释下并行收集器和并发收集器:</span><br><span class="line">   并行:用户线程等待,多个GC线程并行进行垃圾回收</span><br><span class="line">   并发:用户线程和GC线程同时执行(可能并发交替执行,可能并行在不同CPU上)</span><br></pre></td></tr></table></figure></p>
-<h5 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h5><p>  和CMS以及ParNew关注的不同,这两者关注的都是如何缩短用户线程等待的时间,尽可能提高用户的体验(响应请求的速度快),而 Parallel Scavenge主要目的就是为了提高吞吐量,就是垃圾回收的时间占总的虚拟机运行时间的比例,例子:虚拟机运行了100分钟,垃圾回收1分钟,吞吐量就是99%. 提高吞吐量是为了尽可能快的完成运算任务,主要用于运算任务,不需要和用户有很多的交互,如果垃圾回收频繁发生,就会导致运算任务花费的时间要比不打断的时间长.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gc停顿时间的变小的代价就是牺牲吞吐量和新生代的空间为代价.为了更快的处理新生代的垃圾对象,新生代的空间变小(小就处理的快),代价就是gc频繁发生,吞吐量下降,比如原来是10s收集一下,每次停顿100ms,现在5s一次,每次停顿70ms 停顿时间虽然减少了,但是吞吐量下来了</span><br></pre></td></tr></table></figure><br>  还有就是Parallel Scavenge 有参数可以自动调节参数(eden和from to的比例,年轻代晋升到老年代的参数等),也是和ParNew的区别</p>
-<h5 id="Serial-Old和-Parallel-Old"><a href="#Serial-Old和-Parallel-Old" class="headerlink" title="Serial Old和 Parallel Old"></a>Serial Old和 Parallel Old</h5><p>  是之前介绍的垃圾回收器的老年代版本,Parallel old主要是为了和年轻代的Parallel Scavenge垃圾回收器配合吞吐量大的场景,没有它之前Parallel Scavenge只能呢选择Serial Old</p>
-<h5 id="CMS收集器-重点"><a href="#CMS收集器-重点" class="headerlink" title="CMS收集器(重点)"></a>CMS收集器(重点)</h5><p>  CMS收集器作用在老年代,采用的是标记-清除算法,它大大减少了STW的时间,保证用户线程和gc线程并发执行,所以在B/S架构的服务器端这种很看中用户体验的场景下被采用.<br>  它主要的收集过程分为以下:<br>  <img src="/images/5.png" alt=""><br>  (1)初始标记:标记和gc roots直连(第一层)的对象,需要STW,但是时间很短<br><br>  (2)并发标记:GC roots链的继续向下标记,和用户线程并发执行<br><br>  (3)重新标记:在并发标记阶段程序继续运行导致之前标记变化的需要重新标记.需要STW,但是时间同样很短<br><br>  (4)并发清除:开始清除垃圾对象,过程和用户线程并发执行.<br><br>  可以看到最花费时间的并发标记和清除都是和用户线程并行的,STW的时间就会很短,对应的就是响应请求的速度很快.<br><br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CMS的缺点:</span><br><span class="line">(1)对CPU敏感:占用CPU的运行,对于CPU数量少的就会导致程序变慢,因为CPU的大量时间都去gc了,用户的请求没有得到有效的处理.</span><br><span class="line">(2)浮动垃圾:在并发清理阶段和用户线程一块运行,就不像别的垃圾处理器等到老年代都满了才gc,余姚预留一部分内存留给用户线程,full gc的次数就增加了,可以使用参数调整出发full gc的内存阈值,默认是68%的内存就出发Full gc</span><br><span class="line">(3)内存碎片:采用标记-清除算法</span><br><span class="line">&#39;</span><br></pre></td></tr></table></figure></p>
-<h5 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h5><p>G1收集器不需要和其他垃圾回收器配合,自己就可以完成分代回收的任务.它比较复杂,简单介绍下相比CMS,它的优势主要在:<br><br>(1)可以更好的发挥多CPU 多核的优势<br><br>(2)使用标记-整理算法,不会产生内存碎片<br><br>(3)可预测的停顿:可以设置某段时间内垃圾回收的时间不超过多少<br><br>(4)独立完成垃圾回收,不需要配合其他垃圾回收器</p>
-<h5 id="理解GC日志和常见的GC参数"><a href="#理解GC日志和常见的GC参数" class="headerlink" title="理解GC日志和常见的GC参数"></a>理解GC日志和常见的GC参数</h5><p>详见&lt;&lt;深入理解java虚拟机 第二版&gt;&gt; P89,人为规定的一些规则</p>
-<h5 id="内存分配和回收策略"><a href="#内存分配和回收策略" class="headerlink" title="内存分配和回收策略"></a>内存分配和回收策略</h5><p>回收策略是上面介绍的,以下介绍下内存是如何分配的.<br  ><br>1.对象是优先分配到Eden区域,当对象无法放在Eden区域的时候就触发一次MinorGc<BR><br>2.大对象直接进入老年代,防止在新生代中多次复制,可以使用参数规定大于一定大小的对象直接分配到老年代,在写程序的时候也要避免定义朝生夕死的大对象,这样只会频繁发生gc<br><br>3.长期存活的对象会进入老年代,在from和to之间来回复制超过一定次数的对象就会进入老年代(认为它或许是长期存在的)<br>4. 动态对象年龄判断,在Surivor区域中相同年龄的对象大于Servior大小的一般的时候,那么大于等于该年龄的对象会被分配到老年代<br><br>5,空间担保.当eden区域的对象在surivor区域无法放开的时候,对象就会进入老年代,由老年代进行担保.一般情况下就是老年代剩余的连续内存空间是否大于年轻代的所有对象内存的总大小,如果大于,担保是安全的.如果小于,就有担保风险,看jvm是否允许担保风险.如果允许,就看历次由年轻代晋升到老年代的对象的平均大小,如果大于剩余老年代的大小,就担保失败,如果大于平均仍然有失败的风险,只不过是进行一次FullGC,这样兜了一圈就是为了减少FullGC发生的次数.</p>
-<h4 id="虚拟机监控和故障处理工具"><a href="#虚拟机监控和故障处理工具" class="headerlink" title="虚拟机监控和故障处理工具"></a>虚拟机监控和故障处理工具</h4><p>1.命令行:jps jstat jinfo jmapjhat <br><br>2.可视化 :Jconsole(这个使用过,还可以)  VisualVM<br><br>3.调优实战的话就看周的书上的例子,由于现在知识储量的问题,还没有办法完全看懂,等看懂了再写.</p>
+        <p>数据库的事务是建立在底层数据库锁的基础之上的,所以先介绍存在mysql的各种锁.</p>
+<h4 id="Mysql中的锁"><a href="#Mysql中的锁" class="headerlink" title="Mysql中的锁"></a>Mysql中的锁</h4><p>mysql的主要的锁的种类按照不同的标准,可以划分如图所示:<br><img src="/images/44.png" alt=""><br> <a id="more"></a><br>可以看到mysql的两个主要的存储引擎在锁方面是有不同的:<br></p>
+<ul>
+<li>InnoDB支持行锁和表锁,MyISAM只支持表锁 导致INNODB的在并发高的情况下优于MYISAM<br></li>
+<li>InnoDb支持事务操作和安全恢复技术,MyISAM不支持;<br></li>
+<li>InnoDb支持MVCC(多版本并发控制),是在读已提交和可重复读的事务隔离级别下,实现不加锁方式解决并发事务出现的问题;MyISAM不支持事务,自然也不支持MVCC;<br></li>
+<li>InnoDB支持外键,MYISAM不支持 …..<br><br>Innodb的行锁是对修改的列是加了索引的才会进行加行锁,没有加索引的还是会触发表锁.如果索引失效的话,行锁就会升级为表锁<br></li>
+</ul>
+<h6 id="表级锁和行级锁"><a href="#表级锁和行级锁" class="headerlink" title="表级锁和行级锁"></a>表级锁和行级锁</h6><p>Innodb的行锁是对修改的列是加了索引的才会进行加行锁,没有加索引的还是会触发表锁.<br><br>前提关闭事务的自动提交，并且操作的表是INnodb存储引擎.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set autocommit &#x3D; 0;&#x2F;&#x2F;窗口关了就失效,可以在配置文件设置有效,练习的话这个就可以</span><br></pre></td></tr></table></figure>
+<p>mysql的默认事务隔离级别是可重复读．关于事务的知识后面会详解<br></p>
+<ul>
+<li>对加了索引的列同时ｕｐｄａｔｅ的话，如果第一个事务没有提交，第二个事务将处于等待状态（对同一条记录无论怎样是不可能同时ｕｐｄａｔｅ的，不同的是触发了表锁还是行锁）．如图：<br><img src="/images/46.png" alt=""></li>
+<li>对加了索引的列ｕｐｄａｔｅ，如果第一个事务没有提交，第二个事务更新了另一条主键索引的列，是可以更新成功的，说明触发了行锁;<br><img src="/images/47.png" alt=""></li>
+<li>对没有加索引的列ｕｐｄａｔｅ，即使更新的不是同一条记录，第二个事务的更新操作也会被阻塞，说明第一个事务的更新语句触发了表锁，对整张表的记录都加锁了．<br><img src="/images/48.png" alt=""><br>对于存储引擎是ＭＹＩＳＡＭ的表，读和写是阻塞的，InnoDB读和写是不阻塞的，读和读才会阻塞．</li>
+</ul>
+<h6 id="间隙锁"><a href="#间隙锁" class="headerlink" title="间隙锁"></a>间隙锁</h6><p>在ｍｙｓｑｌ的可重复读的事务隔离级别下，可以锁指定查询范围的索引，避免幻读现象的发生，具体在下面的幻读的例子．<br>间隙锁不好的地方:<br><br>新增索引在间隙锁的范围之内是插入失败的(即使新增的主键id在数据库中不存在,但是在间隙锁范围内)</p>
+<h6 id="乐观锁和悲观锁"><a href="#乐观锁和悲观锁" class="headerlink" title="乐观锁和悲观锁"></a>乐观锁和悲观锁</h6><ul>
+<li>乐观锁<br><br>乐观锁是一种思想，具体实现是，表中有一个版本字段，第一次读的时候，获取到这个字段(version)。处理完业务逻辑开始更新的时候，需要再次查看该字段的值是否和第一次的一样。如果一样更新，反之拒绝。之所以叫乐观，因为这个模式没有从数据库加锁，等到更新的时候再判断是否可以更新<br><br>缺点：产生的问题ABA问题，就是预期值为A  但是这时候有事务操作改为B,然后又改为A,这时候事务以为没问题，但是其实中间已经修改了两次。<br><br>解决方法有：<br><br>1.加版本号。每次操作版本号加1.<br><br>2.加时间戳。新提交的时候检查当前数据库中数据的时间戳和自己更新前取到的时间戳进行对比，如果一致则OK，否则就是版本冲突<br></li>
+</ul>
+<ul>
+<li>悲观锁<br><br>悲观锁就是数据库底层锁的机制(行锁　表锁)，对整张表或者某一行在ｕｐｄａｔｅ的时候进行加锁．任何其余的ｕｐｄａｔｅ操作都会阻塞<br><br>乐观锁适用于写操作不是很大的情况，如果写并发比较大就会导致重试的次数比较多，可以采取重入的机制，就是失败了不马上结束，而是尝试重试，可以限定一个时间段内重入几次或者限制重入的次数，来减少对数据库的访问；相反，悲观锁就适用于写操作比较大的情况<br>现在的应用都是使用ｒｅｄｉｓ作为中间件，把高并发的数据放在ｒｅｄｉｓ中，ｒｅｄｉｓ处理完毕后才走数据库．<br><br>显示加锁的情况(S锁就是读锁　Ｘ锁是写锁)<br></li>
+<li>select … for update（加Ｘ锁）<br>读和读操作是可以的，读和写是互斥的．默认mysql如果事务开启select的话加的是X锁,在没有提交的情况下由于MVCC其他事务可以修改,这在并发情况下是不可以的.思考一个场景,就好剩下一个商品,如果你for update,读取完别的事务读取并且下单完毕,你在下单就会超发,所以这行必须加for update,不加的话就在update语句上判断库存是否&gt;0,当你update判断的库存MVCC读取的是最新快照的数据.</li>
+<li>select … lock in share mode(加Ｓ锁)<br>关于这两者的区别，可以看这篇博:<br><br><a href="https://blog.csdn.net/cug_jiang126com/article/details/50544728" target="_blank" rel="noopener">深入理解SELECT … LOCK IN SHARE MODE和SELECT … FOR UPDATE</a><br><br>结论：lock in share mode适用于两张表存在业务关系时的一致性要求，for  update适用于操作同一张表时的一致性要求</li>
+</ul>
+<h5 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h5><p>MVCC(多版本并发控制),它出现主要是为了解决读写阻塞的问题,就是在不使用MVCC的情况下,如果一个事务正在读取且还没有提交(select xx from table),另一个事务要修改该行的记录的时候,由于读写锁的阻塞,事务B会阻塞;MVCC是不用加锁就完成读写操作,即B可以更新成功,它主要作用于读已提交和可重复读的级别.<br></p>
+<p><img src="/images/61.png" alt=""><br>上图记录了不同事务对某一行数据的操作记录,(只有更新操作才才会产生事务,读取不会)<br></p>
+<p>MVCC对于某一行数据每次的更新操作会生成一个事务,维护一个对该数据操作的版本链.<br><img src="/images/62.png" alt=""><br>然后根据版本链和产生的readview(select产生 []里是存活的事务id,外面是当前这行的最大事务id)来读取自己应该读到的数据版本.<br><br><img src="/images/63.png" alt=""><br>对于可重复读：保存的是所有的快照历史版本，readView沿用第一次使用的readView<br><br>对于读已提交：保存的是当前最新的快照,生成最新的readView<br></p>
+<p><a href="https://www.bilibili.com/video/av83518115?from=search&seid=1831310497745668994" target="_blank" rel="noopener">B站MVCC学习链接</a><br><br>update insert 和delete都会读取最新的版本,select在可重复读的情况下会根据readview判断应该显示的版本.</p>
+<h4 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h4><h5 id="事务的ACID特性"><a href="#事务的ACID特性" class="headerlink" title="事务的ＡＣＩＤ特性"></a>事务的ＡＣＩＤ特性</h5><p>　* 原子性：一个事务的操作要么都成功，要么都失败回滚。<br><br>　* 一致性：数据库从一个一致性状态切换到另一个一致性状态。就像两个人汇款，不管多少次操作，钱的总数是一样的。<br><br>　* 隔离性：针对并发事务，事务的操作不会被其他事务干扰。<br><br>　* 持久性：即数据库恢复机制来保证的，当显示提交事务成功，当此时出现数据库的故障，那么要保证我们对数据的最新更新<br><br> 破坏事务ACID的因素：（1）并发事务的交叉执行  （2）事务在运行过程中被强制停止（恢复策略帮助）</p>
+<p> 并发事务会产生的问题：</p>
+<ul>
+<li>写写并发事务产生的问题<br><ul>
+<li>第一类丢失更新<br><br>第一类丢失更新就是两个事务同时操作一条数据，Ａ修改了但是没有提交事务，这是Ｂ修改了该条数据并且提交．Ａ此时撤回事务，导致Ｂ的修改丢失．但是这种现象所有的数据库都已经解决了．<br><img src="/images/52.png" alt=""></li>
+<li>第二类丢失更新<br><br>第二类丢失更新的情况如下图：<br><img src="/images/50.png" alt=""><br>第二类情况主要依靠数据库的锁来解决，数据库在锁级别保证了不会同时两个事务更新同一条记录成功，只能第一个事务更新成功并提交事务，第二个事务才能更新，数据库的锁就是悲观锁；当然为了解决第二类丢失更新，也可以采取乐观锁解决方案；或者不考虑性能的情况下直接把数据库事务级别设置为序列化．</li>
+</ul>
+</li>
+<li>读写并发产生的问题<ul>
+<li>脏读　读到了还没有提交的事务里面的数据<br><img src="/images/53.png" alt=""><br>这种情况的解决就是读写互斥，读的时候发现这条记录正在被更新（该记录或者表加了写锁），就等待锁释放后读取数据．这是由数据库底层的读锁和写锁互斥解决的．</li>
+<li>不可重复读　<br><br>对于一个事务内两条相同的查询语句结果不一样，是由于A事务读取到了B事务已经提交的更改数据，在同个时间段内，两次查询的结果不一致。<br><img src="/images/54.png" alt=""><br>数据库底层还是依赖读写互斥来解决的．当一个事务要读取数据的时候，就会在该记录加读锁，如果别的事务要读是可以的，读和读不互斥；如果是写的话就会阻塞，直到读操作完毕并且提交事务．</li>
+<li>幻读<br>上面讲的是读和写操作互斥解决不可重复读的问题，但是没有说插入的操作，如果一个事务第一次select count(1) from table后未提交事务,中间第二个事务插入了新的记录，第一个事务再次select count(1)结果就会不一致．<br><img src="/images/55.png" alt=""><br>ps:幻读和不可重复读主要区别是不可重复读是并发事务进行更新导致的，幻读是并发事务进行插入导致的．<br><br>解决幻读的方法：数据库采取序列化级别，事务按照串行的顺序执行，中间没有穿插操作，就失去了并发事务．在ｍｙｓｑｌ中提供了一种间隙锁（ｍｙｓｑｌ可重复读级别），当你查询的时候，他会对查询数据的范围（主键ｉｄ）索引树的范围进行加锁，当别的事务执行插入的时候就会插入失败．<br><br>如图在ｉｄ＞８的范围插入数据就会出错，因为对这个范围的索引加锁了<br><img src="/images/59.png" alt=""><br>ｓｑｌ语句需要加上ｆｏｒ　ｕｐｄａｔｅ，如果不加的话ｍｙｓｑｌ默认采取ＭＶＣＣ是允许读写操作在不加锁的情况下可以同时执行．for update后，触发表锁还是行锁要看是否走索引．反正其他事务ｕｐｄａｔｅ本行记录是阻塞的，ｉｎｓｅｒｔ由于间隙锁的存在也是阻塞的．<br><br>如果在１－８这个范围且主键不重复插入还是可以插入的，说明了间隙锁的作用：<br><img src="/images/60.png" alt=""></li>
+</ul>
+</li>
+</ul>
+<p>总结：<br><br>　　了解决并发事务之间的问题，数据库设置了不同的隔离级别适应不同的要求．隔离级别不是越高越好，越高代表性能不行，但是安全，安全性的要求取决于具体的业务，ｍｙｓｑｌ默认的隔离级别是可重复读.msyql的可重复读不会产生幻读,因为间隙锁的存在<br><br>  隔离级别: 读未提交 读已提交 可重复读 序列化<br> <img src="/images/58.png" alt=""></p>
+<h5 id="事务的隔离级别-Spring"><a href="#事务的隔离级别-Spring" class="headerlink" title="事务的隔离级别(Spring)"></a>事务的隔离级别(Spring)</h5><p>spring事务隔离级别与传播机制<br>隔离级别：<br>1、ISOLOCATION_DEFAULT:  数据库默认级别<br>2、ISOLOCATION_READ_UNCOMMITTED: 允许读取未提交的读， 可能导致脏读，不可重复读，幻读<br>3、ISOLOCATION_READ_COMMITTED:  允许读取已提交的读，可能导致不可重复读，幻读<br>4、ISOLOCATION_REPEATABLE_READ : 不能能更新另一个事务修改单尚未提交(回滚)的数据，可能引起幻读<br>5、ISOLOCATION_SERIALIZABLE: 序列执行效率低<br><br>其实底层还是数据库的隔离级别.关于spring事务的隔离级别包括传播机制会单独写一篇博客.</p>
+<h5 id="数据库恢复"><a href="#数据库恢复" class="headerlink" title="数据库恢复"></a>数据库恢复</h5><p> <img src="/images/65.png" alt=""><br> 实现恢复的技术：数据转储和log日志文件（undo日志：数据之前的历史数据   redo日志：数据更新后内容（但还没写到磁盘））. MVCC的版本就写在undo日志.<br><br> 利用数据转储可以使得数据库恢复到某一时刻的状态，再利用日志文件就可以保证恢复到出故障时候数据的状态<br>日志文件的记录要严格按照事务的发生时间；必须先写日志文件，后更新数据库<br><br>具体的数据库恢复策略等有空写.<br></p>
+<p>一些知识和图的参考链接:<a href="https://segmentfault.com/a/1190000015738121#item-3-14" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015738121#item-3-14</a></p>
 
       
 
@@ -231,7 +274,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
@@ -287,7 +330,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/27/JVM-GC/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -301,18 +344,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          JVM类加载和执行机制
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/27/JVM%E5%86%85%E5%AD%98%E5%88%92%E5%88%86%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%BA%94%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM内存划分以及相应的内存问题</div>
+    <a href="/2020/06/02/mysql%E7%B4%A2%E5%BC%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据库索引(mysql)</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -339,7 +373,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GC-垃圾回收机制"><span class="toc-number">1.</span> <span class="toc-text">GC (垃圾回收机制)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判断对象已死"><span class="toc-number">1.2.</span> <span class="toc-text">判断对象已死</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-引用计数法"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.引用计数法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-可达性分析"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 可达性分析</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收算法"><span class="toc-number">1.3.</span> <span class="toc-text">垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-标记清除算法"><span class="toc-number">1.3.1.</span> <span class="toc-text">1 标记清除算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-复制算法"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.复制算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-标记整理算法"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.标记整理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-分代回收算法"><span class="toc-number">1.3.4.</span> <span class="toc-text">4 分代回收算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收器"><span class="toc-number">1.4.</span> <span class="toc-text">垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#serial垃圾回收器"><span class="toc-number">1.4.1.</span> <span class="toc-text">serial垃圾回收器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ParNew"><span class="toc-number">1.4.2.</span> <span class="toc-text">ParNew</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Parallel-Scavenge"><span class="toc-number">1.4.3.</span> <span class="toc-text">Parallel Scavenge</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Serial-Old和-Parallel-Old"><span class="toc-number">1.4.4.</span> <span class="toc-text">Serial Old和 Parallel Old</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CMS收集器-重点"><span class="toc-number">1.4.5.</span> <span class="toc-text">CMS收集器(重点)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G1-收集器"><span class="toc-number">1.4.6.</span> <span class="toc-text">G1 收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#理解GC日志和常见的GC参数"><span class="toc-number">1.4.7.</span> <span class="toc-text">理解GC日志和常见的GC参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内存分配和回收策略"><span class="toc-number">1.4.8.</span> <span class="toc-text">内存分配和回收策略</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟机监控和故障处理工具"><span class="toc-number">1.5.</span> <span class="toc-text">虚拟机监控和故障处理工具</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mysql中的锁"><span class="toc-number">1.</span> <span class="toc-text">Mysql中的锁</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#表级锁和行级锁"><span class="toc-number">1.0.1.</span> <span class="toc-text">表级锁和行级锁</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#间隙锁"><span class="toc-number">1.0.2.</span> <span class="toc-text">间隙锁</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#乐观锁和悲观锁"><span class="toc-number">1.0.3.</span> <span class="toc-text">乐观锁和悲观锁</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MVCC"><span class="toc-number">1.1.</span> <span class="toc-text">MVCC</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#事务"><span class="toc-number">2.</span> <span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#事务的ACID特性"><span class="toc-number">2.1.</span> <span class="toc-text">事务的ＡＣＩＤ特性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#事务的隔离级别-Spring"><span class="toc-number">2.2.</span> <span class="toc-text">事务的隔离级别(Spring)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数据库恢复"><span class="toc-number">2.3.</span> <span class="toc-text">数据库恢复</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -353,7 +387,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="JVM-GC" data-title="JVM GC" data-url="http://yoursite.com/2020/05/27/JVM-GC/"></div>
+	<div class="ds-thread" data-thread-key="mysql锁和事务" data-title="mysql锁和事务" data-url="http://yoursite.com/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

@@ -6,25 +6,44 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>JVM GC | Hexo</title>
+  <title>数据库索引(mysql) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="GC (垃圾回收机制)前言  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)  垃圾回收主要解决的问题：">
+  <meta name="description" content="索引的数据结构我们知道mysql底层索引的数据结构是B+树,那么为什么是B+树,它比其他的平衡n叉树强在哪里? 1在讲数据结构之前,我们需要知道mysql的数据是存储在磁盘上面的,我们查询的数据要从磁盘加载到内存中.磁盘io的时间相比cpu从内存中取数据是慢很多的(所以有很多内存数据库例如redis来作为缓存,减少和数据库交互的次数,从而提高程序的响应速度).所以哪种数据结构能够减少访问数据库的次">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM GC">
-<meta property="og:url" content="http://yoursite.com/2020/05/27/JVM-GC/index.html">
+<meta property="og:title" content="数据库索引(mysql)">
+<meta property="og:url" content="http://yoursite.com/2020/06/02/mysql%E7%B4%A2%E5%BC%95/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="GC (垃圾回收机制)前言  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)  垃圾回收主要解决的问题：">
+<meta property="og:description" content="索引的数据结构我们知道mysql底层索引的数据结构是B+树,那么为什么是B+树,它比其他的平衡n叉树强在哪里? 1在讲数据结构之前,我们需要知道mysql的数据是存储在磁盘上面的,我们查询的数据要从磁盘加载到内存中.磁盘io的时间相比cpu从内存中取数据是慢很多的(所以有很多内存数据库例如redis来作为缓存,减少和数据库交互的次数,从而提高程序的响应速度).所以哪种数据结构能够减少访问数据库的次">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="http://yoursite.com/images/2.png">
-<meta property="og:image" content="http://yoursite.com/images/3.png">
-<meta property="og:image" content="http://yoursite.com/images/4.png">
-<meta property="og:image" content="http://yoursite.com/images/5.png">
-<meta property="article:published_time" content="2020-05-27T15:20:08.000Z">
-<meta property="article:modified_time" content="2020-05-28T13:31:16.260Z">
+<meta property="og:image" content="http://yoursite.com/images/18.png">
+<meta property="og:image" content="http://yoursite.com/images/19.png">
+<meta property="og:image" content="http://yoursite.com/images/20.png">
+<meta property="og:image" content="http://yoursite.com/images/21.png">
+<meta property="og:image" content="http://yoursite.com/images/23.png">
+<meta property="og:image" content="http://yoursite.com/images/21.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/43.png">
+<meta property="og:image" content="http://yoursite.com/images/24.png">
+<meta property="og:image" content="http://yoursite.com/images/25.png">
+<meta property="og:image" content="http://yoursite.com/images/27.png">
+<meta property="og:image" content="http://yoursite.com/images/26.png">
+<meta property="og:image" content="http://yoursite.com/images/28.png">
+<meta property="og:image" content="http://yoursite.com/images/29.png">
+<meta property="og:image" content="http://yoursite.com/images/30.png">
+<meta property="og:image" content="http://yoursite.com/images/31.png">
+<meta property="og:image" content="http://yoursite.com/images/32.png">
+<meta property="og:image" content="http://yoursite.com/images/33.png">
+<meta property="og:image" content="http://yoursite.com/images/34.png">
+<meta property="og:image" content="http://yoursite.com/images/37.png">
+<meta property="og:image" content="http://yoursite.com/images/35.png">
+<meta property="og:image" content="http://yoursite.com/images/36.png">
+<meta property="og:image" content="http://yoursite.com/images/40.png">
+<meta property="og:image" content="http://yoursite.com/images/41.png">
+<meta property="article:published_time" content="2020-06-02T04:01:49.000Z">
+<meta property="article:modified_time" content="2020-06-04T10:05:31.605Z">
 <meta property="article:author" content="CodeXi">
-<meta property="article:tag" content="jvm">
+<meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/2.png">
+<meta name="twitter:image" content="http://yoursite.com/images/18.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,43 +179,143 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JVM-GC" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-mysql索引" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JVM GC
+      数据库索引(mysql)
     </h1>
   
 
         
-        <a href="/2020/05/27/JVM-GC/" class="archive-article-date">
-  	<time datetime="2020-05-27T15:20:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
+        <a href="/2020/06/02/mysql%E7%B4%A2%E5%BC%95/" class="archive-article-date">
+  	<time datetime="2020-06-02T04:01:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="GC-垃圾回收机制"><a href="#GC-垃圾回收机制" class="headerlink" title="GC (垃圾回收机制)"></a>GC (垃圾回收机制)</h3><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)<br><br>  垃圾回收主要解决的问题：<br><br>  <a id="more"></a><br>    * 什么时间回收（到达安全点［某段程序执行时间比较长])<br>    * 哪些内存需要回收 (主要是堆和方法区的对象,栈中的内存在编译阶段就已经确定好而且虽然方法的执行栈帧的进进出出就释放了,所以不需要回收;程序计数器忽略不计)<br>    * 如何回收(分代的垃圾回收算法,主要使用 标记整理 标记清除 复制算法这三种)</p>
-<h4 id="判断对象已死"><a href="#判断对象已死" class="headerlink" title="判断对象已死"></a>判断对象已死</h4><h5 id="1-引用计数法"><a href="#1-引用计数法" class="headerlink" title="1.引用计数法"></a>1.引用计数法</h5><p>  所谓的引用计数法,就是当有引用指向自己的时候,引用数+1,如果句柄(引用)赋值为Null,引用-1.当应用是0的时候就去清除该对象.<br>  优点:方便简单易于实现<br>  缺点:无法解决相互引用的问题<br> <img src="/images/2.png" alt=""><br> 执行obj1=obj2=null后的内存布局如上图所示,但是二者相互引用,引用计数都等于1,无法被GC回收.</p>
-<h5 id="2-可达性分析"><a href="#2-可达性分析" class="headerlink" title="2. 可达性分析"></a>2. 可达性分析</h5><p>  JVM采用的是可达性分析的算法,看对象和GC roots是否有关联判断对象是否需要被回收<br>  <img src="/images/3.png" alt=""><br>  可以看到尽管两者相互引用,但是jvm会判断这两个对象没有关联到gc roots的任何一个对象,所以就会回收它们.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以作为gc roots对象的有:栈内的局部变量引用 方法区的对象引用(被staic修饰和被final修饰)等</span><br></pre></td></tr></table></figure><br>  java中的引用还可以细分为强引用(Obejct o=new Object() 即使内存紧张也不会回收)<br>  软引用(内存紧张就会回收这类引用指向的对象,比如缓存) 弱引用(紧不紧张都回收) 虚引用(标识作用)</p>
-<h4 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h4><h5 id="1-标记清除算法"><a href="#1-标记清除算法" class="headerlink" title="1 标记清除算法"></a>1 标记清除算法</h5><p>  标记内存中无用的对象,然后清除,看起来简单粗暴,但是会造成许多内存碎片(整片内存中就会一个窟窿一个窟窿,不再是连成片的),导致下一次如果new一个大点的对象这些内存锁片放不下就会导致新一轮的GC,程序性能下降.(我们优化GC就是想办法减少gc的次数,尤其是full gc的次数,因为它比较浪费时间)</p>
-<h5 id="2-复制算法"><a href="#2-复制算法" class="headerlink" title="2.复制算法"></a>2.复制算法</h5><p>  简单的复制算法就是将对象存放的内存(堆内存和方法区内存)平均分两块,一块用于存储对象,另一块在没有发生gc的时候就空着,不能放任何对象,当发生gc的时候,就把gc存活的对象放到这一块,另一快之前存放对象的清空,二者再调换角色.<br><br>  显然这种方法浪费了一半的内存,JVM采取的是将年轻代内存分割成8:1:1的区域,eden from to三块.eden gc后就把存活的放到from ,再一次gc就把eden 和from存活的对象放到to,清空from和eden,交换from和to的角色,这样就只浪费10%的内存. 当from或者to的内存放不下存活的对象的时候,对象就会进入老年代(内存担保)</p>
-<h5 id="3-标记整理算法"><a href="#3-标记整理算法" class="headerlink" title="3.标记整理算法"></a>3.标记整理算法</h5><p>  和标记清除算法类似,只不过在标注后会把标记的对象都移动到一端,这样清除后就会产生一块连续的内存空间,不会产生内存碎片</p>
-<h5 id="4-分代回收算法"><a href="#4-分代回收算法" class="headerlink" title="4 分代回收算法"></a>4 分代回收算法</h5><p>  不是新的算法,只是在对于不同的内存采取不同的垃圾回收算法,年轻代内存采取复制算法(这里的对象基本用完就废了),老年代一般采用剩下其他两种算法</p>
-<h4 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h4><p>   <img src="/images/4.png" alt=""><br>   上图标识了7种垃圾回收器,以及它们所作用的内存(年轻代还是老年代)和相互之间的搭配使用关系</p>
-<h5 id="serial垃圾回收器"><a href="#serial垃圾回收器" class="headerlink" title="serial垃圾回收器"></a>serial垃圾回收器</h5><p>   用单线程进行垃圾回收,在进行垃圾回收的时候会暂停所有正在运行的线程.垃圾收集器的改进就是不断的缩短暂停用户线程的时间,让用户尽可能感受不到,提高用户的使用体验</p>
-<h5 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h5><p>  Serial收集器的多线程版本,使用多线程来进行GC(很多时候并不是线程越多越好,线程切换需要花费时间,对于单核CPU多线程反而不如单线程处理速度快)<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">解释下并行收集器和并发收集器:</span><br><span class="line">   并行:用户线程等待,多个GC线程并行进行垃圾回收</span><br><span class="line">   并发:用户线程和GC线程同时执行(可能并发交替执行,可能并行在不同CPU上)</span><br></pre></td></tr></table></figure></p>
-<h5 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h5><p>  和CMS以及ParNew关注的不同,这两者关注的都是如何缩短用户线程等待的时间,尽可能提高用户的体验(响应请求的速度快),而 Parallel Scavenge主要目的就是为了提高吞吐量,就是垃圾回收的时间占总的虚拟机运行时间的比例,例子:虚拟机运行了100分钟,垃圾回收1分钟,吞吐量就是99%. 提高吞吐量是为了尽可能快的完成运算任务,主要用于运算任务,不需要和用户有很多的交互,如果垃圾回收频繁发生,就会导致运算任务花费的时间要比不打断的时间长.<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gc停顿时间的变小的代价就是牺牲吞吐量和新生代的空间为代价.为了更快的处理新生代的垃圾对象,新生代的空间变小(小就处理的快),代价就是gc频繁发生,吞吐量下降,比如原来是10s收集一下,每次停顿100ms,现在5s一次,每次停顿70ms 停顿时间虽然减少了,但是吞吐量下来了</span><br></pre></td></tr></table></figure><br>  还有就是Parallel Scavenge 有参数可以自动调节参数(eden和from to的比例,年轻代晋升到老年代的参数等),也是和ParNew的区别</p>
-<h5 id="Serial-Old和-Parallel-Old"><a href="#Serial-Old和-Parallel-Old" class="headerlink" title="Serial Old和 Parallel Old"></a>Serial Old和 Parallel Old</h5><p>  是之前介绍的垃圾回收器的老年代版本,Parallel old主要是为了和年轻代的Parallel Scavenge垃圾回收器配合吞吐量大的场景,没有它之前Parallel Scavenge只能呢选择Serial Old</p>
-<h5 id="CMS收集器-重点"><a href="#CMS收集器-重点" class="headerlink" title="CMS收集器(重点)"></a>CMS收集器(重点)</h5><p>  CMS收集器作用在老年代,采用的是标记-清除算法,它大大减少了STW的时间,保证用户线程和gc线程并发执行,所以在B/S架构的服务器端这种很看中用户体验的场景下被采用.<br>  它主要的收集过程分为以下:<br>  <img src="/images/5.png" alt=""><br>  (1)初始标记:标记和gc roots直连(第一层)的对象,需要STW,但是时间很短<br><br>  (2)并发标记:GC roots链的继续向下标记,和用户线程并发执行<br><br>  (3)重新标记:在并发标记阶段程序继续运行导致之前标记变化的需要重新标记.需要STW,但是时间同样很短<br><br>  (4)并发清除:开始清除垃圾对象,过程和用户线程并发执行.<br><br>  可以看到最花费时间的并发标记和清除都是和用户线程并行的,STW的时间就会很短,对应的就是响应请求的速度很快.<br><br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CMS的缺点:</span><br><span class="line">(1)对CPU敏感:占用CPU的运行,对于CPU数量少的就会导致程序变慢,因为CPU的大量时间都去gc了,用户的请求没有得到有效的处理.</span><br><span class="line">(2)浮动垃圾:在并发清理阶段和用户线程一块运行,就不像别的垃圾处理器等到老年代都满了才gc,余姚预留一部分内存留给用户线程,full gc的次数就增加了,可以使用参数调整出发full gc的内存阈值,默认是68%的内存就出发Full gc</span><br><span class="line">(3)内存碎片:采用标记-清除算法</span><br><span class="line">&#39;</span><br></pre></td></tr></table></figure></p>
-<h5 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a>G1 收集器</h5><p>G1收集器不需要和其他垃圾回收器配合,自己就可以完成分代回收的任务.它比较复杂,简单介绍下相比CMS,它的优势主要在:<br><br>(1)可以更好的发挥多CPU 多核的优势<br><br>(2)使用标记-整理算法,不会产生内存碎片<br><br>(3)可预测的停顿:可以设置某段时间内垃圾回收的时间不超过多少<br><br>(4)独立完成垃圾回收,不需要配合其他垃圾回收器</p>
-<h5 id="理解GC日志和常见的GC参数"><a href="#理解GC日志和常见的GC参数" class="headerlink" title="理解GC日志和常见的GC参数"></a>理解GC日志和常见的GC参数</h5><p>详见&lt;&lt;深入理解java虚拟机 第二版&gt;&gt; P89,人为规定的一些规则</p>
-<h5 id="内存分配和回收策略"><a href="#内存分配和回收策略" class="headerlink" title="内存分配和回收策略"></a>内存分配和回收策略</h5><p>回收策略是上面介绍的,以下介绍下内存是如何分配的.<br  ><br>1.对象是优先分配到Eden区域,当对象无法放在Eden区域的时候就触发一次MinorGc<BR><br>2.大对象直接进入老年代,防止在新生代中多次复制,可以使用参数规定大于一定大小的对象直接分配到老年代,在写程序的时候也要避免定义朝生夕死的大对象,这样只会频繁发生gc<br><br>3.长期存活的对象会进入老年代,在from和to之间来回复制超过一定次数的对象就会进入老年代(认为它或许是长期存在的)<br>4. 动态对象年龄判断,在Surivor区域中相同年龄的对象大于Servior大小的一般的时候,那么大于等于该年龄的对象会被分配到老年代<br><br>5,空间担保.当eden区域的对象在surivor区域无法放开的时候,对象就会进入老年代,由老年代进行担保.一般情况下就是老年代剩余的连续内存空间是否大于年轻代的所有对象内存的总大小,如果大于,担保是安全的.如果小于,就有担保风险,看jvm是否允许担保风险.如果允许,就看历次由年轻代晋升到老年代的对象的平均大小,如果大于剩余老年代的大小,就担保失败,如果大于平均仍然有失败的风险,只不过是进行一次FullGC,这样兜了一圈就是为了减少FullGC发生的次数.</p>
-<h4 id="虚拟机监控和故障处理工具"><a href="#虚拟机监控和故障处理工具" class="headerlink" title="虚拟机监控和故障处理工具"></a>虚拟机监控和故障处理工具</h4><p>1.命令行:jps jstat jinfo jmapjhat <br><br>2.可视化 :Jconsole(这个使用过,还可以)  VisualVM<br><br>3.调优实战的话就看周的书上的例子,由于现在知识储量的问题,还没有办法完全看懂,等看懂了再写.</p>
+        <h5 id="索引的数据结构"><a href="#索引的数据结构" class="headerlink" title="索引的数据结构"></a>索引的数据结构</h5><p>我们知道mysql底层索引的数据结构是B+树,那么为什么是B+树,它比其他的平衡n叉树强在哪里?<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在讲数据结构之前,我们需要知道mysql的数据是存储在磁盘上面的,我们查询的数据要从磁盘加载到内存中.磁盘io的时间相比cpu从内存中取数据是慢很多的(所以有很多内存数据库例如redis来作为缓存,减少和数据库交互的次数,从而提高程序的响应速度).所以哪种数据结构能够减少访问数据库的次数,它就是好的.</span><br></pre></td></tr></table></figure>
+  <a id="more"></a>
+<p>还有就是我们为什么要使用索引?<br><br>这个问题需要辩证的来看,先看下数据在磁盘的存储结构<br><img src="/images/18.png" alt=""><br>首先是使用索引的好处,在不使用索引的时候,假设你执行一条sql语句:<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table where id&#x3D;1</span><br></pre></td></tr></table></figure>
+<p>那么就会把内存页一个一个(或者一次几个)加载到内存,然后在每个内存页里检查每条记录是否符合条件,没有查到就继续找.可想而知速度是很慢的,发生了很多次的磁盘io<br><br>但是如果使用的索引(本质上就类似二分查找),那么页之间关系就不是简单的线性关系,而是一种树形结构,并且是排序二叉树.<br><img src="/images/19.png" alt=""><br>这样查询数据做多的 查询次数就是树的高度(每往下一层就意味着发生一次磁盘io,所以树的高度越矮越好),对于确定了记录所在的页,剩下的查找在内存中,速度非常快,就可以忽略不计了.<br><br>使用索引的另一个好处就是索引本身就对数据进行了排序,在查找的数据如果是需要排序的话,索引会给你排好了,就是查出来的数据就是有序的,cpu就不会再去排序,减少cpu消耗.但是如果不好好写sql的话就会导致在内存的排序,后面优化会讲<br></p>
+<p>使用索引的坏处就是需要时刻维护索引文件,对于查找操作是不用修改索引结构的,但是对于新增,删除操作,就会频繁的修改索引.索引也是存储在磁盘上的.每次插入还要修改索引,时间长了索引数据也会很大.<br><br>索引不是一次就建立好的,要根据实际的业务和日志分析,逐步建立最优的索引.</p>
+<ul>
+<li>普通的二叉排序数树<br><br>首先是二叉的,如果有100w行数据,树的高度差不多20,意味着磁盘io是20,io次数较多;还有就是二叉排序树在有序的情况会变成线性结构,这样高度就近似记录的次数,所以使用它是不合适的.</li>
+<li>普通的平衡二叉树<br><br>解决了二叉排序树退化成线程结构的可能性,但是由于是二叉,树的高度依然大.</li>
+<li>B树<br><br>B树就是平衡n叉树,可以大大减少树的高度.但是为什么最后还是用B+树呢?说明它相比B+树还是有不足,先看下B树(B-树就是B树)结构:<br><img src="/images/20.png" alt=""><br>方便对比看下B+树的结构:<br><img src="/images/21.png" alt=""><br>可以看到B树的任何一个节点都有可能指向数据(有指向数据的指针),这样就造成本来的页就那么大,如果存储了索引之外的东西,就必然导致能存储的索引件减少,高度增加,所以b+树会比b树更矮,相比B+树只有叶子节点存储最终的数据指针,尽管有节点的冗余,但也是相比数据指针少的,而且是为了方便查找,还有就是B+树相比B树查询更加稳定,B+树是lognM,B-树没法算,有可能在第一层,有可能在最后找到; 在遍历和范围查找方面,B树要遍历树,B+树只要找到起点节点后遍历链表就可以<br><br>综上所述,B+树比B树强在:<br><ul>
+<li>能更矮(磁盘IO更少)</li>
+<li>查询性能稳定</li>
+<li>方便遍历和范围查找</li>
+</ul>
+</li>
+<li>hash索引<br><br>用的比较少,主要是范围查找的话比较不方便,又存在hash冲突.</li>
+<li>B+树索引<br>上面介绍完了B+树索引的优点,这里拿数据看一下.<br><br>页大小为16k，叶子阶段存储数据  非叶子节点存储主键+指针  （16KB/ [8+6]B=1170）,假设每行的数据是1Kb（比较大了），每页就能存储16行（叶子节点存储16行），两层的B+数就能存储16*1170行数据 ，三层就2000w了，首页缓存在内存中，所以查询数据最多两次磁盘IO,2000w的数据两次io,所以B+树的查询性能是绝对ok的.那么B+树的每个节点存储的多一点吗?不行,因为内存和磁盘交互每次最代也就nK(n取决于计算机)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">其他关于索引的小的知识点:</span><br><span class="line">1.为什么查询找到的数据是有序的？因为插入存储的时候就是有序的</span><br><span class="line">2.为什么要设置主键自增？不设置的话每页的链表需要调整,自增的话在原来页的基础上增加就可以.</span><br><span class="line">3.为什么建议自增id比较短，不建议uuid，因为页的大小是固定的，使用uuid意味这每页存储的数据少了，页数就多了，目录页多了，树的高度增加，io增加，性能下降;还有就是uuid比较的的是Ascii,不如int快;最重要的就是uuid不是自增的,意味着每次插入的话插入位置不惟一,机会造成节点的分裂,而整形自增的就直接在每页的后面继续添加,不会造成分裂.</span><br><span class="line">4.mysql还会默认把目录页缓存到内存中，进一步加快速度</span><br><span class="line">5.InnoDB存储引擎为什么一定要设置主键? 因为它的索引和数据文件是在一块的,需要依赖主键组织起来.</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>这些情况下适合建立索引:<br><img src="/images/23.png" alt=""><br>对于7,写order by语句的时候尽量按照建立索引字段的顺序,这样就可以避免cpu排序;对于8,group by分组的前会进行排序<br>索引分组也和索引有关系的.<br>不适合建立索引的情况:<br><br>(1)数据量比较少,像几w条mysql还是能撑住的<br><br>(2)经常增删改的表(索引的维护代价比较大)<br><br>(3)数据重复而且平均的字段(比如性别)</p>
+<h5 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h5><p>索引可以分为两类,聚集索引和非聚集索引<br><img src="/images/21.jpeg" alt=""></p>
+<ul>
+<li><p>聚集索引<br><br>聚集索引就是主键索引,索引加在主键上(mysql没有主键也会设置行号来作为主键索引).主键索引如图所示,特点就是找到符合条件的节点也就找到了数据(InnoDB索引文件是和数据放在一块的)</p>
+</li>
+<li><p>非聚集索引<br>如图,通过非聚集索引查到的节点其实是指向数据的主键索引,你还得去根据里面的主键索引的值再到主键索引存储结构中找到对应的数据,就走了两次查询,意味着多一些io,但是主键索引的话一次查询就能找到.<br></p>
+</li>
+<li><p>复合索引<br><br>以上是根据其和数据的联系划分的,如果按照索引个数还可以分为单值索引和复合索引,按照唯一性还可以划分出唯一索引(索引的字段不可以有重复值).<br><img src="/images/43.png" alt=""><br>在第一个索引值相同的时候会按照第二个索引的值排序,索引索引本质上是排序好的数据结构,它使得数据变得相对有序,我们要好好利用索引,可以进行排序的操作,就会在写sql的时候就行一定的优化,后面会介绍.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> 最左匹配原则</span><br><span class="line"> 由于上面符合索引的结构,索引我们在建立索引的时候,可能按照(A,B)两个字段建立的,那么优先对A排序,A一样按照B排序.但是如果你在查询的时候先写B的条件,就会导致查询不走索引,从B的角度看数据,数据是没有顺序的,但是从A的角度,数据就是有序的.就这么简单的原则.</span><br><span class="line">select * from table where A&#x3D;XX 和 Select * from table where A&#x3D;XX and B&#x3D;XX都是可以走索引的</span><br><span class="line">但是 select * from table where B&#x3D;xx and A&#x3D;xx ,select * from table where B&#x3D;xx</span><br><span class="line">就不走索引了,从B的角度数据不是有序的,最左边的字段要用上，是根据建立索引的顺序</span><br></pre></td></tr></table></figure></li>
+<li><p>索引覆盖<br><br>索引覆盖其实是sql优化的一部分.在复合索引的情况下,如果查询的字段集合正好是复合索引的字段集合,那么就像主键索引一样,最后的节点就是数据,就不会在走一遍查询,减少了磁盘io次数.所以在写sql的时候别总写select *, 如果需要的字段正好是复合索引pilau,就只是写查询这几个字段的sql语句.</p>
+</li>
+</ul>
+<h5 id="sql优化"><a href="#sql优化" class="headerlink" title="sql优化"></a>sql优化</h5><p>mysql常见的性能瓶颈:<br><br>(1)CPU:CPU饱和,发生在数据装入内存或者从磁盘装入数据<br><br>(2)IO:磁盘I/O瓶颈发生在装入数据大于内存容量<br><br>(3)服务器硬件性能不行<br></p>
+<ul>
+<li>explain(分析查询语句是否存在性能瓶颈)<br><br>用法 :explain+ sql语句<br><br>主要可以看到:<ul>
+<li>表的读取顺序(多表查询)</li>
+<li>数据读取操作的操作类型</li>
+<li>哪些索引可以使用 并实际被使用</li>
+<li>表之间的引用</li>
+<li>每张表有多少行被sql优化器查询<br><img src="/images/24.png" alt=""></li>
+</ul>
+</li>
+</ul>
+<h5 id="explain参数分析"><a href="#explain参数分析" class="headerlink" title="explain参数分析"></a>explain参数分析</h5><ul>
+<li><p>id<br><br>select 查询的序列号,包含一组数字,标识查询执行select自居或者操作的顺序<br><br>主要有三种情况:<br><br>(1)id相同,执行顺序从上倒下<br><br>(2)id不同:id值越大优先级越高<br>(3)id有相同和不同的(里面有临时表)</p>
+</li>
+<li><p>select_type(读取类型):</p>
+<ul>
+<li>siimple 简单查询,不包括union和子查询</li>
+<li>primary:查询中包含子查询,最外层的查询标记为primary</li>
+<li>subqury 子查询</li>
+<li>derived 延伸表(临时表)</li>
+<li>union :union操作</li>
+<li>union result</li>
+</ul>
+</li>
+<li><p>type<br><br>从最好到最差:system&gt;const&gt;eq_ref&gt;ref&gt;range&gt;index&gt;ALL,到range就不错了</p>
+<ul>
+<li>ALL: 全表扫描,没有走索引</li>
+<li>system: 查询的表只有一条记录</li>
+<li>const:条件是priary key或者unique索引的列,查询的结果只有一条记录.<br><img src="/images/25.png" alt=""></li>
+<li>eq_ref:与其他表关联的时候,用的关联列是主键或者唯一列,匹配的行只有一行<br>先执行扫描o,对于每个o的记录在u表中有唯一的一条记匹配.虽然在o的user_id加了索引,但是还是ALL的原因是索引是从1开始的,索引还是全表,如果修改了条件就会变成range,即永乐索引缩小了范围<br>)<br><img src="/images/27.png" alt=""></li>
+<li>ref :非唯一性扫描,就是普通的索引,返回所有匹配条件的多行(8的记录有两行)<br><img src="/images/26.png" alt=""></li>
+<li>range 只检索给定的范围<br><img src="/images/28.png" alt=""></li>
+<li>index 遍历索引列的所有值,是从索引树中找,是在内存中,ALL是走磁盘<br><img src="/images/29.png" alt=""></li>
+<li>ALL 走磁盘,全表扫描<br><img src="/images/30.png" alt=""></li>
+</ul>
+</li>
+<li><p>possible_keys<br>显示这张表可能用到的索引,一个或多个,但不一定被实际使用</p>
+</li>
+<li><p>key<br>mysql实际使用的索引.如果是NULL 说明建了索引没用到,索引失效(前提是possible_keys有值).如果使用了覆盖索引,那么仅出现在key中</p>
+</li>
+<li><p>key_len 索引的长度,复合索引的长度就大于单值索引长度,虽然说key_len长度约短越好,但是短意味这结果不是很精确.</p>
+</li>
+<li><p>ref :显示索引的那一列被使用,哪些列或者常量被用于查找索引列的值</p>
+</li>
+<li><p>rows: 找到所需要的记录要读取的行数</p>
+</li>
+<li><p>Extra:额外的信息</p>
+<ul>
+<li>using filesort:文件内排序(无法利用索引的顺序)<br><img src="/images/31.png" alt=""><br><img src="/images/32.png" alt=""></li>
+<li>using temporary: 使用临时表保存中间结果,常见于order by和group by<br><img src="/images/33.png" alt=""></li>
+<li>using index:表示select使用到了覆盖索引,避免了访问表的数据行(二次查找),只是遍历的索引树;where的筛选条件是索引的前导列,如果联合索引是(a,b),a就是前导列.</li>
+<li>using where:单独出现标识没有使用到索引.<br></li>
+<li>using index+using where:一块出现标识where筛选使用的不是前导列,比如条件是b.<br><img src="/images/34.png" alt=""></li>
+<li>using join-buffer: 使用了连接缓存<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由于mysql的版本和优化器的存在,上面的一些规则并不是严格遵守,注意就行.比如有时候mysql认为走全表扫描是优于走索引的;只要覆盖索引都出现了,顺序完全不安建立的顺序也是走索引的,这都是优化器优化的结果.</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h6 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h6><ul>
+<li>单表查询<br><ul>
+<li>查询字段没有索引就建立索引</li>
+<li>范围的话索引就会失效(a,b,c)  where a&gt;x and b=x anc c=x 索引失效,可以就(b,c)建立索引</li>
+</ul>
+</li>
+<li>两表查询<br><ul>
+<li>左外连接索引就加载右表上(因为左边都会遍历,以左表为准),反之亦然.(建立了索引,那么就按照索引的要求来写sql语句,这样就不用改索引了,对掉表的位置即可)</li>
+</ul>
+</li>
+<li>小表驱动大表<br><img src="/images/37.png" alt=""></li>
+<li>order by优化 (不要产生filesort)<br><br>order by顺序和复合索引顺序要一致,order by默认升序</li>
+<li>group by<br><br>和order by思路相同,order by是先排序,后分组<br></li>
+</ul>
+<h6 id="索引失效"><a href="#索引失效" class="headerlink" title="索引失效"></a>索引失效</h6><p>索引失效的情况:<br>  <img src="/images/35.png" alt=""><br>  <br><br>  lile % 写右边;  %xx%,走覆盖索引就不会失效<br><br>  <img src="/images/36.png" alt=""><br>  c3索引也用到了,不是用于查找,而是排序.<br></p>
+<ul>
+<li>sql分析的步骤<ul>
+<li>开启慢查询日志,抓取慢的sql</li>
+<li>使用explain+show profile 分析sql</li>
+</ul>
+</li>
+</ul>
+<h5 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h5><p>存储引擎是表级别的,而不是数据库级别的.mysql主要的存储引擎有MYISAM和INNODB,这里主要介绍二者在索引方面的区别<br><br>MYSISM的索引结构:<br><br><img src="/images/40.png" alt=""><br>myisam的数据和索引文件是分开的,在磁盘上就是两个文件.先通过索引文件找到数据在磁盘的位置,再去磁盘文件上查找.所以主键索引文件和非主键索引文件的结构是相同的.这种索引文件就是非聚集索引,而对于INNODB而言,就是不一样的.</p>
+<p> <img src="/images/41.png" alt=""></p>
+<p>Innodb的话,主键索引最终的叶子节点是数据,数据和索引在一块,这也就解释了为什么INNODB一定要有主键,它就是靠它把数据整合起来的;而对于非主键索引,最终的叶子节点存储的是主键的id,然后根据主键id在去索引树里查询数据,多了一次查询.所以对于复合索引查询的时候别动不动selelct * .<br><br><br><a href="https://segmentfault.com/a/1190000015738121" target="_blank" rel="noopener">索引和锁一个整理比较好的博客</a><br><br><a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485185&idx=1&sn=66ef08b4ab6af5757792223a83fc0d45&chksm=cea248caf9d5c1dc72ec8a281ec16aa3ec3e8066dbb252e27362438a26c33fbe842b0e0adf47&token=79317275&lang=zh_CN#rd" target="_blank" rel="noopener">sql语句执行慢的原因</a></p>
 
       
 
@@ -231,7 +350,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
@@ -287,7 +406,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/27/JVM-GC/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/02/mysql%E7%B4%A2%E5%BC%95/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -301,18 +420,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          JVM类加载和执行机制
+          mysql锁和事务
         
       </div>
     </a>
   
   
-    <a href="/2020/05/27/JVM%E5%86%85%E5%AD%98%E5%88%92%E5%88%86%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%BA%94%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM内存划分以及相应的内存问题</div>
+    <a href="/2020/06/02/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">工厂模式</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -339,7 +458,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GC-垃圾回收机制"><span class="toc-number">1.</span> <span class="toc-text">GC (垃圾回收机制)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判断对象已死"><span class="toc-number">1.2.</span> <span class="toc-text">判断对象已死</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-引用计数法"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.引用计数法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-可达性分析"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 可达性分析</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收算法"><span class="toc-number">1.3.</span> <span class="toc-text">垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-标记清除算法"><span class="toc-number">1.3.1.</span> <span class="toc-text">1 标记清除算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-复制算法"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.复制算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-标记整理算法"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.标记整理算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-分代回收算法"><span class="toc-number">1.3.4.</span> <span class="toc-text">4 分代回收算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收器"><span class="toc-number">1.4.</span> <span class="toc-text">垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#serial垃圾回收器"><span class="toc-number">1.4.1.</span> <span class="toc-text">serial垃圾回收器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ParNew"><span class="toc-number">1.4.2.</span> <span class="toc-text">ParNew</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Parallel-Scavenge"><span class="toc-number">1.4.3.</span> <span class="toc-text">Parallel Scavenge</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Serial-Old和-Parallel-Old"><span class="toc-number">1.4.4.</span> <span class="toc-text">Serial Old和 Parallel Old</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CMS收集器-重点"><span class="toc-number">1.4.5.</span> <span class="toc-text">CMS收集器(重点)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#G1-收集器"><span class="toc-number">1.4.6.</span> <span class="toc-text">G1 收集器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#理解GC日志和常见的GC参数"><span class="toc-number">1.4.7.</span> <span class="toc-text">理解GC日志和常见的GC参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内存分配和回收策略"><span class="toc-number">1.4.8.</span> <span class="toc-text">内存分配和回收策略</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟机监控和故障处理工具"><span class="toc-number">1.5.</span> <span class="toc-text">虚拟机监控和故障处理工具</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#索引的数据结构"><span class="toc-number">1.</span> <span class="toc-text">索引的数据结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#索引的分类"><span class="toc-number">2.</span> <span class="toc-text">索引的分类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#sql优化"><span class="toc-number">3.</span> <span class="toc-text">sql优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#explain参数分析"><span class="toc-number">4.</span> <span class="toc-text">explain参数分析</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#索引优化"><span class="toc-number">4.1.</span> <span class="toc-text">索引优化</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#索引失效"><span class="toc-number">4.2.</span> <span class="toc-text">索引失效</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#存储引擎"><span class="toc-number">5.</span> <span class="toc-text">存储引擎</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -353,7 +472,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="JVM-GC" data-title="JVM GC" data-url="http://yoursite.com/2020/05/27/JVM-GC/"></div>
+	<div class="ds-thread" data-thread-key="mysql索引" data-title="数据库索引(mysql)" data-url="http://yoursite.com/2020/06/02/mysql%E7%B4%A2%E5%BC%95/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
