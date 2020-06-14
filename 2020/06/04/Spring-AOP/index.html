@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 设计模式 | Hexo</title>
+  <title>Spring AOP | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
+  <meta name="description" content="前言　　AOP(面向切面编程)并不是新的编程思想,它只是面向对象编程的扩展.核心思想是抽离和业务逻辑无关的代码或者说部分代码可以单独抽离出来作为一个切面类.那抽取来单独做一个类或者方法不就行,为什么还要引入AOP?抽出来的话你还是得在你的业务代码里显示调用,AOP厉害就厉害在它可以不用你在业务里显示调用,你只需要定义一个切面的逻辑类,告诉它执行什么方法,在这个方法的前或者后执行,当你调用方法的时候">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring AOP">
+<meta property="og:url" content="http://yoursite.com/2020/06/04/Spring-AOP/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言　　AOP(面向切面编程)并不是新的编程思想,它只是面向对象编程的扩展.核心思想是抽离和业务逻辑无关的代码或者说部分代码可以单独抽离出来作为一个切面类.那抽取来单独做一个类或者方法不就行,为什么还要引入AOP?抽出来的话你还是得在你的业务代码里显示调用,AOP厉害就厉害在它可以不用你在业务里显示调用,你只需要定义一个切面的逻辑类,告诉它执行什么方法,在这个方法的前或者后执行,当你调用方法的时候">
 <meta property="og:locale" content="zh">
+<meta property="og:image" content="http://yoursite.com/images/21.jpg">
+<meta property="article:published_time" content="2020-06-04T13:51:50.000Z">
+<meta property="article:modified_time" content="2020-06-14T16:37:44.538Z">
 <meta property="article:author" content="CodeXi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/21.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,98 +156,238 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Spring-AOP" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/02/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-06-02T02:32:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-02</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/02/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">工厂模式</a>
+    <h1 class="article-title" itemprop="name">
+      Spring AOP
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/02/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-06-02T02:08:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-02</time>
+        
+        <a href="/2020/06/04/Spring-AOP/" class="archive-article-date">
+  	<time datetime="2020-06-04T13:51:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-04</time>
 </a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　AOP(面向切面编程)并不是新的编程思想,它只是面向对象编程的扩展.核心思想是抽离和业务逻辑无关的代码或者说部分代码可以单独抽离出来作为一个切面类.那抽取来单独做一个类或者方法不就行,为什么还要引入AOP?抽出来的话你还是得在你的业务代码里显示调用,AOP厉害就厉害在它可以不用你在业务里显示调用,你只需要定义一个切面的逻辑类,告诉它执行什么方法,在这个方法的前或者后执行,当你调用方法的时候就会把逻辑类里的代码绑定进来.<br><br>　　说了这么多,其实就是代理模式中的动态代理.在你调用方法的时候,会生成代理类,并把切面逻辑织入到代理类.Spring的事务,Mybatis的Mapper接口编程以及RPC通信的底层都是用的AOP(动态代理)的思想,把最难或者反复的代码帮你实现了,使得业务实现变得简洁.<br></p>
+<h5 id="AOP中的术语"><a href="#AOP中的术语" class="headerlink" title="AOP中的术语"></a>AOP中的术语</h5><ul>
+<li><p>连接点<br><br>连接点说白了就是对象的每一个方法,当你调用哪一个方法的时候,这个方法就是连接点</p>
+</li>
+<li><p>切点<br><br>切点是用来选择连接点的.用户调用哪些方法的时候会被拦截,你希望执行哪些方法的时候需要AOP帮你做点什么.会定义一个切点的表达式来选择连接点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">execution(* *.find*(..))  &#x2F;&#x2F;用于选择find方法开头的方法(连接点)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通知(Advice)<br><br>通过切点选好了哪些方法会被拦截.通知就是具体的逻辑,你要在这些方法之前(beforeAdice)还是之后(凡Advice)或者出现异常等后执行AOP帮你执行的代码.</p>
+</li>
+<li><p>切面<br><br>前面所说的通知和切点现在还是分开的,切面就是切点+通知(逻辑代码).切点解决了 where 问题，通知解决了 when 和 how 问题。切面把两者整合起来，就可以解决 对什么方法（where）在何时（when - 前置还是后置，或者环绕）执行什么样的横切逻辑（how）的三连发问题在真正使用过程我们会定义一个切面类,里面的方法都是这样的,以注解方式来讲<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@BeforeAdvice(execution(* *.find*(..)))</span><br><span class="line">public void beforeMethod()&#123;</span><br><span class="line">  ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>织入<br><br>现在切面,切点,通知和连接点都有了,最关键的是如何把切面逻辑插入到方法的前或者后执行呢?织入就是在切点的引导下将切面逻辑(方法)插入到用户正在执行方法的过程.</p>
+</li>
+</ul>
+<h5 id="核心实现"><a href="#核心实现" class="headerlink" title="核心实现"></a>核心实现</h5><p>AOP是这样实现植入的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　通过实现后置处理器 BeanPostProcessor 接口。该接口是 Spring 提供的一个拓展接口，通过实现该接口，用户可在 bean 初始化前后做一些自定义操作。那 Spring 是在何时进行织入操作的呢？答案是在 bean 初始化完成后，即 bean 执行完初始化方法（init-method）后然后执行后置处理方法的时候.</span><br><span class="line">(1)spring会扫描所有实现后置处理器的类(包含AOP核心类),调用它们实现的后置处理方法,在这些方法里,AOP核心类就会得到所有的切面类(通知+切点)[因为它同时实现了Aware接口,会把BeanFactory引用注入,也就获得了整个容器的信息],通过切点表达式确认该类是否需要生成代理,如果需要,就会为对象生成代理类,并且把通知逻辑植入到代理类里,返回代理对象.</span><br><span class="line">(2)当用户调用相应方法的时候,就会执行注入的通知的代码.</span><br></pre></td></tr></table></figure>
+<p>这两步对应的主要代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AspectJAwareAdvisorAutoProxyCreator</span> <span class="keyword">implements</span> <span class="title">BeanPostProcessor</span>, <span class="title">BeanFactoryAware</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> XmlBeanFactory xmlBeanFactory;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 1.  从 BeanFactory 查找 AspectJExpressionPointcutAdvisor类型的对象(切面类)</span></span><br><span class="line">        List&lt;AspectJExpressionPointcutAdvisor&gt; advisors =</span><br><span class="line">                xmlBeanFactory.getBeansForType(AspectJExpressionPointcutAdvisor<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="keyword">for</span> (AspectJExpressionPointcutAdvisor advisor : advisors) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2. 使用 Pointcut 对象匹配当前 bean 对象</span></span><br><span class="line">            <span class="keyword">if</span> (advisor.getPointcut().getClassFilter().matchers(bean.getClass())) &#123;</span><br><span class="line">                ProxyFactory advisedSupport = <span class="keyword">new</span> ProxyFactory();</span><br><span class="line">                <span class="comment">//注入通知和切点</span></span><br><span class="line">                advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());</span><br><span class="line">                advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());</span><br><span class="line">                TargetSource targetSource = <span class="keyword">new</span> TargetSource(bean, bean.getClass(), bean.getClass().getInterfaces());</span><br><span class="line">                advisedSupport.setTargetSource(targetSource);</span><br><span class="line">                <span class="comment">// 3. 生成代理对象，并返回</span></span><br><span class="line">                <span class="keyword">return</span> advisedSupport.getProxy();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 2. 匹配失败，返回 bean</span></span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代理类的逻辑:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class JdkDynamicAopProxy extends AbstractAopProxy implements InvocationHandler &#123;</span><br><span class="line"></span><br><span class="line">    public JdkDynamicAopProxy(AdvisedSupport advised) &#123;</span><br><span class="line">        super(advised);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 为目标 bean 生成代理对象</span><br><span class="line">     *</span><br><span class="line">     * @return bean 的代理对象</span><br><span class="line">     *&#x2F;</span><br><span class="line">    @Override</span><br><span class="line">    public Object getProxy() &#123;</span><br><span class="line">        return Proxy.newProxyInstance(getClass().getClassLoader(), advised.getTargetSource().getInterfaces(), this);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * InvocationHandler 接口中的 invoke 方法具体实现，封装了具体的代理逻辑</span><br><span class="line">     *&#x2F;</span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        MethodMatcher methodMatcher &#x3D; advised.getMethodMatcher();</span><br><span class="line">        &#x2F;&#x2F; 使用方法匹配器 methodMatcher 测试 bean 中原始方法 method 是否符合匹配规则</span><br><span class="line">        if (methodMatcher !&#x3D; null &amp;&amp; methodMatcher.matchers(method, advised.getTargetSource().getTargetClass())) &#123;</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 获取 Advice MethodInterceptor 的父接口继承了 Advice</span><br><span class="line">            MethodInterceptor methodInterceptor &#x3D; advised.getMethodInterceptor();</span><br><span class="line">            &#x2F;&#x2F; 将 bean 的原始 method 封装成 MethodInvocation 实现类对象，</span><br><span class="line">            &#x2F;&#x2F; 将生成的对象传给 Adivce 实现类对象，执行通知逻辑</span><br><span class="line">            return methodInterceptor.invoke(</span><br><span class="line">                    new ReflectiveMethodInvocation(advised.getTargetSource().getTarget(), method, args));</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            &#x2F;&#x2F; 当前 method 不符合匹配规则，直接调用 bean 中的原始 method</span><br><span class="line">            return method.invoke(advised.getTargetSource().getTarget(), args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这两部分代码就是实现AOP的核心代码.当然,Spring AOP的不仅仅是jdk动态代理,jdk动态代理是实现接口的了类才会使用它创建代理对象,对于没有实现接口的类,会使用CGLIB动态代理.<br><br>对于里面切面表达式如何判断就不需要理解了,无非是字符串解析.<br></p>
+<h5 id="切面逻辑的执行"><a href="#切面逻辑的执行" class="headerlink" title="切面逻辑的执行"></a>切面逻辑的执行</h5><p>现在切面逻辑已经插入到方法的前后,那他是怎么执行的呢?。当目标方法被多个通知匹配到时，Spring 通过引入拦截器(拦截器就是之前的通知,通知实现拦截器的接口即可)链来保证每个通知的正常执行。<br></p>
+<p><img src="/images/21.jpg" alt=""></p>
+<h5 id="自己实现AOP思路"><a href="#自己实现AOP思路" class="headerlink" title="自己实现AOP思路"></a>自己实现AOP思路</h5><p>如果自己实现一个简单的AOP的话<br><br>(1)如果不结合IOC结合的话,那就是动态代理的代码<br>(2)如果和IOC结合但是需要手动配置切面逻辑的植入的话(就是在动态代理类手动编写通知),就把之前简单的IOC代码加上就可以<br><br>(3)复杂的IOC结合,就看下面top-spring的代码就行</p>
+<h5 id="AOP在spring中的使用"><a href="#AOP在spring中的使用" class="headerlink" title="AOP在spring中的使用"></a>AOP在spring中的使用</h5><p>aop在spring中主要有基于xml和基于注解的配置方式,首先引入依赖(基于springboot)<br></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>基于注解的配置方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;切面类(注解的方式完成切点表达式和通知的注入)</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">@Aspect</span><br><span class="line">@Order(1)</span><br><span class="line">public class LogerAspect &#123;</span><br><span class="line"></span><br><span class="line">    @Pointcut(&quot;execution(* com.example.springdemo.controller.*.*(..))&quot;)</span><br><span class="line">    public void pointcut()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;前置通知</span><br><span class="line">    @Before(&quot;pointcut()&quot;)</span><br><span class="line">    public void before()&#123;</span><br><span class="line">        System.out.println(&quot;before----------&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;后置通知</span><br><span class="line">    @After(&quot;pointcut()&quot;)</span><br><span class="line">    public void after(JoinPoint joinPoint)&#123;</span><br><span class="line">        System.out.println(&quot;after-------------&quot;+joinPoint.getSignature().getName());</span><br><span class="line">    &#125;</span><br><span class="line">   &#x2F;&#x2F;返回通知</span><br><span class="line">    @AfterReturning(&quot;pointcut()&quot;)</span><br><span class="line">    public void  afterreturn()&#123;</span><br><span class="line">        System.out.println(&quot;after return&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @AfterThrowing(&quot;pointcut()&quot;)</span><br><span class="line">    public void  afterThrowing()&#123;</span><br><span class="line">        System.out.println(&quot;after throw&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基于xml的方法</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;切面类(没有任何配置,配置放在xml里)</span><br><span class="line">public class LogerAspect2 &#123;</span><br><span class="line"></span><br><span class="line">   public void before2() &#123;</span><br><span class="line">       System.out.println(&quot;before2&quot;);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public void after2()&#123;</span><br><span class="line">       System.out.println(&quot;after2&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/aop/spring-aop.xsd"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--目标对象 孩子类(controller使用springbbot自动注入,这里就不用再注入了)--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;bean id="indexController" class="com.example.springdemo.controller.IndexController"/&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--切面类--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"logerAspect2"</span> <span class="attr">class</span>=<span class="string">"com.example.springdemo.aop.LogerAspect2"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--面向切面编程--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--定义切面--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"logerAspect2"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--定义切点--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">"action"</span> <span class="attr">expression</span>=<span class="string">"execution(* com.example.springdemo.controller.*.*(..))"</span>/&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 声明前置通知 (在切点方法被执行前调用)--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">aop:before</span> <span class="attr">method</span>=<span class="string">"before2"</span> <span class="attr">pointcut-ref</span>=<span class="string">"action"</span>/&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 声明后置通知 (在切点方法被执行后调用)--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">aop:after</span> <span class="attr">method</span>=<span class="string">"after2"</span> <span class="attr">pointcut-ref</span>=<span class="string">"action"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当然可以使用通知做很多事情,比如还可以获取参数列表,把返回值返回,指令拦截异常等等,治理只是介绍aop的简单使用.<br><br>ps:springboot环境如果想指定加载xml的文件,使用@ImportResource(value = “xx.xml”)加载主启动类上就可以.不过现在都是avaConfig的方式(@Configuratin+@Bean)完成可xml相同的功能,就基本永不到xml了.</p>
+<h5 id="Spring事务"><a href="#Spring事务" class="headerlink" title="Spring事务"></a>Spring事务</h5><p> spring事务是AOP的应用之一.可以采用基于注解和基于xml的配置方式,大致和上图相似.一般我们都使用基于注解的方式,只需要在指定方法上添加@Transactional注解就可以实现方法中的操作放在一个事务里面.spring的事务依赖于底层数据库的事务隔离级别,当然这个注解可以配置一些参数,比如指定异常回滚,超时设置等等,大呢该具体使用在详看就可以.<br><br> 另一个比较重要的知识点是spring事务的传播级别,我只记住最重要的两个Require和Requied_new.前者是在事务代码里,如果调用的方法又是被@Transactional修饰,那么它不会创建新的事务;后者会新创建一个事务.<br> 如果整个事务操作一个出现异常,即使成功的操作也会被回滚,但是如果新创建的事务就不会收到影响到.</p>
+<p>参考链接:<br><br><a href="http://www.tianxiaobo.com/2018/06/17/Spring-AOP-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%AF%BC%E8%AF%BB/" target="_blank" rel="noopener">Spring AOP 源码分析系列文章导读</a><br><br>小型的spring实现,主要是实现了AOP和IOC并且把二者结合起来:<br><br><a href="https://github.com/code4wt/toy-spring" target="_blank" rel="noopener">top-spring github源码</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/02/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">代理模式</a>
-    </h1>
-  
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-          
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/04/Spring-AOP/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/06/04/Spring-IOC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Spring IOC
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mysql锁和事务</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#AOP中的术语"><span class="toc-number">1.1.</span> <span class="toc-text">AOP中的术语</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#核心实现"><span class="toc-number">1.2.</span> <span class="toc-text">核心实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#切面逻辑的执行"><span class="toc-number">1.3.</span> <span class="toc-text">切面逻辑的执行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自己实现AOP思路"><span class="toc-number">1.4.</span> <span class="toc-text">自己实现AOP思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AOP在spring中的使用"><span class="toc-number">1.5.</span> <span class="toc-text">AOP在spring中的使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring事务"><span class="toc-number">1.6.</span> <span class="toc-text">Spring事务</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Spring-AOP" data-title="Spring AOP" data-url="http://yoursite.com/2020/06/04/Spring-AOP/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -264,9 +410,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

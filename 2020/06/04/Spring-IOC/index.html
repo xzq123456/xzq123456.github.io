@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 设计模式 | Hexo</title>
+  <title>Spring IOC | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
+  <meta name="description" content="前言  　　IOC(控制反转)是Spring最重要的两个特性之一,剩下的AOP下篇再写.IOC主要解决的就是创建对象的问题.以往创建对象都是new对象.你可能觉得这样也没什么不方便.可以当你的对象属性比较多,里面还依赖其他对象的时候,你就需要先创建其他对象然后set到该对象里.如果有了IOC,你就可以把一些默认对象(比如mybatis相关类配置)和它的属性以及依赖都定义到xml里,spring在加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring IOC">
+<meta property="og:url" content="http://yoursite.com/2020/06/04/Spring-IOC/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言  　　IOC(控制反转)是Spring最重要的两个特性之一,剩下的AOP下篇再写.IOC主要解决的就是创建对象的问题.以往创建对象都是new对象.你可能觉得这样也没什么不方便.可以当你的对象属性比较多,里面还依赖其他对象的时候,你就需要先创建其他对象然后set到该对象里.如果有了IOC,你就可以把一些默认对象(比如mybatis相关类配置)和它的属性以及依赖都定义到xml里,spring在加">
 <meta property="og:locale" content="zh">
+<meta property="og:image" content="http://yoursite.com/images/677.png">
+<meta property="og:image" content="http://yoursite.com/images/66.png">
+<meta property="og:image" content="http://yoursite.com/images/19.jpg">
+<meta property="og:image" content="http://yoursite.com/images/67.png">
+<meta property="og:image" content="http://yoursite.com/images/20.jpg">
+<meta property="article:published_time" content="2020-06-04T13:52:00.000Z">
+<meta property="article:modified_time" content="2020-06-14T07:20:42.495Z">
 <meta property="article:author" content="CodeXi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/677.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,98 +160,250 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Spring-IOC" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/02/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-06-02T02:32:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-02</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/02/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">工厂模式</a>
+    <h1 class="article-title" itemprop="name">
+      Spring IOC
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/02/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-06-02T02:08:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-02</time>
+        
+        <a href="/2020/06/04/Spring-IOC/" class="archive-article-date">
+  	<time datetime="2020-06-04T13:52:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-04</time>
 </a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  　　IOC(控制反转)是Spring最重要的两个特性之一,剩下的AOP下篇再写.IOC主要解决的就是创建对象的问题.以往创建对象都是new对象.你可能觉得这样也没什么不方便.可以当你的对象属性比较多,里面还依赖其他对象的时候,你就需要先创建其他对象然后set到该对象里.如果有了IOC,你就可以把一些默认对象(比如mybatis相关类配置)和它的属性以及依赖都定义到xml里,spring在加载的时候就会读取配置文件并且为你生成对象放到容器里面管理,就不需要你在工程里自己生成.当你在工程中需要引入的时候,就通过getBean(“类名”)或者注解的方式就完成类的创建.<br><br>　　原来由你自己手动创建,现在变成spring给你创建.对象创建由你变成了程序自动创建,这就是控制反转.DI(依赖注入)是实现IOC的方式,对象所依赖的对象也会创建并且与对象联系起来.</p>
+<h5 id="简单的IOC思路"><a href="#简单的IOC思路" class="headerlink" title="简单的IOC思路"></a>简单的IOC思路</h5><p>　　如果想自己手动实现一个简单的IOC的话.主要思路:</p>
+<ul>
+<li>创建配置文件(如xml格式),把类相关定义和默认属性定义好.</li>
+<li>读取配置文件类. 读取配置文件,对读到的类创建它并且把它的属性设置到类里(通过反射).然后保存在一个Map里.key是类名,value是对象引用.来模拟spring的容器.</li>
+<li>测试方法 读取xml,通过getBean的方式(工厂方法)创建对象.</li>
+</ul>
+<h5 id="Spring-IOC的过程"><a href="#Spring-IOC的过程" class="headerlink" title="Spring IOC的过程"></a>Spring IOC的过程</h5><p>  当然spring的源码不会这么简单,但是大体思路和上面差不是很多.不过spring考虑的东西很多:比如对象的生命周期,循环依赖,后置处理器等.<br>  那Bean的存储数据结构是怎么样的?大致是下面的几个主要对象,<br>   <img src="/images/677.png" alt=""><br>   BeanFactory本身不会去解析xml文件,有专门解析xml类的类去解析,然后把结果存储在上面的几个对象里.此时只是存储对象创建的基本信息,并没有创建对象.<br><br>   当这些信息收集完毕后,对于实现BeanPostProcessor接口的类,Spring会首先加载它们,这里涉及AOP的思想,AOP本质是动态代理,这些实现后置处理接口的类是用于实现切面逻辑的,所以要先于普通对象被创建(要不怎么实现切面功能,又没有显示定义在类的属性里)<br>  <br><br>  下图是spring Bean的生命周期图(实例化过程),后面会围绕它对里面的每一部分进行单独讲解.<br><br>  <img src="/images/66.png" alt=""></p>
+<ul>
+<li><p>实例化对象(空对象,没有属性).利用反射 class.forName(“”).newInstance()</p>
+</li>
+<li><p>设置对象属性</p>
+</li>
+<li><p>检查实现Aware接口(为了获得容器的所有类信息,注入BeanFactory引用)和BeanPostProcessor接口(切面类创建).</p>
+</li>
+<li><p>前置处理,对象创建前需要做的</p>
+</li>
+<li><p>检查实现 initializingBean接口(实现它就要实现它的接口方法 afterPropertiesSe),可以在Bean实例化前做一些事情</p>
+</li>
+<li><p>init-method自己定义的方法</p>
+</li>
+<li><p>后置处理,比如Aop切面类的织入就是在后置处理阶段</p>
+</li>
+<li><p>使用 然后destory掉(自己也可以定义destrory方法)<br></p>
+<p>大致的过程就是这样的.在详细介绍每一部分前,还需要知晓一些spring的特性:<br></p>
+</li>
+</ul>
+<p>   1.alias 别名,给Bean起一个别名,在注解开发的时候,就是@Alias注解,默认是类名首字母小写<br><br>   2.autoware 并不是注解的@Autowire, autowire属性主要是在类的依赖(ref)比较多的情况下,自动给你完成依赖注入,主要有ByName和ByType两种,就少了很多自己手动指定的工作<br><br>   3.FactoryBean  能够创建Bean的Bean,本质还是一个Bean<br><br>   4.factory-method   工厂方法创建Bean<br><br>   5.depend-on 如果不是直接关联的依赖,加上它可以把这个依赖先初始化.<br><br>   6.BeanPostProcessor 实现切面逻辑类需要继承的接口,AOP实现的关键<br><br>   7.<em>Aware接口,获取运行时期容器或者Bean的相关信息.也是实现AOP的关键.AOP的关键类会实现BeanPostProcessor和</em>Aware的接口,前者用于提前初始化自己,后者会获取容器信息,初始化相关类(切面类)并且在被代理类调用相关方法的时候根据切面表达式判断是否要注入切面逻辑,更具体会单独在AOP中写.</p>
+<h6 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h6><ul>
+<li><p>对别名和&amp;开头的BeanName进行处理,替换成在Map缓存的beanName</p>
+</li>
+<li><p>尝试从缓存中获取Bean.<br><br>  这里就涉及到循环依赖的问题,<br><br>  <img src="/images/19.jpg" alt=""><br>  那Spring是如何解决循环依赖问题的?<br><br>  答案是使用多个map来缓存不同阶段的Bean实例.<br>  <img src="/images/67.png" alt=""></p>
+<p>  在创建A的过程中发现A依赖B,然后去初始化B.初始化B发现B依赖A,首先B会去singletonObject这个缓存里去找A,因为A还没有完全初始化好,发现没有的话就到earlySingletonObject里去找BeanA的早期引用,此时也没有,就只能到singletonFatories找到创建BeanA的工厂,从里面找到BeanA的引用,(factory.getObject).找到后就把B的早期引用放到earlySingletonObject里.并且删除对应的工厂类,这样B就完成初始化了.A也就能继续完成初始化了.<br><br>  对象的早期引用和对象最终完成实例的引用是一样的,只不过在没有完全实例化的时候在singletonObjects缓存里是没有的,里面没有只能说明对象还没有创建或者正在创建之中.<br><br>大致过程如下图:<br><img src="/images/20.jpg" alt=""></p>
+</li>
+<li><p>创建原始的Bean对象<br><br>获取Bean的前提是创建Bean.如果在各个缓存中没有命中,就会创建原始的Bean.原始的Bean的意思就是没有任何赋值的Bean.调用反射的方式创建一个原始的对象.当然,具体的过程肯定很复杂,我们就不必深究了.思路很重要.</p>
+</li>
+<li><p>为对象填充属性<br><br>填充属性还是使用反射将get/set方法或者构造器获取的属性值填充到对应的属性当中去.复杂的地方比如如何实现autowire自动依赖注入以及传入值的属性转换等,太复杂.引用的博客链接在文末.</p>
+</li>
+<li><p>检查Aware接口<br><br>并不是每一个类都实现了该类接口,若实现，则向 bean 中注入相应的对象.这类接口主要是在AOP关键类才会用到.会在AOP篇介绍.</p>
+</li>
+<li><p>前置处理器   对象创建前做的一些,具体还不知道具体干啥</p>
+</li>
+<li><p>initializeBean 和init-method</p>
+<ul>
+<li>1 若 bean 实现了 InitializingBean 接口，则调用 afterPropertiesSet 方法</li>
+<li>2 若用户配置了 bean 的 init-method 属性，则调用用户在配置中指定的方法<br></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>剩余的工作<br><br>后置处理会在AOP讲,剩下的销毁和自定义销毁用到估计也不多,就没仔细看.<br></li>
+</ul>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>　　我所了解到的IOC就到这些,IOC并不是有多先进,只是它的理念是很好的,由程序来帮我们来生成对象,自己在哪里用到直接取就可以.最核心的就是反射的思想.<br><br>  <a href="http://www.tianxiaobo.com/2018/05/30/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%AF%BC%E8%AF%BB/" target="_blank" rel="noopener">Spring IOC 容器源码分析系列文章导读</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/02/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">代理模式</a>
-    </h1>
-  
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-          
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/04/Spring-IOC/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/06/04/mybatis%E5%BA%95%E5%B1%82/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          mybatis和mybatis-plus
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2020/06/04/Spring-AOP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring AOP</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#简单的IOC思路"><span class="toc-number">1.1.</span> <span class="toc-text">简单的IOC思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring-IOC的过程"><span class="toc-number">1.2.</span> <span class="toc-text">Spring IOC的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#生命周期"><span class="toc-number">1.2.1.</span> <span class="toc-text">生命周期</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#总结"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Spring-IOC" data-title="Spring IOC" data-url="http://yoursite.com/2020/06/04/Spring-IOC/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -264,9 +426,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
