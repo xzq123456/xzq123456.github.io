@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言　　Mybatis是作为持久层开发的ORM(对象关系映射)框架.其实它只能算半ORM框架,因为我们需要自己编写SQL语句,而hibernate才是真正的ORM框架,sql语句都是由系统帮你写好(自己也没用过,只是看资料).所以对于一些简单的OA系统,可以大大简化开发,但这也是弊端所在:现在的系统都很大,sql语句需要不断的优化,mybatis这种手写sql的模式程序员就可以对SQL进行优化,所">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-06-04T14:38:41.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:02:50.862Z">
+<meta property="article:modified_time" content="2020-06-15T13:08:47.290Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="mybatis">
 <meta name="twitter:card" content="summary">
@@ -176,6 +176,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　Mybatis是作为持久层开发的ORM(对象关系映射)框架.其实它只能算半ORM框架,因为我们需要自己编写SQL语句,而hibernate才是真正的ORM框架,sql语句都是由系统帮你写好(自己也没用过,只是看资料).所以对于一些简单的OA系统,可以大大简化开发,但这也是弊端所在:现在的系统都很大,sql语句需要不断的优化,mybatis这种手写sql的模式程序员就可以对SQL进行优化,所以每一项技术都有它对应的应用场景,没有谁绝对比谁强.持久层另一个就是JPA,也比较好用,自己暂时还没有用过.<br><br>　　还想说的就是,大部分程序员都是做着CRUD的工作,有研究什么源码的时间还不如好好写写SQL,基础都写不好,后面估计做东西都很难受</p>
+  <a id="more"></a>
 <h4 id="Mybatis"><a href="#Mybatis" class="headerlink" title="Mybatis"></a>Mybatis</h4><p>  Mybatis有两种开发模式,一个是基于xml文件的,就是把所有的sql都写在xml文档里,不存在接口定义的,这中方式基本开发也不用;另一种就是开发中使用的基于Mapper接口的开发模式,在Mapper中定义接口,然后具体实现在xml或者注解的方式完成.</p>
 <ul>
 <li><p>基于Mapper的开发模式</p>

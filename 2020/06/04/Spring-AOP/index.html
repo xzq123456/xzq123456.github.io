@@ -17,7 +17,7 @@
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/images/21.jpg">
 <meta property="article:published_time" content="2020-06-04T13:51:50.000Z">
-<meta property="article:modified_time" content="2020-06-14T16:41:09.938Z">
+<meta property="article:modified_time" content="2020-06-15T13:09:23.958Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="spring">
 <meta name="twitter:card" content="summary">
@@ -177,7 +177,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　AOP(面向切面编程)并不是新的编程思想,它只是面向对象编程的扩展.核心思想是抽离和业务逻辑无关的代码或者说部分代码可以单独抽离出来作为一个切面类.那抽取来单独做一个类或者方法不就行,为什么还要引入AOP?抽出来的话你还是得在你的业务代码里显示调用,AOP厉害就厉害在它可以不用你在业务里显示调用,你只需要定义一个切面的逻辑类,告诉它执行什么方法,在这个方法的前或者后执行,当你调用方法的时候就会把逻辑类里的代码绑定进来.<br><br>　　说了这么多,其实就是代理模式中的动态代理.在你调用方法的时候,会生成代理类,并把切面逻辑织入到代理类.Spring的事务,Mybatis的Mapper接口编程以及RPC通信的底层都是用的AOP(动态代理)的思想,把最难或者反复的代码帮你实现了,使得业务实现变得简洁.<br></p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　AOP(面向切面编程)并不是新的编程思想,它只是面向对象编程的扩展.核心思想是抽离和业务逻辑无关的代码或者说部分代码可以单独抽离出来作为一个切面类.那抽取来单独做一个类或者方法不就行,为什么还要引入AOP?抽出来的话你还是得在你的业务代码里显示调用,AOP厉害就厉害在它可以不用你在业务里显示调用,你只需要定义一个切面的逻辑类,告诉它执行什么方法,在这个方法的前或者后执行,当你调用方法的时候就会把逻辑类里的代码绑定进来.<br><br>　　说了这么多,其实就是代理模式中的动态代理.在你调用方法的时候,会生成代理类,并把切面逻辑织入到代理类.Spring的事务,Mybatis的Mapper接口编程以及RPC通信的底层都是用的AOP(动态代理)的思想,把最难或者反复的代码帮你实现了,使得业务实现变得简洁.<br><br>  <a id="more"></a></p>
 <h5 id="AOP中的术语"><a href="#AOP中的术语" class="headerlink" title="AOP中的术语"></a>AOP中的术语</h5><ul>
 <li><p>连接点<br><br>连接点说白了就是对象的每一个方法,当你调用哪一个方法的时候,这个方法就是连接点</p>
 </li>
