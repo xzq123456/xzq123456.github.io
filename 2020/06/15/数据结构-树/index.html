@@ -8,16 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>数据结构-树(基础) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言　　树是数据结构中的重要知识点,相比较链表相对简单的增删改查操作,树因为有多个分叉,而且涉及到递归算法,所以里面有很多知识点可以挖掘,也是面试问得比较多的一块.且面试中常常以二叉树为主,所以本问主要介绍二叉树的一些基础算法,了解了这些再去刷题也不迟. 二叉树的创建　　首先要有一颗二叉树才能进行后续的操作.二叉树的创建是以递归的形式创建的(不嫌累可以自己写).递归算法在二叉树这部分知识出现的很高">
+  <meta name="description" content="前言　　树是数据结构中的重要知识点,相比较链表相对简单的增删改查操作,树因为有多个分叉,而且涉及到递归算法,所以里面有很多知识点可以挖掘,也是面试问得比较多的一块.且面试中常常以二叉树为主,所以本问主要介绍二叉树的一些基础算法,了解了这些再去刷题也不迟.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构-树(基础)">
 <meta property="og:url" content="http://yoursite.com/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前言　　树是数据结构中的重要知识点,相比较链表相对简单的增删改查操作,树因为有多个分叉,而且涉及到递归算法,所以里面有很多知识点可以挖掘,也是面试问得比较多的一块.且面试中常常以二叉树为主,所以本问主要介绍二叉树的一些基础算法,了解了这些再去刷题也不迟. 二叉树的创建　　首先要有一颗二叉树才能进行后续的操作.二叉树的创建是以递归的形式创建的(不嫌累可以自己写).递归算法在二叉树这部分知识出现的很高">
+<meta property="og:description" content="前言　　树是数据结构中的重要知识点,相比较链表相对简单的增删改查操作,树因为有多个分叉,而且涉及到递归算法,所以里面有很多知识点可以挖掘,也是面试问得比较多的一块.且面试中常常以二叉树为主,所以本问主要介绍二叉树的一些基础算法,了解了这些再去刷题也不迟.">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-06-15T13:32:51.000Z">
-<meta property="article:modified_time" content="2020-06-16T05:12:01.251Z">
+<meta property="article:modified_time" content="2020-06-16T05:19:10.191Z">
 <meta property="article:author" content="CodeXi">
+<meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -175,6 +176,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　树是数据结构中的重要知识点,相比较链表相对简单的增删改查操作,树因为有多个分叉,而且涉及到递归算法,所以里面有很多知识点可以挖掘,也是面试问得比较多的一块.且面试中常常以二叉树为主,所以本问主要介绍二叉树的一些基础算法,了解了这些再去刷题也不迟.<br></p>
+<a id="more"></a>
 <h5 id="二叉树的创建"><a href="#二叉树的创建" class="headerlink" title="二叉树的创建"></a>二叉树的创建</h5><p>　　首先要有一颗二叉树才能进行后续的操作.二叉树的创建是以递归的形式创建的(不嫌累可以自己写).递归算法在二叉树这部分知识出现的很高,如果不是很了解递归,那么很多二叉树的算法会看得有点累.递归的算法是看起来很简单,就几行,但是递归的缺点是占用资源多,运行时间长,所以使用递归写的代码就有优化的空间.<br><br>　　说一下自己理解的递归和回溯的区别:递归就是自己调用自己,是一种写法;回溯是多个路径下尝试的过程,就像二叉树的查找,不再这个分支就回到根然后继续下一个分支的过程,回溯大部分情况下是依赖递归来实现的,所以有时候也可以不使用递归.<br></p>
 <ul>
 <li><p>递归方式创建二叉树</p>
@@ -247,6 +249,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -310,6 +323,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/06/16/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          栈和队列
+        
+      </div>
+    </a>
   
   
     <a href="/2020/06/04/SpringMVC/" id="article-nav-older" class="article-nav-link-wrap">
@@ -505,15 +527,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
               </li>
             
             <div class="clearfix"></div>
