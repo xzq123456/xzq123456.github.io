@@ -152,6 +152,112 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-数据结构-树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/">数据结构-树(基础)</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/" class="archive-article-date">
+  	<time datetime="2020-06-15T13:32:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　树是数据结构中的重要知识点,相比较链表相对简单的增删改查操作,树因为有多个分叉,而且涉及到递归算法,所以里面有很多知识点可以挖掘,也是面试问得比较多的一块.且面试中常常以二叉树为主,所以本问主要介绍二叉树的一些基础算法,了解了这些再去刷题也不迟.<br></p>
+<h5 id="二叉树的创建"><a href="#二叉树的创建" class="headerlink" title="二叉树的创建"></a>二叉树的创建</h5><p>　　首先要有一颗二叉树才能进行后续的操作.二叉树的创建是以递归的形式创建的(不嫌累可以自己写).递归算法在二叉树这部分知识出现的很高,如果不是很了解递归,那么很多二叉树的算法会看得有点累.递归的算法是看起来很简单,就几行,但是递归的缺点是占用资源多,运行时间长,所以使用递归写的代码就有优化的空间.<br><br>　　说一下自己理解的递归和回溯的区别:递归就是自己调用自己,是一种写法;回溯是多个路径下尝试的过程,就像二叉树的查找,不再这个分支就回到根然后继续下一个分支的过程,回溯大部分情况下是依赖递归来实现的,所以有时候也可以不使用递归.<br></p>
+<ul>
+<li><p>递归方式创建二叉树</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  Bitree <span class="title">createTree</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Scanner sc=<span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">    String input=<span class="keyword">null</span>;</span><br><span class="line">    Bitree root=<span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span>(!(input = sc.next()).equals(<span class="string">"#"</span>) )&#123;</span><br><span class="line">        root=<span class="keyword">new</span> Bitree(Integer.parseInt(input));</span><br><span class="line">        root.lchild=createTree();</span><br><span class="line">        root.rchild=createTree();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>递归方式创建排序二叉树(后面在介绍排序二叉树算法的时候会用到)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/二分思路</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitree <span class="title">createSortedTree</span><span class="params">(<span class="keyword">int</span> data[],<span class="keyword">int</span> start,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        Bitree root=<span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(start&lt;=end)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=(start+end)/<span class="number">2</span>;</span><br><span class="line">            root=<span class="keyword">new</span> Bitree(data[mid]);</span><br><span class="line">            root.lchild=createSortedTree(data,start,mid-<span class="number">1</span>);</span><br><span class="line">            root.rchild=createSortedTree(data,mid+<span class="number">1</span>,end);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>  root;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>二叉树还可以使用数组的方式创建,根据中+前,中+后和中+层次的三种方式都可以,前两种方式可以根据数组的范围自己在纸上一画就知道,后面层次这种比较复杂,就在这里不说了.前面两种还是使用递归的方法创建(二叉树还就是离不开递归)<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据先序和中序遍历可以唯一确定一颗二叉树</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  Bitree <span class="title">createTreeByPreAndIn</span><span class="params">(<span class="keyword">int</span> pre[],<span class="keyword">int</span> L1,<span class="keyword">int</span> R1,<span class="keyword">int</span> in[],<span class="keyword">int</span> L2,<span class="keyword">int</span> R2)</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(L1&gt;R1||L2&gt;R2)</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">       Bitree root=<span class="keyword">new</span> Bitree(pre[L1]);</span><br><span class="line">       <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">       <span class="keyword">for</span>(i=L2;i&lt;=R2;i++)&#123;</span><br><span class="line">           <span class="keyword">if</span>(in[i]==pre[L1])&#123;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       root.lchild=createTreeByPreAndIn(pre,L1+<span class="number">1</span>,L1+i-L2,in,L2,i-<span class="number">1</span>);</span><br><span class="line">       root.rchild=createTreeByPreAndIn(pre,L1+i-L2+<span class="number">1</span>,R1,in,i+<span class="number">1</span>,R2);</span><br><span class="line">       <span class="keyword">return</span>  root;</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="comment">//根据中序和后序也可以唯一确定一颗二叉树</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  Bitree <span class="title">createTreeByPostAndIn</span><span class="params">(<span class="keyword">int</span> post[],<span class="keyword">int</span> L1,<span class="keyword">int</span> R1,<span class="keyword">int</span> in[],<span class="keyword">int</span> L2,<span class="keyword">int</span> R2)</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(L1&gt;R1||L2&gt;R2)</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">       Bitree root=<span class="keyword">new</span> Bitree(post[R1]);</span><br><span class="line">       <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">       <span class="keyword">for</span>(i=L2;i&lt;=R2;i++)&#123;</span><br><span class="line">           <span class="keyword">if</span>(in[i]==post[R1])&#123;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       root.lchild=createTreeByPostAndIn(post,L1,L1+i-L2-<span class="number">1</span>,in,L2,i-<span class="number">1</span>);</span><br><span class="line">       root.rchild=createTreeByPostAndIn(post,L1+i-L2,R1-<span class="number">1</span>,in,i+<span class="number">1</span>,R2);</span><br><span class="line">       <span class="keyword">return</span>  root;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h5><p>遍历算法是基础中的基础,树主要有三个前序,中序和后序三种遍历算法,分为递归和非递归的.递归的想必大家都会写,这里就介绍下二叉树的非递归实现.<br></p>
+</li>
+<li><p>前序非递归<br><br>主要的思想是利用一个辅助栈存储二叉树的子节点.利用前序遍历根左右和栈的先进后出的特点,让右孩子节点先入栈,左孩子节点后入栈.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">NonDiguiPre</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       Stack&lt;Bitree&gt; stack=<span class="keyword">new</span> Stack&lt;Bitree&gt;();</span><br><span class="line">       stack.push(root);</span><br><span class="line">       <span class="keyword">while</span> (!stack.isEmpty())&#123;</span><br><span class="line">           Bitree pop = stack.pop();</span><br><span class="line">           System.out.print(pop.data+<span class="string">" "</span>);</span><br><span class="line">           <span class="keyword">if</span>(pop.rchild!=<span class="keyword">null</span>)</span><br><span class="line">               stack.push(pop.rchild);</span><br><span class="line">           <span class="keyword">if</span>(pop.lchild!=<span class="keyword">null</span>)</span><br><span class="line">               stack.push(pop.lchild);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>后序遍历二叉树<br><br>先介绍它主要是利用前序非递归的思想,后续遍历的顺序是左右根.逆后序的顺序是根右左,所以你只要遍历出来根右左的顺序然后再使用栈记录中间的结果,那么栈的输出就是后续遍历结果.想获得根右左只需要把前序遍历右左孩子入栈的顺序一颠倒就行<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/后序非递归  (先得到你逆后续,然后用栈得到后序)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">NondiguiPost</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    Stack&lt;Bitree&gt; stack1=<span class="keyword">new</span> Stack&lt;Bitree&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2=<span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    stack1.push(root);</span><br><span class="line">    <span class="keyword">while</span> (!stack1.isEmpty())&#123;</span><br><span class="line">        Bitree pop = stack1.pop();</span><br><span class="line">        stack2.push(pop.data);</span><br><span class="line">        <span class="keyword">if</span>(pop.lchild!=<span class="keyword">null</span>)</span><br><span class="line">            stack1.push(pop.lchild);</span><br><span class="line">        <span class="keyword">if</span>(pop.rchild!=<span class="keyword">null</span>)</span><br><span class="line">            stack1.push(pop.rchild);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(!stack2.isEmpty())&#123;</span><br><span class="line">        System.out.print(stack2.pop()+<span class="string">" "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>中序遍历二叉树<br><br>主要思想是利用一个辅助栈记录从根到最左孩子之间的路径.<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//中序非递归(辅助栈记录经过经过的节点)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">NondiguiIn</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      Stack&lt;Bitree&gt; stack=<span class="keyword">new</span> Stack&lt;Bitree&gt;();</span><br><span class="line">      Bitree p=root;</span><br><span class="line">      <span class="keyword">while</span> (p!=<span class="keyword">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">          <span class="keyword">while</span> (p!=<span class="keyword">null</span>)&#123;</span><br><span class="line">              stack.push(p);</span><br><span class="line">              p=p.lchild;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">              p = stack.pop();</span><br><span class="line">             System.out.print(p.data+<span class="string">" "</span>);</span><br><span class="line">             p=p.rchild;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.println();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>层次遍历<br><br>层次遍历比较简单,使用的是队列.但是它的思路很重要,层次遍历和广度优先遍历是紧紧相关的,其实再进一步说图的深度和广度遍历很多和树是一样的思想,只不过图没有唯一一个确认的根.<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">cengci</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       Queue&lt;Bitree&gt; queue=<span class="keyword">new</span> LinkedList&lt;Bitree&gt;();</span><br><span class="line">       queue.add(root);</span><br><span class="line">       <span class="keyword">while</span> (!queue.isEmpty())&#123;</span><br><span class="line">           Bitree poll = queue.poll();</span><br><span class="line">           System.out.print(poll.data+<span class="string">" "</span>);</span><br><span class="line">           <span class="keyword">if</span>(poll.lchild!=<span class="keyword">null</span>)</span><br><span class="line">               queue.add(poll.lchild);</span><br><span class="line">           <span class="keyword">if</span>(poll.rchild!=<span class="keyword">null</span>)</span><br><span class="line">               queue.add(poll.rchild);</span><br><span class="line">       &#125;</span><br><span class="line">       System.out.println();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="遍历的扩展知识"><a href="#遍历的扩展知识" class="headerlink" title="遍历的扩展知识"></a>遍历的扩展知识</h5><p>上面介绍了遍历的基础知识,可以在这些遍历上做一些扩展,比如层次遍历.递归.</p>
+</li>
+<li><p>求二叉树的宽度(最宽的那一层有多少节点)<br><br>思路是在层次遍历的时候记录没一层的节点的数目,找到最大值就行<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算树的宽度</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">int</span> <span class="title">width</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      Queue&lt;Bitree&gt; queue=<span class="keyword">new</span> LinkedList&lt;Bitree&gt;();</span><br><span class="line">      queue.add(root);</span><br><span class="line">      <span class="comment">//要遍历的这一层的节点个数</span></span><br><span class="line">      <span class="keyword">int</span> currentsize=<span class="number">0</span>;</span><br><span class="line">      <span class="keyword">int</span> maxwidth=<span class="number">0</span>;</span><br><span class="line">      <span class="keyword">while</span> (!queue.isEmpty())&#123;</span><br><span class="line">          currentsize=queue.size();</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;currentsize;i++)&#123;</span><br><span class="line">              Bitree poll = queue.poll();</span><br><span class="line">              <span class="keyword">if</span>(poll.lchild!=<span class="keyword">null</span>)</span><br><span class="line">                  queue.add(poll.lchild);</span><br><span class="line">              <span class="keyword">if</span>(poll.rchild!=<span class="keyword">null</span>)</span><br><span class="line">                  queue.add(poll.rchild);</span><br><span class="line">          &#125;</span><br><span class="line">          maxwidth=Math.max(currentsize,queue.size());</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> maxwidth;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>关于这个求宽度的算法,你就可以解决下面的几个题目,做到举一反三<br></p>
+<ul>
+<li>层次输出二叉树的节点(这个算法在poll出节点输出就可以,还得在for后加一个换行)</li>
+<li>之子型打印二叉树(根据层次的奇偶使用栈或者list来存储元素)</li>
+</ul>
+</li>
+<li><p>递归算法的扩展(基础)</p>
+<ul>
+<li>判断两颗树是否相等(结构相同,对应位置的节点值也一样)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">boolean</span> <span class="title">isSim</span><span class="params">(Bitree root1,Bitree root2)</span></span>&#123;</span><br><span class="line">     <span class="keyword">if</span>(root1==<span class="keyword">null</span>&amp;&amp; root2==<span class="keyword">null</span>)&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">if</span>(root1==<span class="keyword">null</span>&amp;&amp; root2!=<span class="keyword">null</span>)&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">if</span>(root1!=<span class="keyword">null</span>&amp;&amp; root2==<span class="keyword">null</span>)&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">if</span>(root1.data!=root2.data)</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">         <span class="keyword">return</span> isSim(root1.lchild,root2.lchild)&amp;&amp;isSim(root1.rchild,root2.rchild);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+<li>二叉树的深度<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">int</span> <span class="title">depth</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">int</span> left=depth(root.lchild);</span><br><span class="line">      <span class="keyword">int</span> right=depth(root.rchild);</span><br><span class="line">      <span class="keyword">return</span>  left&gt;=right?(left+<span class="number">1</span>):(right+<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+还有很多算法就是在递归遍历算法基础上改的,比如各种的查找算法(无非是加了查找条件,框架没变).还有很多,后面会继续加</li>
+</ul>
+</li>
+</ul>
+<h5 id="排序二叉树"><a href="#排序二叉树" class="headerlink" title="排序二叉树"></a>排序二叉树</h5><p>排序二叉树也是很重要的知识,像java集合中的TreeMap,TreeSet底层使用的就是红黑树(排序二叉树的改进).<br>排序二叉树是左边的节点的值都比根小,右边都比根大,不存在相等的节点.最大的特性就是中序遍历遍历它得到的结果是顺序的,这个可以解很多问题<br></p>
+<ul>
+<li>二叉排序树查找某个节点<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//针对二叉排序树</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(Bitree root,<span class="keyword">int</span> key)</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">           <span class="keyword">if</span>(root.data==key)</span><br><span class="line">               <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">           <span class="keyword">else</span> <span class="keyword">if</span>(root.data&lt;key)</span><br><span class="line">               <span class="keyword">return</span> search(root.rchild,key);</span><br><span class="line">           <span class="keyword">else</span></span><br><span class="line">              <span class="keyword">return</span> search(root.lchild,key);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
+<li>判断一棵树是不是排序二叉树(递归思路)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">boolean</span> <span class="title">isSortedBinaryTree</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">if</span>(root.lchild!=<span class="keyword">null</span>&amp;&amp;root.lchild.data&gt;=root.data)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(root.rchild!=<span class="keyword">null</span>&amp;&amp; root.rchild.data&lt;=root.data)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">return</span> isSortedBinaryTree(root.lchild)&amp;&amp;isSortedBinaryTree(root.rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+除了上面的思路,还可以对这颗二叉树进行中序遍历,得到结果保存在数组看是不是有序的(两个指针一遍就行,时间复杂度O(n))<br></li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文主要介绍了二叉树的一些很基本的算法,作为后序学习的基础.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringMVC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -809,71 +915,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JVM类加载和执行机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/">JVM类加载和执行机制</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2020-05-29T02:14:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面已经介绍了虚拟机的内存分布和垃圾回收机制,本节主要介绍class文件的结构,class文件是如何被加载到内存的以及虚拟机执行引擎是如何一步步解释执行代码.<br>
-        
-          <a class="article-more-a" href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/">展开全文 >></a>
         </p>
       
 
