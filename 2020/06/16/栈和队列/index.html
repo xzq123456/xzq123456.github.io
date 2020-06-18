@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言栈和队列是比较特殊的线性结构,栈内元素实现先进后出,队列内元素先进先出.栈不陌生,jvm的栈结构是程序函数调用的基础,函数按照先进后出在帧内进进出,递归调用函数就是栈保存;队列是作为广度优先遍历算法基础,在java中的中间件技术,阻塞队列等都需要队列作为存储数据的数据结构等,所以说队列还是很重要的.">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-06-16T05:47:55.000Z">
-<meta property="article:modified_time" content="2020-06-17T02:45:13.561Z">
+<meta property="article:modified_time" content="2020-06-18T10:11:19.878Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
 <ul>
 <li><p>两个栈实现队列<br><br>主要的思想:利用栈A转村存放数据,入队操作由它完成;栈B做出队操作,只不过出队的时候如果B有数据,就直接出栈模拟出队,如果没有就把栈A所有的数据入栈B,然后出栈模拟出队<br></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TwoStackQueue</span> </span>&#123;</span><br><span class="line">     Stack&lt;Integer&gt; stack1=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">     Stack&lt;Integer&gt; stack2=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">add</span><span class="params">(Integer val)</span></span>&#123;</span><br><span class="line">         stack1.push(val);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> Integer <span class="title">poll</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">         Integer poll;</span><br><span class="line">         <span class="keyword">if</span>(stack2.size()==<span class="number">0</span>)&#123;</span><br><span class="line">             <span class="keyword">if</span>(stack1.size()==<span class="number">0</span>)</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"队列空"</span>);</span><br><span class="line">             <span class="keyword">while</span> (!stack1.isEmpty())</span><br><span class="line">                 stack2.push(stack1.pop());</span><br><span class="line">         &#125;</span><br><span class="line">         poll=stack2.pop();</span><br><span class="line">         <span class="keyword">return</span>   poll;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>最下栈(在栈中加一个求最小值的功能,要求时间复杂度为O(1))<br><br>思路:需要一个辅助栈存储最小值,另一栈存取正常入栈的数据<br><br>入栈:辅助栈空或者其栈顶元素小于入栈元素,入栈元素分别入这两个栈;当栈顶元素大于等于入栈元素时,入栈元素入另外一个栈,辅助栈入它的栈顶元素.<br><br>出栈:两个栈分别出栈<br><br>求最小值:出辅助栈的栈顶元素<br></p>
+<li><p>最小栈(在栈中加一个求最小值的功能,要求时间复杂度为O(1))<br><br>思路:需要一个辅助栈存储最小值,另一栈存取正常入栈的数据<br><br>入栈:辅助栈空或者其栈顶元素小于入栈元素,入栈元素分别入这两个栈;当栈顶元素大于等于入栈元素时,入栈元素入另外一个栈,辅助栈入它的栈顶元素.<br><br>出栈:两个栈分别出栈<br><br>求最小值:出辅助栈的栈顶元素<br></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MinStack</span> </span>&#123;</span><br><span class="line">   Stack&lt;Integer&gt; stack1=<span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">   Stack&lt;Integer&gt; stack2=<span class="keyword">new</span> Stack&lt;&gt;();<span class="comment">//辅助栈</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(Integer data)</span></span>&#123;</span><br><span class="line">        stack1.push(data);</span><br><span class="line">        <span class="keyword">if</span>(stack2.size()==<span class="number">0</span> ||stack2.peek()&gt;=data)&#123;</span><br><span class="line">            stack2.push(data);</span><br><span class="line">        &#125;</span><br><span class="line">       <span class="keyword">else</span> <span class="keyword">if</span> (stack2.peek()&lt;data) &#123;</span><br><span class="line">            stack2.push(stack2.peek());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">pop</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(stack1.size()==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span>  <span class="keyword">new</span> Exception(<span class="string">"栈空"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        stack2.pop();</span><br><span class="line">        <span class="keyword">return</span>  stack1.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">min</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(stack2.size()==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span>  <span class="keyword">new</span> Exception(<span class="string">"栈空"</span>);</span><br><span class="line">        <span class="keyword">return</span> stack2.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>判断出栈顺序时候可以由入栈顺序得到<br><br>ps:有个公式是专门计算由入栈顺序得到出栈顺序的,不过这里是判断<br><br>思路:需要两个辅助栈,栈A存储栈的顺序,栈B存储出栈顺序.刚开始栈A是空的,然后根据栈顶元素和出栈的栈顶元素是否一致,不一致的话就入栈直到相同;此时两个栈分别出栈到栈顶元素不相同,如果两个栈都是空,那出栈顺序是正确的;否则,用一个变量查看此时栈A还能入栈元素否(入栈的顺序元素此时是否全都在栈A里),如果没有且栈A部是空,那就不可能得到出栈顺序.<br><br>画画图就清楚了<br></p>
@@ -510,11 +510,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -522,7 +518,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
