@@ -8,16 +8,23 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Synchronized 与  ReentrantLock | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="前言本文主要介绍java实现线程安全的悲观策略:加锁. 加锁有Synchronized和ReentrantLock方式,它们的使用在之前的线程基础和阻塞队列上已经介绍,本文主要介绍它们之间的不同,也会介绍jdk1.6后对Synchronized的优化.">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Synchronized 与  ReentrantLock">
 <meta property="og:url" content="http://yoursite.com/2020/06/17/Synchronized-%E4%B8%8E-ReentrantLock/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言本文主要介绍java实现线程安全的悲观策略:加锁. 加锁有Synchronized和ReentrantLock方式,它们的使用在之前的线程基础和阻塞队列上已经介绍,本文主要介绍它们之间的不同,也会介绍jdk1.6后对Synchronized的优化.">
 <meta property="og:locale" content="zh">
+<meta property="og:image" content="http://yoursite.com/images/88.png">
+<meta property="og:image" content="http://yoursite.com/images/89.png">
+<meta property="og:image" content="http://yoursite.com/images/90.png">
+<meta property="og:image" content="http://yoursite.com/images/91.png">
 <meta property="article:published_time" content="2020-06-17T14:04:45.000Z">
-<meta property="article:modified_time" content="2020-06-17T14:05:24.990Z">
+<meta property="article:modified_time" content="2020-06-19T14:16:38.551Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="并发与多线程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/88.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -173,7 +180,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文主要介绍java实现线程安全的悲观策略:加锁. 加锁有Synchronized和ReentrantLock方式,它们的使用在之前的线程基础和阻塞队列上已经介绍,本文主要介绍它们之间的不同,也会介绍jdk1.6后对Synchronized的优化.<br></p>
+<a id="more"></a>
+<h5 id="Synchronized"><a href="#Synchronized" class="headerlink" title="Synchronized"></a>Synchronized</h5><p> Syncronized是java的原生锁,被它修饰的代码在jvm编译的时候会在同步代码块形成monitorenter和monitorexit两个字节码指令,这两个指令需要一个reference类型的参数指明要锁的对象.说到这里,不知道大家想没想java是怎么锁对象的,下面的图就可以说明:<br> <img src="/images/88.png" alt=""><br> 在对象的头信息里存有对象的锁信息.当某个程序的线程执行到含有syncronized的代码快的时候,如果没有加锁,就把对象的锁的信息指向自己(里面应该有标有当前线程Id的信息),如果指向成功了,那么该线程就拥有了对象的锁,别的线程访问尝试修改对象的指针失败,于是就阻塞等待线程释放锁(头信息的指针重新为null),就可以在加锁了.撒谎嗯面说的reference指针就是左边栈帧指向对象的指针.如果syn修饰的是类方法,这个指针就指向class对象,普通方法就指向该类的实例对象,如果显示声明了就指向声明的类(syncronized(xx.class))<br><br> 当monitorenter获取锁成功的时候,锁的个数就会加1,执行monitorexit锁的个数-1,对了syncroronied是<br> 可重入锁,不会把自己锁死.<br><br> 我们知道java线程状态的转换依赖于操作系统,如果有很多synchronized修饰的方法,那么在执行到它们的时候,java需要依靠操作系统完成线程状态的转化(运行-&gt;阻塞),就会很消耗资源和时间,有可能访问的时间还不如状态切换的时间.为了减少状态转化的次数,jdk1.6对syncronied做了许多优化.</p>
+<h5 id="synchronized优化"><a href="#synchronized优化" class="headerlink" title="synchronized优化"></a>synchronized优化</h5><ul>
+<li><p>轻量级锁<br><br>它的本意不是替代传统的重量级锁,就是在没有多线程竞争的前提下,见超传统的重量级锁使用操作系统产生的性能消耗.大部分程序并不每时每刻都是多线程访问某个共享资源,如果访问线程自身本身就是正好错开的,如果每次访问还要不管怎样先加锁的话,性能就会下降.轻量级锁就是在这些情况下先用CAS尝试获取锁,获取成功就进入执行代码.后面如果有一个线程CAS失败,就说明这个对象正才被别的线程访问,此时轻量级锁升级为重量锁,线程才进入阻塞状态.<br></p>
+</li>
+<li><p>自旋锁和自适应自旋锁<br><br>首先电脑需要有多个cpu,这样才能实现并行.一个线程访问共享发现有线程在访问,它不是马上进入阻塞状态,而是在这个cpu上自选一段时间,一段时间后再去尝试获取锁,如果成功不久避免了线程切换挂起和恢复线程的时间(有可能这个访问的时间比线程状态的时间还端,阻塞不值当).但是也不可能无限制的自旋(浪费CPU资源),虚拟机会根据算法选择线程子旋的时间,比如一个线程很少获取锁成功,就别让他自旋了,反正获取锁的记录也不大,直接阻塞吧.</p>
+</li>
+<li><p>偏向锁<br><br>偏向于第一个使用它的线程，把线程ID存储在mark-word里，然后下一次这个线程在访问的时候直接看一下ID就直接进来,连CAS获取锁的操作都省了），如果碰到其他的线程，偏向锁撤销，恢复到未锁定或者轻量级锁。</p>
+</li>
+<li><p>锁消除<br><br>JVM会自己判断你加的锁有没有必要，没有会自动把锁给你去了。<br><img src="/images/89.png" alt=""><br>如果没锁消除的话，每次append都会加锁，因为stringBuffer是线程安全的，它的方法都被syncronized修饰。有了锁消除，jvm会判断sb是方法的局部变量，这个方法内的所有访问是线程安全的，就会忽略所有的同步锁。</p>
+<h5 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h5><p>和Syncronized相比，ReentrantLock也可以实现它的功能.只不过它是基于API层面的互斥锁（lock（） unlock() 配合try catch/finally实现），syncronized是原生语法层面的互斥。当然，它还扩展了一些功能：<br></p>
+</li>
+<li><p>可以实现公平锁和非公平锁<br>syncronized是非公平锁（公平锁就是先阻塞的先执行，非公平就是先阻塞的线程可能后执行，实验数据的话非公平锁的效率更高）</p>
+</li>
+<li><p>等待可中断<br><br>可以设置等待的时间，如果超过阈值的话线程可以放弃，改为处理其他事情。这样我们就可以认为指定线程的有一定的执行顺序，用syncronized是不可能的（它是cpu调度，你没法干预）</p>
+</li>
+<li><p>一个锁对象可以绑定多个condition对象<br><br>syncronized中锁对象的wait-notify只有一个等待队列，使用ReentrantLock绑定多个condition对象就保证这个锁对象有好几个等待队列，可以根据需要指定唤醒某个等待队列中的线程，之前在阻塞队列的fullcondition和emptycondition就是例子。<br></p>
+<p><img src="/images/90.png" alt=""><br>同步队列下面还应还有等待队列，当执行notify方法的时候就唤醒等到队列的一个线程，然后进入阻塞队列中竞争cpu资源<br><br>syncronized是基于监视器锁，ReentrantLock底层是AQS队列，对他不是很了解。但是它底层是入下图所示：<br><img src="/images/91.png" alt=""></p>
+<h5 id="其他锁"><a href="#其他锁" class="headerlink" title="其他锁"></a>其他锁</h5><p>锁的类别可以分为多种，按照是否公平可以分为公平锁和非公平锁;按照是否可以重入分别重入锁和可重入锁;还可以分为乐观锁（CAS）和悲观锁（本文介绍的两种），独占锁和共享锁<br><br>还可以按照读写方式的区别有读写锁，类似数据库的锁，读读共享，读写互斥，写写互斥。ReentrantReadWriteLock<br><br>这里提一下CopyOnWriteArrayList这个并发容器，在很多应用场景中，读操作可能会远远大于写操作。由于读操作根本不会修改原有的数据，因此对于每次读取都进行加锁其实是一种资源浪费。我们应该允许多个线程同时访问 List 的内部数据，毕竟读取操作是安全的。JDK 中提供了 CopyOnWriteArrayList 类比相比于在读写锁的思想又更进一步。为了将读取的性能发挥到极致，CopyOnWriteArrayList 读取是完全不用加锁的，并且更厉害的是：写入也不会阻塞读取操作。只有写入和写入之间需要进行同步等待。这样一来，读操作的性能就会大幅度提升。它在写入的时候重新开辟内存进行写入，此时别的线程读之前拷贝的数据，不会影响，写入完毕后再覆盖原来的数据</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;保证安全的时候尽量提高性能</span><br><span class="line">public class  ReadWriteLockDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        MycatCache mycatCache&#x3D;new MycatCache();</span><br><span class="line">        &#x2F;&#x2F;写入</span><br><span class="line">        for(int i&#x3D;1;i&lt;&#x3D;10;i++)&#123;</span><br><span class="line">            final  int temp&#x3D;i;</span><br><span class="line">            new Thread(new Runnable() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void run() &#123;</span><br><span class="line">                    mycatCache.put(temp+&quot;&quot;,temp+&quot;&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,String.valueOf(i)).start();</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;读取</span><br><span class="line">        for(int i&#x3D;1;i&lt;&#x3D;10;i++)&#123;</span><br><span class="line">            final  int temp&#x3D;i;</span><br><span class="line">            new Thread(new Runnable() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void run() &#123;</span><br><span class="line">                    mycatCache.get(temp+&quot;&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,String.valueOf(i)).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * 自定义缓存</span><br><span class="line"> *&#x2F;</span><br><span class="line">class MycatCache&#123;</span><br><span class="line">    private volatile Map&lt;String,Object&gt; map&#x3D;new HashMap&lt;&gt;();</span><br><span class="line">    private ReentrantReadWriteLock lock&#x3D;new ReentrantReadWriteLock();</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;只有一个线程写</span><br><span class="line">    public void put(String key,Object value)&#123;</span><br><span class="line">        lock.writeLock().lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+&quot;写入&quot;+key);</span><br><span class="line">            map.put(key,value);</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+&quot;写入完毕&quot;);</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;finally &#123;</span><br><span class="line">            lock.writeLock().unlock();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">   &#x2F;&#x2F;读也要加读锁，防止被写篡改（读写互斥，读和读无所谓）</span><br><span class="line">    public void get(String key)&#123;</span><br><span class="line">        lock.readLock().lock();</span><br><span class="line">        try&#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+&quot;读取&quot;+key);</span><br><span class="line">            map.get(key);</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+&quot;读取完毕&quot;);</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;finally &#123;</span><br><span class="line">            lock.readLock().unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>以上就是多线程锁的相关知识，ReentrantLock有自己使用的范围，它比syncronized多的功能就是它使用的用处，但是和syncronized重叠的部分其实它的性能并不比优化后的syncronied强。</p>
+
       
 
       
@@ -288,7 +320,7 @@
   
   
     <a href="/2020/06/17/volatile%E5%85%B3%E9%94%AE%E5%AD%97/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title"> volatile&amp;CAS&amp;原子类</div>
+      <div class="article-nav-title"> volatile&amp;CAS</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -315,7 +347,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Synchronized"><span class="toc-number">1.1.</span> <span class="toc-text">Synchronized</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#synchronized优化"><span class="toc-number">1.2.</span> <span class="toc-text">synchronized优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ReentrantLock"><span class="toc-number">1.3.</span> <span class="toc-text">ReentrantLock</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#其他锁"><span class="toc-number">1.4.</span> <span class="toc-text">其他锁</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#总结"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -484,15 +516,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
