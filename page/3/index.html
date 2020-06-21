@@ -152,29 +152,29 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-calss文件和类加载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-栈和队列" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/">Class文件和类加载</a>
+      <a class="article-title" href="/2020/06/16/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/">栈和队列</a>
     </h1>
   
 
         
-        <a href="/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/" class="archive-article-date">
-  	<time datetime="2020-05-30T16:54:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-31</time>
+        <a href="/2020/06/16/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" class="archive-article-date">
+  	<time datetime="2020-06-16T05:47:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面已经介绍了虚拟机的内存分布和垃圾回收机制,本节主要介绍class文件的结构,class文件是如何被加载到内存的以及虚拟机执行引擎是如何一步步解释执行代码.<br>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>栈和队列是比较特殊的线性结构,栈内元素实现先进后出,队列内元素先进先出.栈不陌生,jvm的栈结构是程序函数调用的基础,函数按照先进后出在帧内进进出,递归调用函数就是栈保存;队列是作为广度优先遍历算法基础,在java中的中间件技术,阻塞队列等都需要队列作为存储数据的数据结构等,所以说队列还是很重要的.<br></p>
         
-          <a class="article-more-a" href="/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/#more">more >></a>
+          <a class="article-more-a" href="/2020/06/16/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/#more">more >></a>
         
       
 
@@ -188,7 +188,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
         		</li>
       		
 		</ul>
@@ -198,7 +198,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/31/calss%E6%96%87%E4%BB%B6%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/06/16/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/">展开全文 >></a>
         </p>
       
 
@@ -228,29 +228,29 @@
 
 
   
-    <article id="post-JVM类加载和执行机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-数据结构-树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/">JVM类加载和执行机制</a>
+      <a class="article-title" href="/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/">数据结构-树(基础)</a>
     </h1>
   
 
         
-        <a href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2020-05-29T02:14:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-29</time>
+        <a href="/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/" class="archive-article-date">
+  	<time datetime="2020-06-15T13:32:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面已经介绍了虚拟机的内存分布和垃圾回收机制,本节主要介绍class文件的结构,class文件是如何被加载到内存的以及虚拟机执行引擎是如何一步步解释执行代码.<br>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　树是数据结构中的重要知识点,相比较链表相对简单的增删改查操作,树因为有多个分叉,而且涉及到递归算法,所以里面有很多知识点可以挖掘,也是面试问得比较多的一块.且面试中常常以二叉树为主,所以本问主要介绍二叉树的一些基础算法,了解了这些再去刷题也不迟.<br></p>
         
-          <a class="article-more-a" href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/#more">more >></a>
+          <a class="article-more-a" href="/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/#more">more >></a>
         
       
 
@@ -259,11 +259,22 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/29/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/">展开全文 >></a>
         </p>
       
 
@@ -293,29 +304,29 @@
 
 
   
-    <article id="post-JVM-GC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-SpringMVC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/27/JVM-GC/">JVM GC</a>
+      <a class="article-title" href="/2020/06/04/SpringMVC/">SpringMVC</a>
     </h1>
   
 
         
-        <a href="/2020/05/27/JVM-GC/" class="archive-article-date">
-  	<time datetime="2020-05-27T15:20:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
+        <a href="/2020/06/04/SpringMVC/" class="archive-article-date">
+  	<time datetime="2020-06-04T14:46:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="GC-垃圾回收机制"><a href="#GC-垃圾回收机制" class="headerlink" title="GC (垃圾回收机制)"></a>GC (垃圾回收机制)</h3><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  java不像C++需要程序員自己手动释放内存,而是有自己一套自动的垃圾回收机制,不需要程序员来干涉.程序员需要了解其内部的一些原理,才能在出现问题(内存溢出和泄漏等),可以看懂GC日志并作出相应的处理(修改参数)<br><br>  垃圾回收主要解决的问题：<br><br>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>SpringMVC是我们进行web开发最重要的组件,它的底层就是servlet.只不过它在servlet的基础上封装了很多,使得我们在使用的时候很方便.<br>
         
-          <a class="article-more-a" href="/2020/05/27/JVM-GC/#more">more >></a>
+          <a class="article-more-a" href="/2020/06/04/SpringMVC/#more">more >></a>
         
       
 
@@ -329,7 +340,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
         		</li>
       		
 		</ul>
@@ -339,7 +350,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/27/JVM-GC/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/06/04/SpringMVC/">展开全文 >></a>
         </p>
       
 
@@ -369,29 +380,29 @@
 
 
   
-    <article id="post-JVM内存划分以及相应的内存问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-mybatis底层" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/27/JVM%E5%86%85%E5%AD%98%E5%88%92%E5%88%86%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%BA%94%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/">JVM内存划分以及相应的内存问题</a>
+      <a class="article-title" href="/2020/06/04/mybatis%E5%BA%95%E5%B1%82/">mybatis和mybatis-plus</a>
     </h1>
   
 
         
-        <a href="/2020/05/27/JVM%E5%86%85%E5%AD%98%E5%88%92%E5%88%86%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%BA%94%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-05-27T13:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
+        <a href="/2020/06/04/mybatis%E5%BA%95%E5%B1%82/" class="archive-article-date">
+  	<time datetime="2020-06-04T14:38:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>　　JVM(java虚拟机),是java可以实现平台无关性的关键,java提出的”一次编译,到处运行”是基于java虚拟机实现的.所谓的一次编译是编译成java字节码文件(半成品),所以无论你在mac linux还是windows编写相同的java代码,生成的字节码文件是相同的.jdk(jvm+类库+java语言)针对不同的操作系统有不同的版本,只要字节码文件相同,结果就一样,因为jdk为程序员屏蔽了太多底层的实现.之前相同的从c++代码在不同的操作系统运行结果会不一样是因为操作系统底底层不一样,程序员需要针对不同的操作系统写好几份代码,不同版本的jvm就替程序员干了这些事情.<br>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　Mybatis是作为持久层开发的ORM(对象关系映射)框架.其实它只能算半ORM框架,因为我们需要自己编写SQL语句,而hibernate才是真正的ORM框架,sql语句都是由系统帮你写好(自己也没用过,只是看资料).所以对于一些简单的OA系统,可以大大简化开发,但这也是弊端所在:现在的系统都很大,sql语句需要不断的优化,mybatis这种手写sql的模式程序员就可以对SQL进行优化,所以每一项技术都有它对应的应用场景,没有谁绝对比谁强.持久层另一个就是JPA,也比较好用,自己暂时还没有用过.<br><br>　　还想说的就是,大部分程序员都是做着CRUD的工作,有研究什么源码的时间还不如好好写写SQL,基础都写不好,后面估计做东西都很难受</p>
         
-          <a class="article-more-a" href="/2020/05/27/JVM%E5%86%85%E5%AD%98%E5%88%92%E5%88%86%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%BA%94%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/#more">more >></a>
+          <a class="article-more-a" href="/2020/06/04/mybatis%E5%BA%95%E5%B1%82/#more">more >></a>
         
       
 
@@ -405,28 +416,17 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/27/JVM%E5%86%85%E5%AD%98%E5%88%92%E5%88%86%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%BA%94%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/06/04/mybatis%E5%BA%95%E5%B1%82/">展开全文 >></a>
         </p>
       
 
@@ -456,35 +456,29 @@
 
 
   
-    <article id="post-my-first-blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Spring-IOC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/27/my-first-blog/">Hexo+GitHub搭建自己的博客网站</a>
+      <a class="article-title" href="/2020/06/04/Spring-IOC/">Spring IOC</a>
     </h1>
   
 
         
-        <a href="/2020/05/27/my-first-blog/" class="archive-article-date">
-  	<time datetime="2020-05-27T12:47:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
+        <a href="/2020/06/04/Spring-IOC/" class="archive-article-date">
+  	<time datetime="2020-06-04T13:52:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>使用github pages服务搭建博客的好处有：</p>
-<ol>
-<li>全是静态文件，访问速度快；</li>
-<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
-<li>可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的；</li>
-<li>数据绝对安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
-<li>博客内容可以轻松打包、转移、发布到其它平台
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  　　IOC(控制反转)是Spring最重要的两个特性之一,剩下的AOP下篇再写.IOC主要解决的就是创建对象的问题.以往创建对象都是new对象.你可能觉得这样也没什么不方便.可以当你的对象属性比较多,里面还依赖其他对象的时候,你就需要先创建其他对象然后set到该对象里.如果有了IOC,你就可以把一些默认对象(比如mybatis相关类配置)和它的属性以及依赖都定义到xml里,spring在加载的时候就会读取配置文件并且为你生成对象放到容器里面管理,就不需要你在工程里自己生成.当你在工程中需要引入的时候,就通过getBean(“类名”)或者注解的方式就完成类的创建.<br><br>
         
-          <a class="article-more-a" href="/2020/05/27/my-first-blog/#more">more >></a>
+          <a class="article-more-a" href="/2020/06/04/Spring-IOC/#more">more >></a>
         
       
 
@@ -498,28 +492,399 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Hexo//" class="article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/27/my-first-blog/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/06/04/Spring-IOC/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Spring-AOP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/04/Spring-AOP/">Spring AOP</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/04/Spring-AOP/" class="archive-article-date">
+  	<time datetime="2020-06-04T13:51:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　AOP(面向切面编程)并不是新的编程思想,它只是面向对象编程的扩展.核心思想是抽离和业务逻辑无关的代码或者说部分代码可以单独抽离出来作为一个切面类.那抽取来单独做一个类或者方法不就行,为什么还要引入AOP?抽出来的话你还是得在你的业务代码里显示调用,AOP厉害就厉害在它可以不用你在业务里显示调用,你只需要定义一个切面的逻辑类,告诉它执行什么方法,在这个方法的前或者后执行,当你调用方法的时候就会把逻辑类里的代码绑定进来.<br><br>　　说了这么多,其实就是代理模式中的动态代理.在你调用方法的时候,会生成代理类,并把切面逻辑织入到代理类.Spring的事务,Mybatis的Mapper接口编程以及RPC通信的底层都是用的AOP(动态代理)的思想,把最难或者反复的代码帮你实现了,使得业务实现变得简洁.<br><br>
+        
+          <a class="article-more-a" href="/2020/06/04/Spring-AOP/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/04/Spring-AOP/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-mysql锁和事务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/">mysql锁和事务</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/" class="archive-article-date">
+  	<time datetime="2020-06-04T10:07:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>数据库的事务是建立在底层数据库锁的基础之上的,所以先介绍存在mysql的各种锁.</p>
+<h4 id="Mysql中的锁"><a href="#Mysql中的锁" class="headerlink" title="Mysql中的锁"></a>Mysql中的锁</h4><p>mysql的主要的锁的种类按照不同的标准,可以划分如图所示:<br><img src="/images/44.png" alt=""><br>
+        
+          <a class="article-more-a" href="/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/04/mysql%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-mysql索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/02/mysql%E7%B4%A2%E5%BC%95/">数据库索引(mysql)</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/02/mysql%E7%B4%A2%E5%BC%95/" class="archive-article-date">
+  	<time datetime="2020-06-02T04:01:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="索引的数据结构"><a href="#索引的数据结构" class="headerlink" title="索引的数据结构"></a>索引的数据结构</h5><p>我们知道mysql底层索引的数据结构是B+树,那么为什么是B+树,它比其他的平衡n叉树强在哪里?<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在讲数据结构之前,我们需要知道mysql的数据是存储在磁盘上面的,我们查询的数据要从磁盘加载到内存中.磁盘io的时间相比cpu从内存中取数据是慢很多的(所以有很多内存数据库例如redis来作为缓存,减少和数据库交互的次数,从而提高程序的响应速度).所以哪种数据结构能够减少访问数据库的次数,它就是好的.</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/06/02/mysql%E7%B4%A2%E5%BC%95/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/02/mysql%E7%B4%A2%E5%BC%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-工厂模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/02/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">工厂模式</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/02/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-06-02T02:32:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://www.cnblogs.com/xiaowangzi1987/p/9665604.html" target="_blank" rel="noopener">三种工厂模式的总结</a><br><br>工厂模式就是Spring IOC的基础<br>
+        
+          <a class="article-more-a" href="/2020/06/02/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/02/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-代理模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/02/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">代理模式</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/02/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-06-02T02:08:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>代理是一种常见的设计模式，主要就是起到松耦合的作用，使得目标类主要集中在写业务代码，不用将无关的一些代码写进来，在业务类（目标类）里只写业务代码。代理模式的主要三个对象：目标类  代理类 增强类（繁琐的代码 比如事务、日志记录等）代理模式的目的在于减轻本人的工作负担，其他应用场景：初始化很浪费时间的话，暂时不会使用的类也会被初始化，使用代理可以先加载轻量级的代理对象，真正需要的时候再加载真实对象。<br><br>  Spring AOP的本质就是动态代理.Mybatis Mapper接口也是动态代理<br>
+        
+          <a class="article-more-a" href="/2020/06/02/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/02/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
         </p>
       
 
@@ -551,7 +916,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -667,19 +1032,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -691,11 +1052,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
             
             <div class="clearfix"></div>

@@ -16,9 +16,9 @@
 <meta property="og:description" content="三种工厂模式的总结工厂模式就是Spring IOC的基础">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/images/17.png">
-<meta property="og:image" content="http://yoursite.com/images/18.jpg">
+<meta property="og:image" content="http://yoursite.com/images/x9.png">
 <meta property="article:published_time" content="2020-06-02T02:32:20.000Z">
-<meta property="article:modified_time" content="2020-06-02T02:47:49.676Z">
+<meta property="article:modified_time" content="2020-06-21T16:00:43.690Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -193,7 +193,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//抽象工厂</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">createCar</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//具体工厂</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BenziFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">createCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Benzi ();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//抽象产品</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//具体产品</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Benzi</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println (<span class="string">"Benzi is Runing!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样扩展新的汽车产品的话，只需要创建对应的工厂和类就可以，不需要对源代码进行修改，符合开闭原则（对修改说不，可以拓展）。<br><img src="/images/17.png" alt=""></p>
 <ul>
-<li>抽象工厂<br>面的工厂方法是生产一种产品，如果一个产品是由多个零部件组成，一个零部件又分好几种，那么就需要抽象工厂进行组装，抽象工厂就是把一些抽象的零件拼装起来。<br>如果产品只有一种（零部件一个），抽象工厂就成为工厂模式；当一种产品有多个零部件，就成为抽象工厂模式。<br>所以主要的角色和工厂方法一致<br><br><img src="/images/18.jpg" alt=""></li>
+<li>抽象工厂<br>面的工厂方法是生产一种产品，如果一个产品是由多个零部件组成，一个零部件又分好几种，那么就需要抽象工厂进行组装，抽象工厂就是把一些抽象的零件拼装起来。<br>如果产品只有一种（零部件一个），抽象工厂就成为工厂模式；当一种产品有多个零部件，就成为抽象工厂模式。<br>所以主要的角色和工厂方法一致<br><br><img src="/images/x9.png" alt=""></li>
 </ul>
 
       
@@ -490,19 +490,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -514,11 +510,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
             
             <div class="clearfix"></div>
