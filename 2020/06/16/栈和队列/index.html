@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言栈和队列是比较特殊的线性结构,栈内元素实现先进后出,队列内元素先进先出.栈不陌生,jvm的栈结构是程序函数调用的基础,函数按照先进后出在帧内进进出,递归调用函数就是栈保存;队列是作为广度优先遍历算法基础,在java中的中间件技术,阻塞队列等都需要队列作为存储数据的数据结构等,所以说队列还是很重要的.">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-06-16T05:47:55.000Z">
-<meta property="article:modified_time" content="2020-06-24T14:03:09.289Z">
+<meta property="article:modified_time" content="2020-06-26T15:27:32.629Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
@@ -206,8 +206,15 @@
 <ul>
 <li>O（1）的时间获取队列的最大值<br><br>上面的例子是用两个栈模拟队列，还有栈在O(1)的得到最小值的例子。二者结合就可以实现O(1)的时间获取队列的最小值<br></li>
 <li>求每个滑动窗口的最小值<br><br>思路1：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;时间复杂度O(nk)</span><br><span class="line">for(int i&#x3D;0;i&lt;n;i++)&#123;</span><br><span class="line">  findMax(data,i,i+k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-思路2：使用O(1)时间获取队列中最大值的思路,每个滑动窗口可以看成一个队列。时间复杂度就变为O(n)，但是相应的空间复杂度就上去了，但还是提高时间复杂度比较重要，者意味着高的响应速度，内存现在可以满足空间复杂度。 <h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5>栈和队列的基础知识点就先罗列这几个,后续有的话会继续添加.<br></li>
+思路2：使用O(1)时间获取队列中最大值的思路,每个滑动窗口可以看成一个队列。时间复杂度就变为O(n)，但是相应的空间复杂度就上去了，但还是提高时间复杂度比较重要，者意味着高的响应速度，内存现在可以满足空间复杂度。</li>
 </ul>
+</li>
+</ul>
+<ul>
+<li><p>LRU缓存策略  最近最少使用（最近使用的会加入缓存的前面，最长不使用的会加在后面，入伙新的元素进缓存，最长未使用的元素会被逐出缓存队列）<br><br>思路：双端队列（两头操作，比较方便） +hash表（用来快速判断使用的元素是否在缓存）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LRUCache</span> </span>&#123;</span><br><span class="line">    ArrayDeque&lt;Integer&gt; deque=<span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">    HashSet&lt;Integer&gt; hashSet=<span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> Integer cacheSize;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LRUCache</span><span class="params">(<span class="keyword">int</span> cacheSize)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cacheSize=cacheSize;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">boolean</span> <span class="title">IsFull</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> deque.size()==cacheSize;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">enqueue</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(IsFull())&#123;</span><br><span class="line">            hashSet.remove(deque.getLast());</span><br><span class="line">            deque.pollLast();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            deque.addFirst(num);</span><br><span class="line">            hashSet.add(num);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">access</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="comment">//不在缓存就加入</span></span><br><span class="line">        <span class="keyword">if</span>(!hashSet.contains(num))&#123;</span><br><span class="line">            enqueue(num);</span><br><span class="line">        <span class="comment">//在缓存但是不再最前面，就移动到最前面</span></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(num!=deque.getFirst())&#123;</span><br><span class="line">            deque.remove(num);</span><br><span class="line">            deque.addFirst(num);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>栈和队列的基础知识点就先罗列这几个,后续有的话会继续添加.<br></p>
 </li>
 </ul>
 
@@ -513,11 +520,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -533,11 +548,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
