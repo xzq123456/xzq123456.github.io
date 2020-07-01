@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>模板方法设计模式 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="介绍模板方法模式：将具体的处理交给子类，就是父类中定义处理流程的框架，子类中实现具体处理的模式组成模板的方法被定义在父类当中，由于是抽象方法，只查看父类的代码是无法知道这些代码是以何具体的形式处理的，唯一能够知道的就是父类如何调用这些方法，在子类上实现抽象方法。 代码12345678910111213141516171819&#x2F;&#x2F;模板方法public abstract class BankTempl">
+  <meta name="description" content="介绍模板方法模式：将具体的处理交给子类，就是父类中定义处理流程的框架，子类中实现具体处理的模式组成模板的方法被定义在父类当中，由于是抽象方法，只查看父类的代码是无法知道这些代码是以何具体的形式处理的，唯一能够知道的就是父类如何调用这些方法，在子类上实现抽象方法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模板方法设计模式">
 <meta property="og:url" content="http://yoursite.com/2020/06/21/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="介绍模板方法模式：将具体的处理交给子类，就是父类中定义处理流程的框架，子类中实现具体处理的模式组成模板的方法被定义在父类当中，由于是抽象方法，只查看父类的代码是无法知道这些代码是以何具体的形式处理的，唯一能够知道的就是父类如何调用这些方法，在子类上实现抽象方法。 代码12345678910111213141516171819&#x2F;&#x2F;模板方法public abstract class BankTempl">
+<meta property="og:description" content="介绍模板方法模式：将具体的处理交给子类，就是父类中定义处理流程的框架，子类中实现具体处理的模式组成模板的方法被定义在父类当中，由于是抽象方法，只查看父类的代码是无法知道这些代码是以何具体的形式处理的，唯一能够知道的就是父类如何调用这些方法，在子类上实现抽象方法。">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-06-21T15:44:00.000Z">
-<meta property="article:modified_time" content="2020-06-21T15:48:52.362Z">
+<meta property="article:modified_time" content="2020-07-01T08:05:34.665Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>模板方法模式：将具体的处理交给子类，就是父类中定义处理流程的框架，子类中实现具体处理的模式<br>组成模板的方法被定义在父类当中，由于是抽象方法，只查看父类的代码是无法知道这些代码是以何具体的形式处理的，唯一能够知道的就是父类如何调用这些方法，在子类上实现抽象方法。</p>
+        <h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>模板方法模式：将具体的处理交给子类，就是父类中定义处理流程的框架，子类中实现具体处理的模式<br>组成模板的方法被定义在父类当中，由于是抽象方法，只查看父类的代码是无法知道这些代码是以何具体的形式处理的，唯一能够知道的就是父类如何调用这些方法，在子类上实现抽象方法。<br>  <a id="more"></a></p>
 <h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//模板方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BankTemplateMethod</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">takeNumber</span><span class="params">()</span></span>&#123;</span><br><span class="line">       System.out.println (<span class="string">"取号"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//办理业务</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">transact</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">evaluate</span><span class="params">()</span></span>&#123;</span><br><span class="line">       System.out.println (<span class="string">"反馈评分"</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//处理流程的框架</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.takeNumber ();</span><br><span class="line">       <span class="keyword">this</span>.transact ();</span><br><span class="line">       <span class="keyword">this</span>.evaluate ();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//子类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DrawMoney</span> <span class="keyword">extends</span> <span class="title">BankTemplateMethod</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transact</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println (<span class="string">"取款"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//调用方式一</span></span><br><span class="line">        BankTemplateMethod bank=<span class="keyword">new</span> DrawMoney ();</span><br><span class="line">        bank.process ();</span><br><span class="line">         <span class="comment">//匿名内部类的方式调用</span></span><br><span class="line">        BankTemplateMethod bank2=<span class="keyword">new</span> BankTemplateMethod () &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transact</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println (<span class="string">"存款"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        bank2.process ();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -487,11 +487,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -515,15 +515,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
