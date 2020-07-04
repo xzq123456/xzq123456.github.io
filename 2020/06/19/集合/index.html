@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://yoursite.com/images/24.jpeg">
 <meta property="og:image" content="http://yoursite.com/images/99.png">
 <meta property="article:published_time" content="2020-06-19T14:42:00.000Z">
-<meta property="article:modified_time" content="2020-06-20T09:04:33.197Z">
+<meta property="article:modified_time" content="2020-07-04T08:07:53.774Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="java基础">
 <meta name="twitter:card" content="summary">
@@ -186,20 +186,16 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">grow</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//扩容前的容量</span></span><br><span class="line">       <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line">       <span class="comment">//扩容到原来的1.5倍</span></span><br><span class="line">       <span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br><span class="line">       <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">           newCapacity = minCapacity;</span><br><span class="line">        <span class="comment">//默认最大值是Integer的最大值-8</span></span><br><span class="line">       <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="number">0</span>)</span><br><span class="line">           newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">       elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <p>其实ArrayList就这么简单，就是一个动态扩容的数组，通过源码我们可以知道如果你确切知道了你需要的数据大小，最好在初始的时候就指定好，免得频繁扩容影响性能.<br><br>ArrayList不是线程安全的，解决方案有：</p>
 <ul>
-<li><p>使用vector，方法都是syncronized的，但是性能不佳</p>
-</li>
-<li><p>Collections工具类的Collections.synchronizedCollection（），本质和上面还是一样</p>
-</li>
-<li><p>JUC下的CopyOnWriteArrayList <br><br>CopyOnWriteArrayList读取是完全不用加锁的，写入也不会阻塞读取操作。只有写入和写入之间需要进行同步等待。因为它写的时候是将原来的数据复制一份，在复制上修改完毕的时候然后才覆盖原数据。适用场景就是读远大于写的情况。</p>
-<h5 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h5><p>LinkedList的底层是双向链表，因为是链表也不存在什么扩容的问题，比较简单，没什么可说的<br><br>LinkedList和ArrayList的区别<br></p>
-</li>
-<li><p>是否保证线程安全： ArrayList 和 LinkedList 都是不同步的，也就是不保证线程安全；</p>
-</li>
-<li><p>底层数据结构： Arraylist 底层使用的是 Object 数组；LinkedList 底层使用的是 双向链表 数据结构（JDK1.6 之前为循环链表，JDK1.7 取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）<br>插入和删除是否受元素位置的影响： ① ArrayList 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。 比如：执行add(E e)方法的时候， ArrayList 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是 O(1)。但是如果要在指定位置 i 插入和删除元素的话（add(int index, E element)）时间复杂度就为 O(n-i)。因为在进行上述操作的时候集合中第 i 和第 i 个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。 ② LinkedList 采用链表存储，所以对于add(E e)方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O(1)，如果是要在指定位置i插入和删除元素的话（(add(int index, E element)） 时间复杂度近似为o(n))因为需要先移动到指定位置再插入。</p>
-</li>
-<li><p>是否支持快速随机访问： LinkedList 不支持高效的随机元素访问，而 ArrayList 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于get(int index)方法)。</p>
-</li>
-<li><p>内存空间占用： ArrayList 的空 间浪费主要体现在在 list 列表的结尾会预留一定的容量空间，而 LinkedList 的空间花费则体现在它的每一个元素都需要消耗比 ArrayList 更多的空间（因为要存放直接后继和直接前驱以及数据)<br><br>LinkedList实现线程安全使用Collections工具方法就可以，复杂的ConcurrentLinkedQueue以后再介绍</p>
+<li>使用vector，方法都是syncronized的，但是性能不佳</li>
+<li>Collections工具类的Collections.synchronizedCollection（），本质和上面还是一样</li>
+<li>JUC下的CopyOnWriteArrayList <br><br>CopyOnWriteArrayList读取是完全不用加锁的，写入也不会阻塞读取操作。只有写入和写入之间需要进行同步等待。因为它写的时候是将原来的数据复制一份，在复制上修改完毕的时候然后才覆盖原数据。适用场景就是读远大于写的情况。<h5 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h5>LinkedList的底层是双向链表，因为是链表也不存在什么扩容的问题，比较简单，没什么可说的<br><br>LinkedList和ArrayList的区别<br></li>
+<li>是否保证线程安全： ArrayList 和 LinkedList 都是不同步的，也就是不保证线程安全；</li>
+<li>底层数据结构： Arraylist 底层使用的是 Object 数组；LinkedList 底层使用的是 双向链表 数据结构（JDK1.6 之前为循环链表，JDK1.7 取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）<br>插入和删除是否受元素位置的影响： ① ArrayList 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。 比如：执行add(E e)方法的时候， ArrayList 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是 O(1)。但是如果要在指定位置 i 插入和删除元素的话（add(int index, E element)）时间复杂度就为 O(n-i)。因为在进行上述操作的时候集合中第 i 和第 i 个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。 ② LinkedList 采用链表存储，所以对于add(E e)方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O(1)，如果是要在指定位置i插入和删除元素的话（(add(int index, E element)） 时间复杂度近似为o(n))因为需要先移动到指定位置再插入。</li>
+<li>是否支持快速随机访问： LinkedList 不支持高效的随机元素访问，而 ArrayList 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于get(int index)方法)。</li>
+<li>内存空间占用： ArrayList 的空 间浪费主要体现在在 list 列表的结尾会预留一定的容量空间，而 LinkedList 的空间花费则体现在它的每一个元素都需要消耗比 ArrayList 更多的空间（因为要存放直接后继和直接前驱以及数据)<br></li>
+</ul>
+<p>我们正常使用的场景中，都是用来查询，不会涉及太频繁的增删，如果涉及频繁的增删，可以使用LinkedList，如果你需要线程安全就使用Vector，这就是三者的区别了，实际开发过程中还是ArrayList使用最多的<br></p>
+<p>LinkedList实现线程安全使用Collections工具方法就可以，复杂的ConcurrentLinkedQueue以后再介绍</p>
 <h4 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h4><p>实现Set接口的类是保证集合中不能有重复的元素<br></p>
 <h5 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h5><p>hash算法是数据结构的重要算法，主要是为了快速查找某一个元素，如果不存在hash碰撞，hash查询指定元素的时间复杂度为O(1)，空间复杂度就是新开辟的空间(最大O(N))，用空间换时间，随着硬件的发展，内存已经不是什么问题，这类以时间换空间的算法是值得的，扯远了..<br><br>HashSet的底层是数组+链表，那他是如何实现判重的呢？<br><br>首先第一步当然是计算传入元素的hash值，然后找到对应下标的数组看是否有数据;如果有（发生了hash冲突），然后顺着链表使用equal方法判断和节点的的值是否相同（==是判断内存地址是否相同，equal是比较里面对象的值），相同则覆盖，不同则添加.这其实是hashMap的底层put方法用来判断key是否相同的代码，hashset源码就是里面有一个hashmap，只不过对象是一个final的对象，充当值<br><br>这也就解释了如果是自定义的对象加入set的时候为什么要重写hashcode和equals方法，如果不重写hashcode，hashcode默认值是内存的地址值，那么即使相同的对象也因地址不同放入hashset，set就失效了.hashcode相同的对象equals不一定相同，equals相同的对象hashcode一定相同。<br><br>hashSet同样不是线程安全的，可以使用Collections工具类方法把它变成线程安全的，不过JUC下有性能更好的CopyOnWriteArraySet</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashSetDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CopyOnWriteArraySet&lt;String&gt; hashset=<span class="keyword">new</span> CopyOnWriteArraySet&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">20</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">                hashset.add(UUID.randomUUID().toString().substring(<span class="number">0</span>, <span class="number">5</span>));</span><br><span class="line">                System.out.println(hashset);</span><br><span class="line">            &#125;,String.valueOf(i)).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -214,23 +210,48 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent,<span class="keyword">boolean</span> evict)</span> </span>&#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab;</span><br><span class="line">         Node&lt;K,V&gt; p; </span><br><span class="line">         <span class="keyword">int</span> n, i;</span><br><span class="line">        <span class="comment">// 判断数组是否为空，长度是否为0，是则进行扩容数组初始化</span></span><br><span class="line">        <span class="keyword">if</span> ((tab = table) == <span class="keyword">null</span> || (n = tab.length) == <span class="number">0</span>)</span><br><span class="line">            n = (tab = resize()).length;</span><br><span class="line">        <span class="comment">// 通过hash算法找到数组下标得到数组元素，为空则新建</span></span><br><span class="line">        <span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="keyword">null</span>)</span><br><span class="line">            tab[i] = newNode(hash, key, value, <span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            Node&lt;K,V&gt; e; K k;</span><br><span class="line">             <span class="comment">// 找到数组元素，hash相等同时key相等，则直接覆盖</span></span><br><span class="line">            <span class="keyword">if</span> (p.hash == hash &amp;&amp;</span><br><span class="line">                ((k = p.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                e = p;</span><br><span class="line">            <span class="comment">// 该数组元素在链表长度&gt;8后形成红黑树结构的对象</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (p <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">                e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(<span class="keyword">this</span>, tab, hash, key, value);</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 该数组元素hash相等，key不等，同时链表长度&lt;8.进行遍历寻找元素，有就覆盖无则新建</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> binCount = <span class="number">0</span>; ; ++binCount) &#123;</span><br><span class="line">                    <span class="keyword">if</span> ((e = p.next) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="comment">// 新建链表中数据元素</span></span><br><span class="line">                        p.next = newNode(hash, key, value, <span class="keyword">null</span>);</span><br><span class="line">                        <span class="keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="number">1</span>) <span class="comment">// -1 for 1st</span></span><br><span class="line">                            <span class="comment">// 链表长度&gt;=8 结构转为 红黑树</span></span><br><span class="line">                            treeifyBin(tab, hash);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">//找到hash值相同而且key相同的元素，break</span></span><br><span class="line">                    <span class="keyword">if</span> (e.hash == hash &amp;&amp;((k = e.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    p = e;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123; <span class="comment">// existing mapping for key</span></span><br><span class="line">                V oldValue = e.value;</span><br><span class="line">                <span class="keyword">if</span> (!onlyIfAbsent || oldValue == <span class="keyword">null</span>)</span><br><span class="line">                <span class="comment">//hash值相同而且key相同的就进行值覆盖</span></span><br><span class="line">                    e.value = value;</span><br><span class="line">                afterNodeAccess(e);</span><br><span class="line">                <span class="keyword">return</span> oldValue;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ++modCount;</span><br><span class="line">        <span class="keyword">if</span> (++size &gt; threshold)</span><br><span class="line">        <span class="comment">//数组元素个数大于指定的阈值，就进行扩容</span></span><br><span class="line">            resize();</span><br><span class="line">        afterNodeInsertion(evict);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>如果用流程图来说明：<br><img src="/images/99.png" alt=""><br>get的步骤主要就是根据hash值计算数组下标，然后对链表或者树进行遍历查找指定的key返回对应的值即可。红黑树树jdk1.8引入的，为了解决查询的速度，因为hash冲突变大的话链表长度变长，在链表上查找指定key的时间复杂度为O(n),使用二叉排序树（红黑树）可以缩小到logn<br>主要的几个参数：<br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">transient Node&lt;K,V&gt;[] table;&#x2F;&#x2F;数组</span><br><span class="line">int threshold;&#x2F;&#x2F;允许的最大的存储的元素数量，通过length数组长度*loadFactor</span><br><span class="line">final float loadFactor;&#x2F;&#x2F;增长因子得出数据的增长因子，默认为0.75。在进行扩容操作会使用到。</span><br><span class="line">int size;&#x2F;&#x2F;实际存储的元素数量</span><br><span class="line">hashMap不指定数组的容量默认大小是16</span><br></pre></td></tr></table></figure>
-<h5 id="hashMapd的扩容"><a href="#hashMapd的扩容" class="headerlink" title="hashMapd的扩容"></a>hashMapd的扩容</h5><p>扩容是hashmap的重要部分，也是容易出问题的步骤，先看下扩容是如何扩容的<br><br>初始化数组大小（默认为16） 通过数组大小*增长因子得到最大的链表元素个数，当大于这个值的时候，数组大小增长1倍。<br> 扩容是是新建了一个HashMap的底层数组，而后调用transfer方法，将就HashMap的全部元素添加到新的HashMap中（要重新计算元素在新的数组中的索引位置很明显，扩容是一个相当耗时的操作，因为它需要重新计算这些元素在新的数组中的位置并进行复制处理。因此，我们在用HashMap的时，最好能提前预估下HashMap中元素的个数，这样有助于提高HashMap的性能)</p>
+<h5 id="hashMapd的扩容"><a href="#hashMapd的扩容" class="headerlink" title="hashMapd的扩容"></a>hashMapd的扩容</h5><p>扩容是hashmap的重要部分，也是容易出问题的步骤，先看下扩容是如何扩容的<br><br>初始化数组大小（默认为16） 通过数组大小*增长因子得到最大的链表元素个数，当大于这个值的时候，数组大小增长1倍。<br>   扩容是是新建了一个HashMap的底层数组，而后调用transfer方法，将就HashMap的全部元素添加到新的HashMap中（要重新计算元素在新的数组中的索引位置很明显，扩容是一个相当耗时的操作，因为它需要重新计算这些元素在新的数组中的位置并进行复制处理。因此，我们在用HashMap的时，最好能提前预估下HashMap中元素的个数，这样有助于提高HashMap的性能)</p>
 <ul>
 <li>hashmap的扩容为什么是每次变成原来的1倍<br>这是由hash算法导致的，hashmap中计算对象hash值对应的数组下标的公式是：index=hash*(n-1),n就是数组的长度，默认16.每次扩展为原来的一倍，初始值为16,是为了减少hash碰撞的机会，没有扩容的时候，index=hash&amp;15,15对应的二进制是1111,这样就能把对象平均分到所有的位置上，机会均等，其实是为了减少hash冲突的手段而已；除此之外，扩容后还好计算元素的新下标，在原来数组下标加上之前扩容前的数组长度即可。</li>
 </ul>
-</li>
+<ul>
 <li><p>扩容导致的问题</p>
 <ul>
-<li>hashMap 1.7是线程不安全的，多线程扩容的时候会产生链表的死循环<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">transfer</span><span class="params">(Entry[] newTable)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Entry[] src = table;</span><br><span class="line">    <span class="keyword">int</span> newCapacity = newTable.length;</span><br><span class="line">    <span class="comment">//下面这段代码的意思是：  从OldTable里摘一个元素出来，然后放到NewTable中</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; src.length; j++) &#123;</span><br><span class="line">        Entry&lt;K,V&gt; e = src[j];</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">            src[j] = <span class="keyword">null</span>; </span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                Entry&lt;K,V&gt; next = e.next;</span><br><span class="line">                <span class="keyword">int</span> i = indexFor(e.hash, newCapacity);</span><br><span class="line">                e.next = newTable[i];</span><br><span class="line">                newTable[i] = e;</span><br><span class="line">                e = next;</span><br><span class="line">            &#125; <span class="keyword">while</span> (e != <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>jdk1.8在多线程情况下扩容就不会出现死循环<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">    Node&lt;K,V&gt; loHead = <span class="keyword">null</span>, loTail = <span class="keyword">null</span>;</span><br><span class="line">    Node&lt;K,V&gt; hiHead = <span class="keyword">null</span>, hiTail = <span class="keyword">null</span>;</span><br><span class="line">    Node&lt;K,V&gt; next;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        next = e.next;</span><br><span class="line">        <span class="keyword">if</span> ((e.hash &amp; oldCap) == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (loTail == <span class="keyword">null</span>)</span><br><span class="line">                loHead = e;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                loTail.next = e;</span><br><span class="line">            loTail = e;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (hiTail == <span class="keyword">null</span>)</span><br><span class="line">                hiHead = e;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                hiTail.next = e;</span><br><span class="line">            hiTail = e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> ((e = next) != <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">if</span> (loTail != <span class="keyword">null</span>) &#123;</span><br><span class="line">        loTail.next = <span class="keyword">null</span>;</span><br><span class="line">        newTab[j] = loHead;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (hiTail != <span class="keyword">null</span>) &#123;</span><br><span class="line">        hiTail.next = <span class="keyword">null</span>;</span><br><span class="line">        newTab[j + oldCap] = hiHead;<span class="comment">//为什么每次扩容到原来的两倍就是因为这样不用rehash，直接加就行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-jdk1.7链表会产生环，但是1.8不会，因为1.8节点的相对位置并没有改变，1.7会导致相对位置发生变化，而且没有进行rehash，减少了运算。</li>
-<li>线程安全问题<br><br>HashMap在多线程环境下操作是线程不安全的，如果想使用线程安全的人Map容器，可以使用  ConcurrentHashMap，这个并发容器在jdk1.7和1.8的实现是不一样的，1.7是分段锁，jdk1.8是对每个数组进行syncronized锁+CAS实现,并发提高了数倍，而且jdk1.8底层引入了红黑树<br></li>
-<li>与Hashtable的区别<br></li>
-<li>线程安全性不同<br><br>hashtable是线程安全的，不过性能不好（方法上加Syncronized）</li>
-<li>key和value是否允许null值<br><br> hashTable不允许key或者value为null ，hashMap允许,不过key只能有一个是nulll。</li>
-<li>hash值不同<br><br>哈希值的使用不同，HashTable直接使用对象的hashCode。而HashMap重新计算hash值。hashCode是jdk根据对象的地址或者字符串或者数字算出来的int类型的数值。Hashtable计算hash值，直接用key的hashCode()，而HashMap重新计算了key的hash值，Hashtable在求hash值对应的位置索引时，用取模运算，而HashMap在求位置索引时，则用与运算。</li>
-<li>扩容机制不同<br>Hashtable扩容时，将容量变为原来的2倍加1，而HashMap扩容时，将容量变为原来的2倍。HashTable在不指定容量的情况下的默认容量为11，而HashMap为16。</li>
-<li>底层结构不同<br><br>hashmap在jdk1.8引入了红黑树</li>
+<li><p>hashMap 1.7是线程不安全的，多线程扩容的时候会产生闭环，get就会产生死循环，这是因为头插法在多线程环境下导致的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">transfer</span><span class="params">(Entry[] newTable)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Entry[] src = table;</span><br><span class="line">    <span class="keyword">int</span> newCapacity = newTable.length;</span><br><span class="line">    <span class="comment">//下面这段代码的意思是：  从OldTable里摘一个元素出来，然后放到NewTable中</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; src.length; j++) &#123;</span><br><span class="line">        Entry&lt;K,V&gt; e = src[j];</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">            src[j] = <span class="keyword">null</span>; </span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                Entry&lt;K,V&gt; next = e.next;</span><br><span class="line">                <span class="keyword">int</span> i = indexFor(e.hash, newCapacity);</span><br><span class="line">                e.next = newTable[i];</span><br><span class="line">                newTable[i] = e;</span><br><span class="line">                e = next;</span><br><span class="line">            &#125; <span class="keyword">while</span> (e != <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>jdk1.8在多线程情况下扩容就不会出现死循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">    Node&lt;K,V&gt; loHead = <span class="keyword">null</span>, loTail = <span class="keyword">null</span>;</span><br><span class="line">    Node&lt;K,V&gt; hiHead = <span class="keyword">null</span>, hiTail = <span class="keyword">null</span>;</span><br><span class="line">    Node&lt;K,V&gt; next;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        next = e.next;</span><br><span class="line">        <span class="keyword">if</span> ((e.hash &amp; oldCap) == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (loTail == <span class="keyword">null</span>)</span><br><span class="line">                loHead = e;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                loTail.next = e;</span><br><span class="line">            loTail = e;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (hiTail == <span class="keyword">null</span>)</span><br><span class="line">                hiHead = e;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                hiTail.next = e;</span><br><span class="line">            hiTail = e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> ((e = next) != <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">if</span> (loTail != <span class="keyword">null</span>) &#123;</span><br><span class="line">        loTail.next = <span class="keyword">null</span>;</span><br><span class="line">        newTab[j] = loHead;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (hiTail != <span class="keyword">null</span>) &#123;</span><br><span class="line">        hiTail.next = <span class="keyword">null</span>;</span><br><span class="line">        newTab[j + oldCap] = hiHead;<span class="comment">//为什么每次扩容到原来的两倍就是因为这样不用rehash，直接加就行</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>jdk1.7链表会产生环，但是1.8不会，因为1.8节点的相对位置并没有改变(尾插法)，1.7会导致相对位置发生变化（头插法），而且没有进行rehash，减少了运算。即使不会出现死循环，但是通过源码看到put/get方法都没有加同步锁，多线程情况最容易出现的就是：无法保证上一秒put的值，下一秒get的时候还是原值，所以线程安全还是无法保证。</p>
+</li>
+<li><p>线程安全问题<br><br>HashMap在多线程环境下操作是线程不安全的，如果想使用线程安全的人Map容器，可以使用  ConcurrentHashMap，这个并发容器在jdk1.7和1.8的实现是不一样的，1.7是分段锁，jdk1.8是对每个数组进行syncronized锁+CAS实现,并发提高了数倍，而且jdk1.8底层引入了红黑树<br></p>
+</li>
+<li><p>与Hashtable的区别<br></p>
+</li>
+<li><p>线程安全性不同<br><br>hashtable是线程安全的，不过性能不好（方法上加Syncronized）</p>
+</li>
+<li><p>key和value是否允许null值<br><br> hashTable不允许key或者value为null ，hashMap允许,不过key只能有一个是nulll。</p>
+</li>
+<li><p>hash值不同<br><br>哈希值的使用不同，HashTable直接使用对象的hashCode。而HashMap重新计算hash值。hashCode是jdk根据对象的地址或者字符串或者数字算出来的int类型的数值。Hashtable计算hash值，直接用key的hashCode()，而HashMap重新计算了key的hash值，Hashtable在求hash值对应的位置索引时，用取模运算，而HashMap在求位置索引时，则用与运算。</p>
+</li>
+<li><p>扩容机制不同<br>Hashtable扩容时，将容量变为原来的2倍加1，而HashMap扩容时，将容量变为原来的2倍。HashTable在不指定容量的情况下的默认容量为11，而HashMap为16。</p>
+</li>
+<li><p>底层结构不同<br><br>hashmap在jdk1.8引入了红黑树<br></p>
+</li>
+</ul>
+</li>
+<li><p>HashMap常见面试题：</p>
+<ul>
+<li>HashMap的底层数据结构？</li>
+<li>HashMap的存取原理？</li>
+<li>Java7和Java8的区别？</li>
+<li>为啥会线程不安全？</li>
+<li>有什么线程安全的类代替么?</li>
+<li>默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂<br><br>16就是一个经验值，定义16没有很特别的原因，只要是2次幂，其实用 8 和 32 都差不多，都是2的幂是因为取index位置是hash&amp;（n-1）,n-1二进制是111，使得hash的值更均匀的分布。</li>
+<li>HashMap的扩容方式？负载因子是多少？为什是这么多？</li>
+<li>HashMap的主要参数都有哪些？</li>
+<li>HashMap是怎么处理hash碰撞的？</li>
+<li>hash的计算规则？</li>
+<li>链表在大于8的时候会转化为红黑树,当删除小于六时重新变为链表<br><br>根据泊松分布，在负载因子默认为0.75的时候，单个hash槽内元素个数为8的概率小于百万分之一，所以将7作为一个分水岭，等于7的时候不转换，大于等于8的时候才进行转换，小于等于6的时候就化为链表。</li>
 </ul>
 </li>
 </ul>
@@ -531,11 +552,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -543,7 +564,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -551,7 +572,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,15 +584,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -579,11 +596,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
             
             <div class="clearfix"></div>

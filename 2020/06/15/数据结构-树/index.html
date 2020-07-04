@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言　　树是数据结构中的重要知识点,相比较链表相对简单的增删改查操作,树因为有多个分叉,而且涉及到递归算法,所以里面有很多知识点可以挖掘,也是面试问得比较多的一块.且面试中常常以二叉树为主,所以本问主要介绍二叉树的一些基础算法,了解了这些再去刷题也不迟.">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-06-15T13:32:00.000Z">
-<meta property="article:modified_time" content="2020-07-01T08:07:22.397Z">
+<meta property="article:modified_time" content="2020-07-03T14:13:31.917Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="算法与数据结构">
 <meta name="twitter:card" content="summary">
@@ -204,15 +204,12 @@
 </li>
 </ul>
 <ul>
-<li><p>二叉树的深度</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">int</span> <span class="title">depth</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">int</span> left=depth(root.lchild);</span><br><span class="line">      <span class="keyword">int</span> right=depth(root.rchild);</span><br><span class="line">      <span class="keyword">return</span>  left&gt;=right?(left+<span class="number">1</span>):(right+<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>交换二叉树的左右子树(镜像反转)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//交换二叉树的左右子树</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    Bitree temp=root.lchild;</span><br><span class="line">    root.lchild=root.rchild;</span><br><span class="line">    root.rchild=temp;</span><br><span class="line">    swap(root.lchild);</span><br><span class="line">    swap(root.rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>二叉树的复制</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//复制二叉树</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  Bitree <span class="title">copy</span><span class="params">(Bitree root,Bitree copy)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        copy=<span class="keyword">new</span> Bitree(root.data);</span><br><span class="line">        copy.lchild=copy(root.lchild,copy);</span><br><span class="line">        copy.rchild=copy(root.rchild,copy);</span><br><span class="line">        <span class="keyword">return</span>  copy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>还有很多算法就是在递归遍历算法基础上改的,比如各种的查找算法(无非是加了查找条件,框架没变).还有很多,后面会继续加</p>
-</li>
+<li>二叉树的深度<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">int</span> <span class="title">depth</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">int</span> left=depth(root.lchild);</span><br><span class="line">      <span class="keyword">int</span> right=depth(root.rchild);</span><br><span class="line">      <span class="keyword">return</span>  left&gt;=right?(left+<span class="number">1</span>):(right+<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+<li>二叉树的直经（一棵二叉树的直径长度是任意两个结点路径长度中的最大值）<br><br>思路： 左子树 右子树深度相加最大值<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> max=<span class="number">0</span>;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">     <span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">int</span> left = helper(root.lchild);</span><br><span class="line">     <span class="keyword">int</span> right = helper(root.rchild);</span><br><span class="line">     max = Math.max(max, left + right);</span><br><span class="line">     <span class="keyword">return</span> Math.max(left, right) + <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">int</span> <span class="title">zhijing</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">     helper(root);</span><br><span class="line">     <span class="keyword">return</span> max;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+<li>交换二叉树的左右子树(镜像反转)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//交换二叉树的左右子树</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    Bitree temp=root.lchild;</span><br><span class="line">    root.lchild=root.rchild;</span><br><span class="line">    root.rchild=temp;</span><br><span class="line">    swap(root.lchild);</span><br><span class="line">    swap(root.rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>二叉树的复制<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//复制二叉树</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  Bitree <span class="title">copy</span><span class="params">(Bitree root,Bitree copy)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        copy=<span class="keyword">new</span> Bitree(root.data);</span><br><span class="line">        copy.lchild=copy(root.lchild,copy);</span><br><span class="line">        copy.rchild=copy(root.rchild,copy);</span><br><span class="line">        <span class="keyword">return</span>  copy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>合并二叉树<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">mergeTrees</span><span class="params">(TreeNode t1, TreeNode t2)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span>(t1==<span class="keyword">null</span>&amp;&amp;t2==<span class="keyword">null</span>)</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">     <span class="keyword">if</span>(t1==<span class="keyword">null</span>&amp;&amp;t2!=<span class="keyword">null</span>)</span><br><span class="line">         <span class="keyword">return</span> t2;</span><br><span class="line">     <span class="keyword">if</span>(t1!=<span class="keyword">null</span>&amp;&amp;t2==<span class="keyword">null</span>)</span><br><span class="line">         <span class="keyword">return</span> t1;</span><br><span class="line">     t1.val+=t2.val;</span><br><span class="line">     t1.left=mergeTrees(t1.left,t2.left);</span><br><span class="line">     t1.right=mergeTrees(t1.right,t2.right);</span><br><span class="line">     <span class="keyword">return</span> t1;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+还有很多算法就是在递归遍历算法基础上改的,比如各种的查找算法(无非是加了查找条件,框架没变).还有很多,后面会继续加</li>
 </ul>
 <h5 id="排序二叉树"><a href="#排序二叉树" class="headerlink" title="排序二叉树"></a>排序二叉树</h5><p>排序二叉树也是很重要的知识,像java集合中的TreeMap,TreeSet底层使用的就是红黑树(排序二叉树的改进).<br>排序二叉树是左边的节点的值都比根小,右边都比根大,不存在相等的节点.最大的特性就是中序遍历遍历它得到的结果是顺序的,这个可以解很多问题<br></p>
 <ul>
@@ -525,11 +522,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -537,7 +534,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,7 +542,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,15 +554,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -573,11 +566,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
             
             <div class="clearfix"></div>

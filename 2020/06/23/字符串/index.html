@@ -15,11 +15,13 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="字符串字符串是由许多字符组成的，本质上其实还是数组，只不过数组中存放的是字符。在平时开发的时候经常用到，在java中由于String是不可变的，每次操作字符串都不是在原来的字符串基础上，而是创建一个新的字符串，所以频繁的创建会导致常量池OOM，java中提供了在原来字符串上操作的StringBuffer（线程安全）和StringBuild（线程不安全）。线程安全同时意味这操作速度是不如线程不安全的">
 <meta property="og:locale" content="zh">
+<meta property="og:image" content="http://yoursite.com/images/l1.png">
 <meta property="article:published_time" content="2020-06-23T15:59:00.000Z">
-<meta property="article:modified_time" content="2020-06-25T08:51:21.661Z">
+<meta property="article:modified_time" content="2020-07-03T13:56:08.173Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="算法与数据结构">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/l1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -191,7 +193,13 @@
 </li>
 <li><p>数组排列成最小的数字（{3,2,11}组合的最小数字为1123）<br><br>思路：字符串全排列的思想。然后找到其中最小的数字。</p>
 </li>
-<li></li>
+<li><p>最长回文子串<br><br>思路：从每个元素为中心往左右扩散</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MaxHuiwen</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span>   <span class="keyword">int</span> startIndex;</span><br><span class="line">    <span class="keyword">public</span>  <span class="keyword">static</span> <span class="keyword">int</span> maxlength=Integer.MIN_VALUE;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(String s,<span class="keyword">int</span> c1,<span class="keyword">int</span> c2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(c1&gt;=<span class="number">0</span>&amp;&amp;c2&lt;s.length()&amp;&amp;s.charAt(c1)==s.charAt(c2))&#123;</span><br><span class="line">            c2++;</span><br><span class="line">            c1--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> tempstartIndex=c1+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> length=c2-c1-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(length&gt;maxlength)&#123;</span><br><span class="line">            maxlength=length;</span><br><span class="line">            startIndex=tempstartIndex;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s==<span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(s.length()==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">if</span>(s.length()==<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length()-<span class="number">1</span>;i++)&#123;</span><br><span class="line">            helper(s,i,i);<span class="comment">//字符串长度为计数</span></span><br><span class="line">            helper(s,i,i+<span class="number">1</span>);<span class="comment">//字符串长度为偶数</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.substring(startIndex,startIndex+maxlength);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       String s=<span class="keyword">new</span> String(<span class="string">"cbbd"</span>);</span><br><span class="line">        System.out.println(longestPalindrome(s));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>盛雨水最多问题<br><img src="/images/l1.png" alt=""><br>思路：木桶效应，盛水量取决于两边的较短端<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BucketWater</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(height.length&lt;<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>,j=height.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j)&#123;</span><br><span class="line">            <span class="keyword">if</span>(height[i]&lt;height[j])&#123;</span><br><span class="line">                res=Math.max(res,height[i]*(j-i));</span><br><span class="line">                i++;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                res=Math.max(res,height[j]*(j-i));</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> arr[]=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">8</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">8</span>,<span class="number">3</span>,<span class="number">7</span>&#125;;</span><br><span class="line">        System.out.println(maxArea(arr));<span class="comment">//49</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接雨水问题<br><br>思路：每一个柱子的高度方向可以接的雨水的数量 = min(从当前柱子向左看的最高柱子高度, 从当前柱子向右看的最高柱子高度) - 当前柱子高度<br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RainWater</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">method</span><span class="params">(<span class="keyword">int</span>[] height)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> length = height.length;</span><br><span class="line">        <span class="keyword">int</span>[] left = <span class="keyword">new</span> <span class="keyword">int</span>[length];<span class="comment">//保存从左往右遍历时，每一个下标位置当前的最高柱子高度</span></span><br><span class="line">        <span class="keyword">int</span>[] right = <span class="keyword">new</span> <span class="keyword">int</span>[length];<span class="comment">//保存从右往左遍历时，每一个下标位置当前的最高柱子高度</span></span><br><span class="line">        <span class="keyword">int</span> leftMax = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> rightMax = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算left和right数组</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (height[i] &gt; leftMax) &#123;</span><br><span class="line">                leftMax = height[i];</span><br><span class="line">            &#125;</span><br><span class="line">            left[i] = leftMax;</span><br><span class="line">            <span class="keyword">if</span> (height[length-<span class="number">1</span>-i] &gt; rightMax) &#123;</span><br><span class="line">                rightMax = height[length-<span class="number">1</span>-i];</span><br><span class="line">            &#125;</span><br><span class="line">            right[length-<span class="number">1</span>-i] = rightMax;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历，只有当前柱子往左看、往右看的最高柱子都比当前柱子高，才能接住雨水</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (height[j] &lt; left[j] &amp;&amp; height[j] &lt; right[j]) &#123;</span><br><span class="line">                sum = sum + Math.min(left[j], right[j]) - height[j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
@@ -488,11 +496,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -500,7 +508,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -508,7 +516,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -520,15 +528,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,11 +540,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
             
             <div class="clearfix"></div>

@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020/6 | Hexo</title>
+  <title>反射 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2020/06/index.html">
+  <meta name="description" content="为什么使用反射反射是通过class文件获取类信息，然后创建对象。是一种隐式创建对象的方法，使用Class.forName(“xxx”)，会触发类的加载并在方法区中创建class对象作为访问类元数据信息的接口。可以获取属性，方法，并且使用invoke方法调用方法。反射是动态加载类的基础。jvm在类加载的时候，会将加载的类生成一个对应的class对象，用来管理类的信息。使用反射的方法可以得到对应cla">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反射">
+<meta property="og:url" content="http://yoursite.com/2020/07/03/%E5%8F%8D%E5%B0%84/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="为什么使用反射反射是通过class文件获取类信息，然后创建对象。是一种隐式创建对象的方法，使用Class.forName(“xxx”)，会触发类的加载并在方法区中创建class对象作为访问类元数据信息的接口。可以获取属性，方法，并且使用invoke方法调用方法。反射是动态加载类的基础。jvm在类加载的时候，会将加载的类生成一个对应的class对象，用来管理类的信息。使用反射的方法可以得到对应cla">
 <meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-07-03T08:02:00.000Z">
+<meta property="article:modified_time" content="2020-07-03T08:53:25.478Z">
 <meta property="article:author" content="CodeXi">
+<meta property="article:tag" content="java基础">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -150,407 +155,222 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-反射" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      反射
+    </h1>
+  
+
+        
+        <a href="/2020/07/03/%E5%8F%8D%E5%B0%84/" class="archive-article-date">
+  	<time datetime="2020-07-03T08:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-03</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="为什么使用反射"><a href="#为什么使用反射" class="headerlink" title="为什么使用反射"></a>为什么使用反射</h5><p>反射是通过class文件获取类信息，然后创建对象。是一种隐式创建对象的方法，使用Class.forName(“xxx”)，会触发类的加载并在方法区中创建class对象作为访问类元数据信息的接口。可以获取属性，方法，并且使用invoke方法调用方法。反射是动态加载类的基础。jvm在类加载的时候，会将加载的类生成一个对应的class对象，用来管理类的信息。使用反射的方法可以得到对应class对象的引用。<br><br> <a id="more"></a><br>java的反射机制就是增加程序的灵活性，避免将程序写死到代码里<br><br>例如： 实例化一个 person()对象， 不使用反射， new person(); 如果想变成 实例化 其他类， 那么必须修改源代码，并重新编译。<br><br>使用反射： class.forName(“person”).newInstance()； 而且这个类描述可以写到配置文件中，如 **.xml, 这样如果想实例化其他类，只要修改配置文件的”类描述”就可以了，不需要重新修改代码并编译</p>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">   Dog d=<span class="keyword">new</span> Dog(<span class="string">"wangwang"</span>,<span class="number">11</span>);</span><br><span class="line">        System.out.println(d.getClass());<span class="comment">//class Reflect.Dog</span></span><br><span class="line">        <span class="comment">//得到Dog 的class对象</span></span><br><span class="line">        Class&lt;Dog&gt; aClass = (Class&lt;Dog&gt;) Class.forName(<span class="string">"Reflect.Dog"</span>);</span><br><span class="line">        System.out.println(aClass==d.getClass());<span class="comment">//true</span></span><br><span class="line"></span><br><span class="line">        Constructor&lt;?&gt;[] constructors = aClass.getConstructors();</span><br><span class="line">        System.out.println(constructors.length);<span class="comment">//2个构造器</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; constructors.length; i++) &#123;</span><br><span class="line">            System.out.println(constructors[i].getParameterCount());<span class="comment">//0 2</span></span><br><span class="line">            System.out.println(constructors[i].getTypeParameters());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Constructor&lt;Dog&gt; constructor = aClass.getConstructor(String<span class="class">.<span class="keyword">class</span>, <span class="title">Integer</span>.<span class="title">class</span>)</span>;</span><br><span class="line">        Dog d2 = constructor.newInstance(<span class="string">"wangwang"</span>, <span class="number">11</span>);</span><br><span class="line">        System.out.println(d2);<span class="comment">//Dog&#123;name='wangwang', age=11&#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取所有的共有属性</span></span><br><span class="line">        Field[] fields = aClass.getFields();</span><br><span class="line">        System.out.println(fields.length);<span class="comment">//1</span></span><br><span class="line">        Field[] declaredFields = aClass.getDeclaredFields();</span><br><span class="line">        System.out.println(declaredFields.length);<span class="comment">//2 获取所有的属性</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取属性信息</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; declaredFields.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> modifiers = declaredFields[i].getModifiers();</span><br><span class="line">            System.out.println(Modifier.toString(modifiers) + <span class="string">" "</span> + declaredFields[i].getName() + <span class="string">" "</span> + declaredFields[i].getType());</span><br><span class="line"><span class="comment">//            private name class java.lang.String</span></span><br><span class="line"><span class="comment">//            public age class java.lang.Integer</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//所有的共有方法，包括继承</span></span><br><span class="line">        Method[] methods = aClass.getMethods();</span><br><span class="line">        Dog dog = <span class="keyword">new</span> Dog(<span class="string">"wangwang"</span>, <span class="number">111</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; methods.length; i++) &#123;</span><br><span class="line"><span class="comment">//            System.out.println(methods[i]);</span></span><br><span class="line">            <span class="keyword">if</span> (methods[i].getName().equals(<span class="string">"toString"</span>)) &#123;</span><br><span class="line">                String s = <span class="keyword">null</span>;</span><br><span class="line">                s = (String) methods[i].invoke(dog);<span class="comment">//Dog&#123;name='wangwang', age=111&#125;</span></span><br><span class="line">                System.out.println(s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//获取本类定义的所有方法（不包括父类）</span></span><br><span class="line">        Method[] declaredMethods = aClass.getDeclaredMethods();</span><br><span class="line">        System.out.println(declaredMethods.length);<span class="comment">//5</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; declaredMethods.length; i++) &#123;</span><br><span class="line"><span class="comment">//            System.out.println(declaredMethods[i]);</span></span><br><span class="line">            <span class="comment">//设置私有的方法可以被访问</span></span><br><span class="line">            declaredMethods[i].setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            <span class="keyword">if</span> (declaredMethods[i].getName().equals(<span class="string">"testPrivate"</span>)) &#123;</span><br><span class="line">                String s = (String) declaredMethods[i].invoke(d);</span><br><span class="line">                System.out.println(s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="内省"><a href="#内省" class="headerlink" title="内省"></a>内省</h5><p>使用反射对对象的属性赋值修改比较麻烦，所以就有了内省。就是针对java的属性（有get和set方法）进行赋值和修改。底层也是反射，对反射做了一些封装便于使用．</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name = <span class="string">"张三"</span>;<span class="comment">//这是字段</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;<span class="comment">//这是字段</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Date birthday;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;<span class="comment">//这才是属性，属性指的是设置setter和读取getter字段的方法</span></span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">getBirthday</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> birthday;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBirthday</span><span class="params">(Date birthday)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.birthday = birthday;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//虽然上边的字段里没定义abc这个字段</span></span><br><span class="line">    <span class="comment">//但这也是属性：属性名称是abc，注意：只要是set或者get开头的方法都叫属性</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAbc</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"abc"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1</span> </span>&#123;</span><br><span class="line">    <span class="comment">//验证内省针对含有get 或者 set 的属性</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//得到Student类中的属性，被封装到了BeanInfo中</span></span><br><span class="line">        BeanInfo bi = Introspector.getBeanInfo(Student<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="comment">//得到类中的所有的属性描述器</span></span><br><span class="line">        PropertyDescriptor[] pds = bi.getPropertyDescriptors();</span><br><span class="line">        System.out.println(<span class="string">"属性的个数："</span>+pds.length);<span class="comment">//5</span></span><br><span class="line">        <span class="keyword">for</span>(PropertyDescriptor pd:pds)&#123;</span><br><span class="line">            System.out.println(<span class="string">"属性:"</span>+pd.getName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//验证使用内省操作方法</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> <span class="keyword">throws</span> ClassNotFoundException, IllegalAccessException, InstantiationException, IntrospectionException, InvocationTargetException </span>&#123;</span><br><span class="line">        Class clazz = Class.forName(<span class="string">"Introspector.Student"</span>);</span><br><span class="line">        Student s = (Student)clazz.newInstance();</span><br><span class="line">        PropertyDescriptor pd = <span class="keyword">new</span> PropertyDescriptor(<span class="string">"name"</span>, Student<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        Method m = pd.getReadMethod();<span class="comment">//得到getName()方法</span></span><br><span class="line">        String value = (String)m.invoke(s, <span class="keyword">null</span>);<span class="comment">//调用getName()方法</span></span><br><span class="line">        System.out.println(<span class="string">"调用get方法得到name的值："</span>+value);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//改变name的值</span></span><br><span class="line">        Method m1 = pd.getWriteMethod();<span class="comment">//得到setName()方法</span></span><br><span class="line">        m1.invoke(s, <span class="string">"李四"</span>);<span class="comment">//调用setName()方法去修改name的值</span></span><br><span class="line">        System.out.println(<span class="string">"调用set方法改变name的值："</span>+s.getName());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="BeanUtils"><a href="#BeanUtils" class="headerlink" title="BeanUtils"></a>BeanUtils</h5><p>但是使用Introspector还是复杂，所以介绍新的工具BeanUtils</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    Student s = <span class="keyword">new</span> Student();</span><br><span class="line">    <span class="comment">//为什么要返回字符串：用户的所有输入都是字符串</span></span><br><span class="line">    String str = BeanUtils.getProperty(s, <span class="string">"name"</span>);<span class="comment">//调用getName方法</span></span><br><span class="line">    System.out.println(str);</span><br><span class="line">    <span class="comment">//设置值</span></span><br><span class="line">    BeanUtils.setProperty(s, <span class="string">"name"</span>, <span class="string">"王五"</span>);</span><br><span class="line">    System.out.println(s.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h5><p>注解起到标识做用，比如Junit的@Test注解<br><br>Junit会在运行时检查方法上是否存在此注解，如果存在，就通过 反射 来运行你的方法。<br><br>反射在注解里相当重要，写完你的自定义注解类后没啥用，必须要用反射才能让它动起来。<br><br>注解可以用来代替配置文件，就比如Spring有基于配置文件的，有基于注解的开发。用了注解以后，可以减少项目的配置文件，使代码看起来更优雅。在Java技术里注解的典型应用是：可以通过反射技术去得到类里面的注解，以决定怎么去运行类<br>掌握注解技术的要点： 如何定义注解、如何反射注解，并根据反射的注解信息，决定如何去运行.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">//自定义注解</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)<span class="comment">//注解存在于运行时</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)<span class="comment">//说明MyTest注解只能用在方法上</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTest &#123;</span><br><span class="line">    <span class="comment">//里面也可以设置属性   比如：String name();注解属性定义完以后，使用：@MyTest(name="hello")</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoTest1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"test1执行了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"test2执行了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//反射注解：</span></span><br><span class="line"><span class="comment">//取得类的字节码</span></span><br><span class="line"><span class="comment">//反射其中的成员，此处就是方法成员</span></span><br><span class="line"><span class="comment">//看谁的上面有MyTest注解</span></span><br><span class="line"><span class="comment">//谁有，就执行谁</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyJunitRunner</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException </span>&#123;</span><br><span class="line">        <span class="comment">//取得类的字节码</span></span><br><span class="line">        Class clazz = DemoTest1<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">        <span class="comment">//反射其中的成员，此处就是方法成员</span></span><br><span class="line">        Method methods[] = clazz.getMethods();<span class="comment">//得到DemoTest1中的所有公有的方法</span></span><br><span class="line">        <span class="comment">//看谁的上面有MyTest注解</span></span><br><span class="line">        <span class="keyword">for</span>(Method m:methods)&#123;</span><br><span class="line">            <span class="comment">//谁有，就执行谁</span></span><br><span class="line">            <span class="keyword">boolean</span> b = m.isAnnotationPresent(MyTest<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">            System.out.println(b+<span class="string">"==="</span>+m.getName());</span><br><span class="line">            <span class="keyword">if</span>(b)&#123;</span><br><span class="line">                m.invoke(clazz.newInstance(), <span class="keyword">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * false===test2</span></span><br><span class="line"><span class="comment">     * true===test1</span></span><br><span class="line"><span class="comment">     * test1执行了</span></span><br><span class="line"><span class="comment">     * false===wait</span></span><br><span class="line"><span class="comment">     * false===wait</span></span><br><span class="line"><span class="comment">     * false===wait</span></span><br><span class="line"><span class="comment">     * false===equals</span></span><br><span class="line"><span class="comment">     * false===toString</span></span><br><span class="line"><span class="comment">     * false===hashCode</span></span><br><span class="line"><span class="comment">     * false===getClass</span></span><br><span class="line"><span class="comment">     * false===notify</span></span><br><span class="line"><span class="comment">     * false===notifyAll</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>例子２：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;METHOD,TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> JDBCConfig &#123;</span><br><span class="line">     <span class="function">String <span class="title">ip</span><span class="params">()</span></span>; </span><br><span class="line">     <span class="function"><span class="keyword">int</span> <span class="title">port</span><span class="params">()</span> <span class="keyword">default</span> 3306</span>; </span><br><span class="line">     <span class="function">String <span class="title">database</span><span class="params">()</span></span>; </span><br><span class="line">     <span class="function">String <span class="title">encoding</span><span class="params">()</span></span>; </span><br><span class="line">     <span class="function">String <span class="title">loginName</span><span class="params">()</span></span>; </span><br><span class="line">     <span class="function">String <span class="title">password</span><span class="params">()</span></span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JDBCConfig</span>(ip = <span class="string">"127.0.0.1"</span>, database = <span class="string">"test"</span>, encoding = <span class="string">"UTF-8"</span>, loginName = <span class="string">"root"</span>, password = <span class="string">"admin"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DBUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException, NoSuchMethodException, SecurityException </span>&#123;</span><br><span class="line">        JDBCConfig config = DBUtil<span class="class">.<span class="keyword">class</span>.<span class="title">getAnnotation</span>(<span class="title">JDBCConfig</span>.<span class="title">class</span>)</span>;</span><br><span class="line"> </span><br><span class="line">        String ip = config.ip();</span><br><span class="line">        <span class="keyword">int</span> port = config.port();</span><br><span class="line">        String database = config.database();</span><br><span class="line">        String encoding = config.encoding();</span><br><span class="line">        String loginName = config.loginName();</span><br><span class="line">        String password = config.password();</span><br><span class="line"> </span><br><span class="line">        String url = String.format(<span class="string">"jdbc:mysql://%s:%d/%s?characterEncoding=%s"</span>, ip, port, database, encoding);</span><br><span class="line">        <span class="keyword">return</span> DriverManager.getConnection(url, loginName, password);</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException, SQLException </span>&#123;</span><br><span class="line">        Connection c = getConnection();</span><br><span class="line">        System.out.println(c);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E5%92%8CDocker/" class="archive-article-date">
-  	<time datetime="2020-06-30T11:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E5%92%8CDocker/">Springcloud与Docker微服务架构实战 大纲</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">分布式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">java基础</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/03/%E5%8F%8D%E5%B0%84/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/29/Dubbo%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-  	<time datetime="2020-06-28T23:38:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-29</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/07/03/java%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          java基础
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/07/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">计算机网络面试题目整理</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/29/Dubbo%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">Dubbo分布式项目介绍</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么使用反射"><span class="toc-number">1.</span> <span class="toc-text">为什么使用反射</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#代码"><span class="toc-number">2.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#内省"><span class="toc-number">3.</span> <span class="toc-text">内省</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#BeanUtils"><span class="toc-number">4.</span> <span class="toc-text">BeanUtils</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#注解"><span class="toc-number">5.</span> <span class="toc-text">注解</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/28/SpringCloud%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-  	<time datetime="2020-06-28T10:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-28</time>
-</a>
-        </div>
-    	 
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="反射" data-title="反射" data-url="http://yoursite.com/2020/07/03/%E5%8F%8D%E5%B0%84/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/28/SpringCloud%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">SpringCloud分布式项目介绍</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-  	<time datetime="2020-06-27T10:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">秒杀项目介绍</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/27/%E5%89%91%E6%8C%87offer%E9%A2%98%E7%9B%AE%E6%80%9D%E8%B7%AF%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2020-06-27T09:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/27/%E5%89%91%E6%8C%87offer%E9%A2%98%E7%9B%AE%E6%80%9D%E8%B7%AF%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/">剑指offer题目思路简单总结</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/27/%E5%89%91%E6%8C%87offer%E5%92%8Cjava%E9%9D%A2%E8%AF%95%E7%AE%97%E6%B3%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-06-27T09:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/27/%E5%89%91%E6%8C%87offer%E5%92%8Cjava%E9%9D%A2%E8%AF%95%E7%AE%97%E6%B3%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/">剑指offer和java面试算法题目整理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/27/Untitled/" class="archive-article-date">
-  	<time datetime="2020-06-27T07:01:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/27/Untitled/">消息队列（RabbitMQ）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">消息中间件</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/25/Redis/" class="archive-article-date">
-  	<time datetime="2020-06-25T15:03:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/25/Redis/">Redis</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/25/%E6%95%B0%E5%AD%A6%E8%AE%A1%E7%AE%97%E5%92%8C%E6%8A%BD%E8%B1%A1%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-06-25T00:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/25/%E6%95%B0%E5%AD%A6%E8%AE%A1%E7%AE%97%E5%92%8C%E6%8A%BD%E8%B1%A1%E9%97%AE%E9%A2%98/">数学计算和抽象问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/24/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%92%8C%E8%B4%AA%E5%A9%AA%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-06-24T05:18:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/24/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%92%8C%E8%B4%AA%E5%A9%AA%E7%AE%97%E6%B3%95/">动态规划和贪婪算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2020/06/page/2/">2</a><a class="page-number" href="/archives/2020/06/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2020/06/page/5/">5</a><a class="extend next" rel="next" href="/archives/2020/06/page/2/">Next &amp;raquo;</a>
-    </nav>
-  
-
 
 
           </div>
@@ -573,8 +393,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
