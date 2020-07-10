@@ -152,6 +152,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-基于ElasticSearch和Spark的推荐搜索系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/10/%E5%9F%BA%E4%BA%8EElasticSearch%E5%92%8CSpark%E7%9A%84%E6%8E%A8%E8%8D%90%E6%90%9C%E7%B4%A2%E7%B3%BB%E7%BB%9F/">基于ElasticSearch和Spark的搜索推荐系统</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/10/%E5%9F%BA%E4%BA%8EElasticSearch%E5%92%8CSpark%E7%9A%84%E6%8E%A8%E8%8D%90%E6%90%9C%E7%B4%A2%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
+  	<time datetime="2020-07-10T02:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>这个项目主要是仿照大众点评的推荐和搜索功能。使用ElasticSearch搭建分布式的搜索功能，还可以自定义打分的策略来影响搜索结果的排序;使用Spark的MLlib库实现基于机器学习算法（ALS推荐算法和逻辑回归算法）的推荐功能。基于SpringBoot搭建，前端和后台管理界面使用的是模板。</p>
+        
+          <a class="article-more-a" href="/2020/07/10/%E5%9F%BA%E4%BA%8EElasticSearch%E5%92%8CSpark%E7%9A%84%E6%8E%A8%E8%8D%90%E6%90%9C%E7%B4%A2%E7%B3%BB%E7%BB%9F/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/10/%E5%9F%BA%E4%BA%8EElasticSearch%E5%92%8CSpark%E7%9A%84%E6%8E%A8%E8%8D%90%E6%90%9C%E7%B4%A2%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-ConcurrentHashMap-HashTable" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -173,80 +249,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>之前对于ConcurrentHashMap的底层不是很了解，最近在知乎看到一篇大佬写的文章<a href="https://zhuanlan.zhihu.com/p/97902016" target="_blank" rel="noopener">《吊打面试官》系列-ConcurrentHashMap &amp; HashTable</a>,不是CSDN那种复制粘贴的出来的文章。里面骚话图片有点多（狗头保命），就把主要的内容梳理一遍。</p>
-<h5 id="HashTable"><a href="#HashTable" class="headerlink" title="HashTable"></a>HashTable</h5><p>HashTable都知道是线程安全的，它所有的方法（包括get）都加了sysncronized方法实现线程安全，性能肯定不行。还有一种把集合变成线程安全的方式：Collections.synchronizedCollection()，其底层有一个final类型的mutux变量，在访问方法的时候会对这个变量加锁，就是由hashtable中的同步方法变成了同步代码块，本质一样的。<br></p>
-<p>Hashtable 是不允许键或值为 null 的，HashMap 的键值则都可以为 null。这里涉及快速失败和安全失败的区别，简单来讲就是在多线程正在遍历集合的时候如果有线程修改，快速失败就是统计modcount是否发生变化，如果变化了就抛出异常;而安全失败是操作的时候新开辟内存，不会抛出异常，出现的问题就是读到的数据不一定是最新的数据，HashTable是安全失败，先了解到这里吧。<br><br>和HashMap的区别：<br></p>
-<ul>
-<li>实现方式不同：Hashtable 继承了 Dictionary类，而 HashMap 继承的是 AbstractMap 类。Dictionary 是 JDK 1.0 添加的.</li>
-<li>初始化容量不同：HashMap 的初始容量为：16，Hash。ble 初始容量为：11，两者的负载因子默认都是：0.75。</li>
-<li>扩容机制不同：当现有容量大于总容量 * 负载因子时，HashMap 扩容规则为当前容量翻倍，Hashtable 扩容规则为当前容量翻倍 + 1。</li>
-<li>迭代器不同：HashMap 中的 Iterator 迭代器是 fail-fast 的，而 Hashtable 的是 fail-safe 的。所以，当其他线程改变了HashMap 的结构，如：增加、删除元素，将会抛出ConcurrentModificationException 异常，而 Hashtable 则不会.</li>
-<li>底层数据结构也不同，jdk1.8 hashMap引入了红黑树</li>
-</ul>
-<h5 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h5><p>ConcurrentHashMap jdk1.7和1.8实现方式是不一样的，要区别来看。</p>
-<h6 id="JDK1-7"><a href="#JDK1-7" class="headerlink" title="JDK1.7"></a>JDK1.7</h6><p><img src="/images/c1.jpg" alt=""><br>是由 Segment 数组、HashEntry 组成，和 HashMap 一样，仍然是数组加链表。Segment 是 ConcurrentHashMap 的一个内部类，主要的组成如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Segment</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">ReentrantLock</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">2249069246763182397L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 和 HashMap 中的 HashEntry 作用一样，真正存放数据的桶</span></span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">volatile</span> HashEntry&lt;K,V&gt;[] table;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">int</span> count;</span><br><span class="line">        <span class="comment">// 记得快速失败（fail—fast）么？</span></span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">int</span> modCount;</span><br><span class="line">        <span class="comment">// 大小</span></span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">int</span> threshold;</span><br><span class="line">        <span class="comment">// 负载因子</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">float</span> loadFactor;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>HashEntry跟HashMap差不多的，但是不同点是，他使用volatile去修饰了他的数据Value还有下一个节点next。来保证多线程下并发的可见性和有序性。<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">那你能说说他并发度高的原因么？</span><br></pre></td></tr></table></figure>
-<p>原理上来说，ConcurrentHashMap 采用了分段锁技术，其中 Segment 继承于 ReentrantLock。</p>
-<p>不会像 HashTable 那样不管是 put 还是 get 操作都需要做同步处理，理论上 ConcurrentHashMap 支持 CurrencyLevel (Segment 数组数量)的线程并发。</p>
-<p>每当一个线程占用锁访问一个 Segment 时，不会影响到其他的 Segment。</p>
-<p>就是说如果容量大小是16他的并发度就是16，可以同时允许16个线程操作16个Segment而且还是线程安全的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">    Segment&lt;K,V&gt; s;</span><br><span class="line">    <span class="keyword">if</span> (value == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();<span class="comment">//这就是为啥他不可以put null值的原因</span></span><br><span class="line">    <span class="keyword">int</span> hash = hash(key);</span><br><span class="line">    <span class="keyword">int</span> j = (hash &gt;&gt;&gt; segmentShift) &amp; segmentMask;</span><br><span class="line">    <span class="keyword">if</span> ((s = (Segment&lt;K,V&gt;)UNSAFE.getObject          </span><br><span class="line">         (segments, (j &lt;&lt; SSHIFT) + SBASE)) == <span class="keyword">null</span>) </span><br><span class="line">        s = ensureSegment(j);</span><br><span class="line">    <span class="keyword">return</span> s.put(key, hash, value, <span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>他先定位到Segment，然后再进行put操作。<br></p>
-<ul>
-<li><p>put源码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> V <span class="title">put</span><span class="params">(K key, <span class="keyword">int</span> hash, V value, <span class="keyword">boolean</span> onlyIfAbsent)</span> </span>&#123;</span><br><span class="line">         <span class="comment">// 将当前 Segment 中的 table 通过 key 的 hashcode 定位到 HashEntry</span></span><br><span class="line">           HashEntry&lt;K,V&gt; node = tryLock() ? <span class="keyword">null</span> :</span><br><span class="line">               scanAndLockForPut(key, hash, value);</span><br><span class="line">           V oldValue;</span><br><span class="line">           <span class="keyword">try</span> &#123;</span><br><span class="line">               HashEntry&lt;K,V&gt;[] tab = table;</span><br><span class="line">               <span class="keyword">int</span> index = (tab.length - <span class="number">1</span>) &amp; hash;</span><br><span class="line">               HashEntry&lt;K,V&gt; first = entryAt(tab, index);</span><br><span class="line">               <span class="keyword">for</span> (HashEntry&lt;K,V&gt; e = first;;) &#123;</span><br><span class="line">                   <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">                       K k;</span><br><span class="line"><span class="comment">// 遍历该 HashEntry，如果不为空则判断传入的 key 和当前遍历的 key 是否相等，相等则覆盖旧的 value。</span></span><br><span class="line">                       <span class="keyword">if</span> ((k = e.key) == key ||</span><br><span class="line">                           (e.hash == hash &amp;&amp; key.equals(k))) &#123;</span><br><span class="line">                           oldValue = e.value;</span><br><span class="line">                           <span class="keyword">if</span> (!onlyIfAbsent) &#123;</span><br><span class="line">                               e.value = value;</span><br><span class="line">                               ++modCount;</span><br><span class="line">                           &#125;</span><br><span class="line">                           <span class="keyword">break</span>;</span><br><span class="line">                       &#125;</span><br><span class="line">                       e = e.next;</span><br><span class="line">                   &#125;</span><br><span class="line">                   <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 不为空则需要新建一个 HashEntry 并加入到 Segment 中，同时会先判断是否需要扩容。</span></span><br><span class="line">                       <span class="keyword">if</span> (node != <span class="keyword">null</span>)</span><br><span class="line">                           node.setNext(first);</span><br><span class="line">                       <span class="keyword">else</span></span><br><span class="line">                           node = <span class="keyword">new</span> HashEntry&lt;K,V&gt;(hash, key, value, first);</span><br><span class="line">                       <span class="keyword">int</span> c = count + <span class="number">1</span>;</span><br><span class="line">                       <span class="keyword">if</span> (c &gt; threshold &amp;&amp; tab.length &lt; MAXIMUM_CAPACITY)</span><br><span class="line">                           rehash(node);</span><br><span class="line">                       <span class="keyword">else</span></span><br><span class="line">                           setEntryAt(tab, index, node);</span><br><span class="line">                       ++modCount;</span><br><span class="line">                       count = c;</span><br><span class="line">                       oldValue = <span class="keyword">null</span>;</span><br><span class="line">                       <span class="keyword">break</span>;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">              <span class="comment">//释放锁</span></span><br><span class="line">               unlock();</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">return</span> oldValue;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-<p>首先第一步的时候会尝试获取锁，如果获取失败肯定就有其他线程存在竞争，则利用 scanAndLockForPut() 自旋获取锁。</p>
-<ul>
-<li>尝试自旋获取锁。</li>
-<li>如果重试的次数达到了 MAX_SCAN_RETRIES 则改为阻塞锁获取，保证能获取成功<br></li>
-</ul>
-<p>get的逻辑就是根据Hash定位到哪一个segment，再通过一次 Hash 定位到具体的元素上。get的时候是不需要加锁的，因为没有对元素进行修改，不会造成线程安全问题，有种读写锁感觉。<br></p>
-</li>
-<li><p>存在的问题<br><br>是的，因为基本上还是数组加链表的方式，我们去查询的时候，还得遍历链表，会导致效率很低，这个跟jdk1.7的HashMap是存在的一样问题，所以他在jdk1.8完全优化了(红黑树)。</p>
-</li>
-</ul>
-<h6 id="JDK1-8"><a href="#JDK1-8" class="headerlink" title="JDK1.8"></a>JDK1.8</h6><p>其中抛弃了原有的 Segment 分段锁，而采用了 CAS + synchronized 来保证并发安全性。</p>
-<p>跟HashMap很像，也把之前的HashEntry改成了Node，但是作用不变，把值和next采用了volatile去修饰，保证了可见性，并且也引入了红黑树，在链表大于一定值的时候会转换（默认是8）。</p>
-<ul>
-<li>put操作<br><ul>
-<li>根据 key 计算出 hashcode 。</li>
-<li>判断是否需要进行初始化。</li>
-<li>即为当前 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败则自旋保证成功。</li>
-<li>如果当前位置的 hashcode == MOVED == -1,则需要进行扩容。</li>
-<li>如果都不满足，则利用 synchronized 锁写入数据。</li>
-<li>如果数量大于 TREEIFY_THRESHOLD 则要转换为红黑树。<br>
-
-
-</li>
-</ul>
-</li>
-</ul>
-<p> 关于CAS操作，之前的博客也写了，是一种乐观锁的机制，产生的问题就是ABA，解决方案就是绑定时间戳或者版本。<br></p>
-<p> synchronized之前一直都是重量级的锁，但是后来java官方是对他进行过升级的，他现在采用的是锁升级的方式去做的。<br>针对 synchronized 获取锁的方式，JVM 使用了锁升级的优化方式，就是先使用偏向锁优先同一线程然后再次获取锁，如果失败，就升级为 CAS 轻量级锁，如果失败就会短暂自旋，防止线程被系统挂起。最后如果以上都失败就升级为重量级锁。<br>所以是一步步升级上去的，最初也是通过很多轻量级的方式锁定的。</p>
-<ul>
-<li>get操作<ul>
-<li>根据计算出来的 hashcode 寻址，如果就在桶上那么直接返回值。</li>
-<li>如果是红黑树那就按照树的方式获取值。</li>
-<li>就不满足那就按照链表的方式遍历获取值。<br></li>
-</ul>
-</li>
-</ul>
-<p>小结：1.8 在 1.7 的数据结构上做了大的改动，采用红黑树之后可以保证查询效率（O(logn)），甚至取消了 ReentrantLock 改为了 synchronized，这样可以看出在新版的 JDK 中对 synchronized 优化是很到位的。</p>
-<h5 id="常见面试问题"><a href="#常见面试问题" class="headerlink" title="常见面试问题"></a>常见面试问题</h5><p>谈谈你理解的 Hashtable，讲讲其中的 get put 过程。ConcurrentHashMap同问。</p>
-<p>1.8 做了什么优化？</p>
-<p>线程安全怎么做的？</p>
-<p>不安全会导致哪些问题？</p>
-<p>如何解决？有没有线程安全的并发容器？</p>
-<p>ConcurrentHashMap 是如何实现的？</p>
-<p>ConcurrentHashMap并发度为啥好这么多？</p>
-<p>1.7、1.8 实现有何不同？为什么这么做？</p>
-<p>CAS是啥？</p>
-<p>ABA是啥？场景有哪些，怎么解决？</p>
-<p>synchronized底层原理是啥？</p>
-<p>synchronized锁升级策略</p>
-<p>快速失败（fail—fast）是啥，应用场景有哪些？安全失败（fail—safe）同问</p>
-
+        
+          <a class="article-more-a" href="/2020/07/04/ConcurrentHashMap-HashTable/#more">more >></a>
+        
       
 
       
@@ -910,83 +915,6 @@
 
 
   
-    <article id="post-剑指offer题目思路简单总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/27/%E5%89%91%E6%8C%87offer%E9%A2%98%E7%9B%AE%E6%80%9D%E8%B7%AF%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/">剑指offer题目思路简单总结</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/27/%E5%89%91%E6%8C%87offer%E9%A2%98%E7%9B%AE%E6%80%9D%E8%B7%AF%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2020-06-27T09:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这个是看完剑指offer大部分题目思路的简单总结，方便有时候想不起来的时候看。</p>
-<h5 id="第二章-面试的基础"><a href="#第二章-面试的基础" class="headerlink" title="第二章  面试的基础"></a>第二章  面试的基础</h5><p>  单例设计模式：饿汉式（不按需分配） 饿汉式（按需分配，需要才使用）<br>
-        
-          <a class="article-more-a" href="/2020/06/27/%E5%89%91%E6%8C%87offer%E9%A2%98%E7%9B%AE%E6%80%9D%E8%B7%AF%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/27/%E5%89%91%E6%8C%87offer%E9%A2%98%E7%9B%AE%E6%80%9D%E8%B7%AF%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1121,6 +1049,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
@@ -1133,11 +1065,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1146,10 +1078,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">

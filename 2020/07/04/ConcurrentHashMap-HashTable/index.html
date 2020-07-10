@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>ConcurrentHashMap &amp; HashTable | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言之前对于ConcurrentHashMap的底层不是很了解，最近在知乎看到一篇大佬写的文章《吊打面试官》系列-ConcurrentHashMap &amp; HashTable,不是CSDN那种复制粘贴的出来的文章。里面骚话图片有点多（狗头保命），就把主要的内容梳理一遍。 HashTableHashTable都知道是线程安全的，它所有的方法（包括get）都加了sysncronized方法实现线">
+  <meta name="description" content="前言之前对于ConcurrentHashMap的底层不是很了解，最近在知乎看到一篇大佬写的文章《吊打面试官》系列-ConcurrentHashMap &amp; HashTable,不是CSDN那种复制粘贴的出来的文章。里面骚话图片有点多（狗头保命），就把主要的内容梳理一遍。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ConcurrentHashMap &amp; HashTable">
 <meta property="og:url" content="http://yoursite.com/2020/07/04/ConcurrentHashMap-HashTable/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前言之前对于ConcurrentHashMap的底层不是很了解，最近在知乎看到一篇大佬写的文章《吊打面试官》系列-ConcurrentHashMap &amp; HashTable,不是CSDN那种复制粘贴的出来的文章。里面骚话图片有点多（狗头保命），就把主要的内容梳理一遍。 HashTableHashTable都知道是线程安全的，它所有的方法（包括get）都加了sysncronized方法实现线">
+<meta property="og:description" content="前言之前对于ConcurrentHashMap的底层不是很了解，最近在知乎看到一篇大佬写的文章《吊打面试官》系列-ConcurrentHashMap &amp; HashTable,不是CSDN那种复制粘贴的出来的文章。里面骚话图片有点多（狗头保命），就把主要的内容梳理一遍。">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/images/c1.jpg">
 <meta property="article:published_time" content="2020-07-04T04:38:29.000Z">
-<meta property="article:modified_time" content="2020-07-04T05:26:17.127Z">
+<meta property="article:modified_time" content="2020-07-10T12:44:16.058Z">
 <meta property="article:author" content="CodeXi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/c1.jpg">
@@ -177,6 +177,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>之前对于ConcurrentHashMap的底层不是很了解，最近在知乎看到一篇大佬写的文章<a href="https://zhuanlan.zhihu.com/p/97902016" target="_blank" rel="noopener">《吊打面试官》系列-ConcurrentHashMap &amp; HashTable</a>,不是CSDN那种复制粘贴的出来的文章。里面骚话图片有点多（狗头保命），就把主要的内容梳理一遍。</p>
+<a id="more"></a>
 <h5 id="HashTable"><a href="#HashTable" class="headerlink" title="HashTable"></a>HashTable</h5><p>HashTable都知道是线程安全的，它所有的方法（包括get）都加了sysncronized方法实现线程安全，性能肯定不行。还有一种把集合变成线程安全的方式：Collections.synchronizedCollection()，其底层有一个final类型的mutux变量，在访问方法的时候会对这个变量加锁，就是由hashtable中的同步方法变成了同步代码块，本质一样的。<br></p>
 <p>Hashtable 是不允许键或值为 null 的，HashMap 的键值则都可以为 null。这里涉及快速失败和安全失败的区别，简单来讲就是在多线程正在遍历集合的时候如果有线程修改，快速失败就是统计modcount是否发生变化，如果变化了就抛出异常;而安全失败是操作的时候新开辟内存，不会抛出异常，出现的问题就是读到的数据不一定是最新的数据，HashTable是安全失败，先了解到这里吧。<br><br>和HashMap的区别：<br></p>
 <ul>
@@ -342,6 +343,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/07/10/%E5%9F%BA%E4%BA%8EElasticSearch%E5%92%8CSpark%E7%9A%84%E6%8E%A8%E8%8D%90%E6%90%9C%E7%B4%A2%E7%B3%BB%E7%BB%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          基于ElasticSearch和Spark的搜索推荐系统
+        
+      </div>
+    </a>
   
   
     <a href="/2020/07/03/java%E5%9F%BA%E7%A1%80/" id="article-nav-older" class="article-nav-link-wrap">
@@ -541,6 +551,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
@@ -553,11 +567,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -566,10 +580,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
