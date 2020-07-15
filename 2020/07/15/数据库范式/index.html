@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>单例模式 | Hexo</title>
+  <title>数据库范式 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言单例设计模式的主要作用是创建的对象在内存中只有一份,就像你玩的游戏的NPC一样,不可能为每一个永用户都创建一个NPC;spring创建的Bean的默认作用范围也是单例的…很多场景就需要系统中这个对象只有一份. 创建单例的几种常见方法">
+  <meta name="description" content="介绍数据库范式是帮助我们如何更好的设计表结构，使得不会出现数据冗余、插入删除异常等情况的发生，让数据库性能更好。 一些概念介绍 码：可以唯一确定一行数据的属性或者属性组，码可以有多个 主属性：码里的属性就是主属性 非主属性：除了主属性外的其他属性 完全函数依赖： 如果码是一个属性组（A,B），对于一个属性C，如果必须（A,B）两个属性都确定了，才可以确定C的值，那么C就完全依赖于码（A,B）。例如">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单例模式">
-<meta property="og:url" content="http://yoursite.com/2020/06/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:title" content="数据库范式">
+<meta property="og:url" content="http://yoursite.com/2020/07/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%8C%83%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前言单例设计模式的主要作用是创建的对象在内存中只有一份,就像你玩的游戏的NPC一样,不可能为每一个永用户都创建一个NPC;spring创建的Bean的默认作用范围也是单例的…很多场景就需要系统中这个对象只有一份. 创建单例的几种常见方法">
+<meta property="og:description" content="介绍数据库范式是帮助我们如何更好的设计表结构，使得不会出现数据冗余、插入删除异常等情况的发生，让数据库性能更好。 一些概念介绍 码：可以唯一确定一行数据的属性或者属性组，码可以有多个 主属性：码里的属性就是主属性 非主属性：除了主属性外的其他属性 完全函数依赖： 如果码是一个属性组（A,B），对于一个属性C，如果必须（A,B）两个属性都确定了，才可以确定C的值，那么C就完全依赖于码（A,B）。例如">
 <meta property="og:locale" content="zh">
-<meta property="article:published_time" content="2020-06-17T02:19:19.000Z">
-<meta property="article:modified_time" content="2020-06-17T02:45:46.917Z">
+<meta property="og:image" content="http://yoursite.com/images/1111.png">
+<meta property="article:published_time" content="2020-07-15T00:38:00.000Z">
+<meta property="article:modified_time" content="2020-07-15T00:59:27.658Z">
 <meta property="article:author" content="CodeXi">
-<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/1111.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -155,41 +157,46 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-单例模式" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-数据库范式" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      单例模式
+      数据库范式
     </h1>
   
 
         
-        <a href="/2020/06/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-06-17T02:19:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-17</time>
+        <a href="/2020/07/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%8C%83%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-07-15T00:38:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>单例设计模式的主要作用是创建的对象在内存中只有一份,就像你玩的游戏的NPC一样,不可能为每一个永用户都创建一个NPC;spring创建的Bean的默认作用范围也是单例的…很多场景就需要系统中这个对象只有一份.<br></p>
-<h5 id="创建单例的几种常见方法"><a href="#创建单例的几种常见方法" class="headerlink" title="创建单例的几种常见方法"></a>创建单例的几种常见方法</h5><a id="more"></a>
-<ul>
-<li>基础版本(不考虑多线程的情况下)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单例模式</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonDemo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SingletonDemo1</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"><span class="comment">//    饿汉式</span></span><br><span class="line"><span class="comment">//    public static  SingletonDemo1 instance=new SingletonDemo1();</span></span><br><span class="line"><span class="comment">//    懒汉式</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span>  SingletonDemo1 instance=<span class="keyword">null</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  SingletonDemo1 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">            instance=<span class="keyword">new</span> SingletonDemo1();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>线程安全的方式1<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单例模式(线程安全)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonDemo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span>  <span class="title">SingletonDemo2</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> SingletonDemo2 instance;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">synchronized</span> SingletonDemo2 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">            instance=<span class="keyword">new</span> SingletonDemo2();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-众所周知syncronized是重量级别的锁,而且上面是锁的方法,即使创建了单例的对象后,后面访问的线程还需要阻塞判断,这就很影响效率了<br></li>
-<li>线程安全的方式2(双重检测锁)<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单例模式(双重检测)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonDemo3</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SingletonDemo3</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="comment">//必须是volatile才可以</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> SingletonDemo3 instance=<span class="keyword">null</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SingletonDemo3 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (SingletonDemo3<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">                    instance=<span class="keyword">new</span> SingletonDemo3();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> instance;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-上面的双重检测锁就是解决了syncronized锁在创建单例对象后后面线程还要阻塞的问题,第一次判null是为了解决后面线程在已经创建单例对象还要阻等待,第二次判空是为了线程安全的创建单例对象<br><br>还需要注意的树instance必须被volatile修饰,因为jvm指令重排的原因,一条new xx()代码会被分割成多条jvm指令,指令之间如果重新排序就会导致获得的单例对象只是占内存的空对象.关于volatile,会专门写文章介绍,禁止指令码排序是它的作用之一<br><br>双重检测锁在jvm1.5之前虽然使用volatile,但是还是会导致空对象,是因为jdk1.5前volatile的原因,现版本的jdk不用担心<br><br>双重检测锁最大的问题可能就是写起来复杂些.</li>
-<li>静态内部类<br>利用类加载过程是线程安全的,把丹利对象的创建放在内部类里,当对象getInstance的时候会加载内部类得到对象,而类加载天然是线程安全的<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonDemo4</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SingletonDemo4</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnnerClass</span></span>&#123;</span><br><span class="line">         <span class="keyword">private</span> <span class="keyword">static</span> SingletonDemo4 instance=<span class="keyword">new</span> SingletonDemo4();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SingletonDemo4 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> InnnerClass.instance;</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
-<li>枚举类型创建<br>看起来静态内部类的方式是最好的,但是以上的几种方法如果使用反射的方式创建对象就不在是单例的.<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获得构造器</span></span><br><span class="line">        Constructor con = SingletonDemo4<span class="class">.<span class="keyword">class</span>.<span class="title">getDeclaredConstructor</span>()</span>;</span><br><span class="line"><span class="comment">//设置为可访问</span></span><br><span class="line">        con.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"><span class="comment">//构造两个不同的对象</span></span><br><span class="line">        SingletonDemo4 singleton1 = (SingletonDemo4) con.newInstance();</span><br><span class="line">        SingletonDemo4 singleton2 = (SingletonDemo4) con.newInstance();</span><br><span class="line"><span class="comment">//验证是否是不同对象</span></span><br><span class="line">        System.out.println(singleton1.equals(singleton2));</span><br></pre></td></tr></table></figure>
-解决的方法是使用枚举来创建对象,使用上面的方法创建就会报错找不到方法<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> SingletonDemo5 &#123;</span><br><span class="line">     INSTANCE;</span><br><span class="line">     SingletonDemo5() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SingletonDemo5 singleton1 = SingletonDemo5.INSTANCE;</span><br><span class="line">        SingletonDemo5 singleton2=SingletonDemo5.INSTANCE;</span><br><span class="line">        System.out.println(singleton1==singleton2);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-没错,就是这么简单,至于为什么,也不是很清楚,抽时间研究吧;枚举方法解决了通过反射或者反序列化的方法来破解单例模式,是最好的方法,那就写一个最好的解决方案<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonDemo6</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">enum</span>  SingletonEnum&#123;</span><br><span class="line">        INSTANCE;</span><br><span class="line">        <span class="keyword">private</span> SingletonDemo6 singleOne;</span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="title">SingletonEnum</span><span class="params">()</span></span>&#123;</span><br><span class="line">            singleOne = <span class="keyword">new</span> SingletonDemo6();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SingletonDemo6 singleOne = SingletonEnum.INSTANCE.singleOne;</span><br><span class="line">        SingletonDemo6 singleOne2 = SingletonEnum.INSTANCE.singleOne;</span><br><span class="line">        System.out.println(singleOne==singleOne2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-关于枚举,之前常用做在项目里定义错误码,使用SpringMVc的ResponseEntity可定制不强<br><br>枚举的用法(在平常的代码里):<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> EnumTest &#123;</span><br><span class="line">    ERROR(<span class="number">400</span>,<span class="string">"失败"</span>),</span><br><span class="line">    SUCCESS(<span class="number">100</span>,<span class="string">"成功"</span>);</span><br><span class="line">    String msg;</span><br><span class="line">    Integer code;</span><br><span class="line">    EnumTest(Integer code,String msg ) &#123;</span><br><span class="line">      <span class="keyword">this</span>.code=code;</span><br><span class="line">      <span class="keyword">this</span>.msg=msg;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> msg;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(EnumTest.SUCCESS.getCode());</span><br><span class="line">        System.out.println(EnumTest.SUCCESS.getMsg());</span><br><span class="line">        System.out.println(EnumTest.ERROR.getCode()+<span class="string">"  "</span>+EnumTest.ERROR.getMsg());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+        <h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>数据库范式是帮助我们如何更好的设计表结构，使得不会出现数据冗余、插入删除异常等情况的发生，让数据库性能更好。</p>
+<h5 id="一些概念介绍"><a href="#一些概念介绍" class="headerlink" title="一些概念介绍"></a>一些概念介绍</h5><ul>
+<li>码：可以唯一确定一行数据的属性或者属性组，码可以有多个</li>
+<li>主属性：码里的属性就是主属性</li>
+<li>非主属性：除了主属性外的其他属性</li>
+<li>完全函数依赖： 如果码是一个属性组（A,B），对于一个属性C，如果必须（A,B）两个属性都确定了，才可以确定C的值，那么C就完全依赖于码（A,B）。例如（学号，课名）→ 分数 （注：因为同一个的学号对应的分数不确定，同一个课名对应的分数也不确定）。</li>
+<li>部分函数依赖：对于码（A,B） ,单单依赖码里任何一个就可以决定C</li>
+<li>传递函数依赖：B依赖A，C依赖B，C就传递依赖与A</li>
 </ul>
+<h5 id="1NF"><a href="#1NF" class="headerlink" title="1NF"></a>1NF</h5><p>表中的每个字段都是最小的数据单元</p>
+<p>例如，用户信息中，“联系方式”字段不应该为“手机+居住地址”，而是单独作为两个原子值字段。否则当需要针对“手机”进行查询时，不管是查询性能和成本都是不理想的。</p>
+<p>除此之外，每一条记录需要有一个字段以确定其唯一性。</p>
+<h5 id="2NF"><a href="#2NF" class="headerlink" title="2NF"></a>2NF</h5><p>在 1NF 的基础上，表中所有的非码属性必须完全依赖于候选码“码属性（候选码属性）” 指能唯一标识一个元组的属性，任何一个码属性都可以作为表的主键。也就是说，“非码属性”不能由候选码的某个部分所确定，否则应该把这个关系独立为另一张表。<br><br>例如，某张表的主键由“学号”与“学院 ID”确定，那么“学院名称”就不应该出现在这张表里，而是应该放到“学院”表中，否则就出现了数据冗余，也不利于保持数据一致性。</p>
+<h5 id="3NF"><a href="#3NF" class="headerlink" title="3NF"></a>3NF</h5><p>在 2NF 的基础上，非主属性之间没有相互依赖（消除传递依赖）“传递依赖”是指，设 X，Y，Z 是关系 R 中互不相同的属性集合，存在 X→Y（Y!→X），Y→Z，则称 Z 传递函数依赖于 X。<br>例如某张表的外键包含“学院 ID”，则“学院名称”不应该出现在这张表里，因为“学院 ID”可以推导出“学院名称”。</p>
+<h5 id="BCNF"><a href="#BCNF" class="headerlink" title="BCNF"></a>BCNF</h5><p>BCNF是不允许主属性与码之间的函数部分依赖或者传递依赖.<br><br>例子：<br>某公司有若干个仓库；每个仓库只能有一名管理员，一名管理员只能在一个仓库中工作；一个仓库中可以存放多种物品，一种物品也可以存放在不同的仓库中。每种物品在每个仓库中都有对应的数量。<br><br>那么关系模式 仓库（仓库名，管理员，物品名，数量） 属于哪一级范式？答：已知函数依赖集：仓库名 → 管理员，管理员 → 仓库名，（仓库名，物品名）→ 数量码：（管理员，物品名），（仓库名，物品名）主属性：仓库名、管理员、物品名非主属性：数量∵ 不存在非主属性对码的部分函数依赖和传递函数依赖。∴ 此关系模式属于3NF。<br><img src="/images/1111.png" alt=""><br>好，既然此关系模式已经属于了 3NF，那么这个关系模式是否存在问题呢？<br><br>我们来看以下几种操作：先新增加一个仓库，但尚未存放任何物品，是否可以为该仓库指派管理员？——不可以，因为物品名也是主属性，根据实体完整性的要求，主属性不能为空。某仓库被清空后，需要删除所有与这个仓库相关的物品存放记录，会带来什么问题？——仓库本身与管理员的信息也被随之删除了。如果某仓库更换了管理员，会带来什么问题？——这个仓库有几条物品存放记录，就要修改多少次管理员信息。从这里我们可以得出结论，在某些特殊情况下，即使关系模式符合 3NF 的要求，仍然存在着插入异常，修改异常与删除异常的问题，仍然不是 ”好“ 的设计。<br><br>造成此问题的原因：存在着主属性对于码的部分函数依赖与传递函数依赖。（在此例中就是存在主属性【仓库名】对于码【（管理员，物品名）】的部分函数依赖。<br><br>解决办法就是要在 3NF 的基础上消除主属性对于码的部分与传递函数依赖。<br></p>
+<ul>
+<li>仓库（仓库名，管理员）</li>
+<li>库存（仓库名，物品名，数量）<br><br>这样，之前的插入异常，修改异常与删除异常的问题就被解决了。</li>
+</ul>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>更多的范式这里就不讨论了，需要注意的是，范式并不是需要绝对遵守的准则，如果你的系统足够简单，例如仅仅需要展示用户的联系方式，那么将“联系方式”字段设计为“手机+居住地址”并无不妥，只是遵守范式设计，会利于你的系统规模扩大，更加容易扩展，不会陷入性能低下、难以开发和维护的困境。</p>
 
       
 
@@ -224,7 +231,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
@@ -280,7 +287,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%8C%83%E5%BC%8F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -294,18 +301,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/06/17/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          线程基础
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/06/16/%E6%A0%91%E7%AE%97%E6%B3%95-%E8%BF%9B%E9%98%B6/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">树算法(进阶)</div>
+    <a href="/2020/07/10/%E5%9F%BA%E4%BA%8EElasticSearch%E5%92%8CSpark%E7%9A%84%E6%8E%A8%E8%8D%90%E6%90%9C%E7%B4%A2%E7%B3%BB%E7%BB%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">基于ElasticSearch和Spark的搜索推荐系统</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -332,7 +330,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#创建单例的几种常见方法"><span class="toc-number">1.1.</span> <span class="toc-text">创建单例的几种常见方法</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#一些概念介绍"><span class="toc-number">2.</span> <span class="toc-text">一些概念介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1NF"><span class="toc-number">3.</span> <span class="toc-text">1NF</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2NF"><span class="toc-number">4.</span> <span class="toc-text">2NF</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3NF"><span class="toc-number">5.</span> <span class="toc-text">3NF</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#BCNF"><span class="toc-number">6.</span> <span class="toc-text">BCNF</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#总结"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -346,7 +344,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="单例模式" data-title="单例模式" data-url="http://yoursite.com/2020/06/17/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"></div>
+	<div class="ds-thread" data-thread-key="数据库范式" data-title="数据库范式" data-url="http://yoursite.com/2020/07/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%8C%83%E5%BC%8F/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

@@ -152,6 +152,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-并发项目介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">秒杀项目介绍</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
+  	<time datetime="2020-06-27T10:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>　　本文主要是介绍我根据网上视频学习的java秒杀项目.这个项目整体并不复杂，主要是包含登录和秒杀功能，登录是为了秒杀操作提供用于登录验证的。主要是秒杀的不断优化的过程，从原始的访问事务+访问数据库，加入redis作为缓存，最后加入消息队列进一步优化，其中还涉及页面静态化，前后端分离，验证码等技术来实现用户限流，总体来讲还是比较全面，里面的具体细节在每一部分单独介绍。<br>
+        
+          <a class="article-more-a" href="/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-剑指offer题目思路简单总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -844,82 +920,6 @@
 
 
   
-    <article id="post-RPC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/22/RPC/">RPC</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/22/RPC/" class="archive-article-date">
-  	<time datetime="2020-06-22T08:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　RPC(远程过程调用).现在的应用程序由原来的单机部署到现在的分布式，随着微服务的兴起，各个模块被拆分成不同的服务部署在不同的系统中，某个业务操作需要多个服务提供，所以各个服务需要相互调用。PRC是远程调用的一个概念，并不是一项技术，其底层如何调用，用的什么协议都可以是不同的。常见的RPC通信协议有基于HTTP的，有基于TCP的（socket编程  同步/异步 阻塞/非阻塞）等<br><br>　　微服务之间的通信可以使用HTTP或者RPC（远程过程调用），其实二者不是一个并行的概念，RPC是一种设计的理念,RPC底层协议也可以使用HTTP，也可以是TCP［异步　阻塞］的方式，只不过HTTP比较臃肿，有效数据占比少，所以类似Dubbo都是使用TCP的方式，比较高效，但是也有其缺点。<br>   ＲＰＣ可以有不同的序列化框架，传统的ｊｄｋ传输的数据太长;RPC的网络协议既可以使用ＨＴＴＰ，也可以使用ＴＣＰ;一个完整的ＲＰＣ框架还要有负载均衡　权重等等部分组成；<br>   <br><br>   <a href="https://blog.csdn.net/xiaojin21cen/article/details/79834222" target="_blank" rel="noopener">dubbo支持的协议</a><br>
-        
-          <a class="article-more-a" href="/2020/06/22/RPC/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/22/RPC/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
@@ -1042,11 +1042,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+                <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1070,15 +1070,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
