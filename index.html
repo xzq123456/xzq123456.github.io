@@ -152,6 +152,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-并发面试题目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/15/%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">并发面试题目</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/15/%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/" class="archive-article-date">
+  	<time datetime="2020-07-15T03:27:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h5><p>死锁产生的四个条件（缺一不可）：<br></p>
+<ul>
+<li>互斥条件：该资源任意一个时刻只由一个线程占用。 【没法破坏，锁就是要它们互斥的】</li>
+<li>请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。【一次性申请所有的资源】</li>
+<li>不剥夺条件:线程已获得的资源在末使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才释放资源。【占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源】</li>
+<li>循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。【靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件】<br>
+        
+          <a class="article-more-a" href="/2020/07/15/%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">并发与多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/15/%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-数据库范式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -173,26 +254,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>数据库范式是帮助我们如何更好的设计表结构，使得不会出现数据冗余、插入删除异常等情况的发生，让数据库性能更好。</p>
-<h5 id="一些概念介绍"><a href="#一些概念介绍" class="headerlink" title="一些概念介绍"></a>一些概念介绍</h5><ul>
-<li>码：可以唯一确定一行数据的属性或者属性组，码可以有多个</li>
-<li>主属性：码里的属性就是主属性</li>
-<li>非主属性：除了主属性外的其他属性</li>
-<li>完全函数依赖： 如果码是一个属性组（A,B），对于一个属性C，如果必须（A,B）两个属性都确定了，才可以确定C的值，那么C就完全依赖于码（A,B）。例如（学号，课名）→ 分数 （注：因为同一个的学号对应的分数不确定，同一个课名对应的分数也不确定）。</li>
-<li>部分函数依赖：对于码（A,B） ,单单依赖码里任何一个就可以决定C</li>
-<li>传递函数依赖：B依赖A，C依赖B，C就传递依赖与A</li>
-</ul>
-<h5 id="1NF"><a href="#1NF" class="headerlink" title="1NF"></a>1NF</h5><p>表中的每个字段都是最小的数据单元</p>
-<p>例如，用户信息中，“联系方式”字段不应该为“手机+居住地址”，而是单独作为两个原子值字段。否则当需要针对“手机”进行查询时，不管是查询性能和成本都是不理想的。</p>
-<p>除此之外，每一条记录需要有一个字段以确定其唯一性。</p>
-<h5 id="2NF"><a href="#2NF" class="headerlink" title="2NF"></a>2NF</h5><p>在 1NF 的基础上，表中所有的非码属性必须完全依赖于候选码“码属性（候选码属性）” 指能唯一标识一个元组的属性，任何一个码属性都可以作为表的主键。也就是说，“非码属性”不能由候选码的某个部分所确定，否则应该把这个关系独立为另一张表。<br><br>例如，某张表的主键由“学号”与“学院 ID”确定，那么“学院名称”就不应该出现在这张表里，而是应该放到“学院”表中，否则就出现了数据冗余，也不利于保持数据一致性。</p>
-<h5 id="3NF"><a href="#3NF" class="headerlink" title="3NF"></a>3NF</h5><p>在 2NF 的基础上，非主属性之间没有相互依赖（消除传递依赖）“传递依赖”是指，设 X，Y，Z 是关系 R 中互不相同的属性集合，存在 X→Y（Y!→X），Y→Z，则称 Z 传递函数依赖于 X。<br>例如某张表的外键包含“学院 ID”，则“学院名称”不应该出现在这张表里，因为“学院 ID”可以推导出“学院名称”。</p>
-<h5 id="BCNF"><a href="#BCNF" class="headerlink" title="BCNF"></a>BCNF</h5><p>BCNF是不允许主属性与码之间的函数部分依赖或者传递依赖.<br><br>例子：<br>某公司有若干个仓库；每个仓库只能有一名管理员，一名管理员只能在一个仓库中工作；一个仓库中可以存放多种物品，一种物品也可以存放在不同的仓库中。每种物品在每个仓库中都有对应的数量。<br><br>那么关系模式 仓库（仓库名，管理员，物品名，数量） 属于哪一级范式？答：已知函数依赖集：仓库名 → 管理员，管理员 → 仓库名，（仓库名，物品名）→ 数量码：（管理员，物品名），（仓库名，物品名）主属性：仓库名、管理员、物品名非主属性：数量∵ 不存在非主属性对码的部分函数依赖和传递函数依赖。∴ 此关系模式属于3NF。<br><img src="/images/1111.png" alt=""><br>好，既然此关系模式已经属于了 3NF，那么这个关系模式是否存在问题呢？<br><br>我们来看以下几种操作：先新增加一个仓库，但尚未存放任何物品，是否可以为该仓库指派管理员？——不可以，因为物品名也是主属性，根据实体完整性的要求，主属性不能为空。某仓库被清空后，需要删除所有与这个仓库相关的物品存放记录，会带来什么问题？——仓库本身与管理员的信息也被随之删除了。如果某仓库更换了管理员，会带来什么问题？——这个仓库有几条物品存放记录，就要修改多少次管理员信息。从这里我们可以得出结论，在某些特殊情况下，即使关系模式符合 3NF 的要求，仍然存在着插入异常，修改异常与删除异常的问题，仍然不是 ”好“ 的设计。<br><br>造成此问题的原因：存在着主属性对于码的部分函数依赖与传递函数依赖。（在此例中就是存在主属性【仓库名】对于码【（管理员，物品名）】的部分函数依赖。<br><br>解决办法就是要在 3NF 的基础上消除主属性对于码的部分与传递函数依赖。<br></p>
-<ul>
-<li>仓库（仓库名，管理员）</li>
-<li>库存（仓库名，物品名，数量）<br><br>这样，之前的插入异常，修改异常与删除异常的问题就被解决了。</li>
-</ul>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>更多的范式这里就不讨论了，需要注意的是，范式并不是需要绝对遵守的准则，如果你的系统足够简单，例如仅仅需要展示用户的联系方式，那么将“联系方式”字段设计为“手机+居住地址”并无不妥，只是遵守范式设计，会利于你的系统规模扩大，更加容易扩展，不会陷入性能低下、难以开发和维护的困境。</p>
-
+        
+          <a class="article-more-a" href="/2020/07/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%8C%83%E5%BC%8F/#more">more >></a>
+        
       
 
       
@@ -456,6 +520,96 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/03/java%E5%9F%BA%E7%A1%80/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-IO-NIO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/03/IO-NIO/">NIO</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/03/IO-NIO/" class="archive-article-date">
+  	<time datetime="2020-07-03T08:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h5><p>NIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章<br><br><a href="https://mp.weixin.qq.com/s?__biz=Mzg3MjA4MTExMw==&mid=2247484746&idx=1&sn=c0a7f9129d780786cabfcac0a8aa6bb7&source=41#wechat_redirect" target="_blank" rel="noopener">&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;</a><br></p>
+<h5 id="IO的发展"><a href="#IO的发展" class="headerlink" title="IO的发展"></a>IO的发展</h5><h5 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h5><p>客户端和服务器的建立连接通信是通过Socket的手段，如果想实现多个客户端并发地访问就必须创建多个线程处理，因为服务器端的用来接收客户端请求的accept等是同步则塞的，如果已经建立连接，后来的请求就会被阻塞，只能等待之前的请求被处理完毕，达不到并发的要求，所以要创建新的线程用来处理每个请求，主线程只是负责接收连接请求。如图所示：<br><img src="/images/nio1.png" alt=""><br>解决了多客户端连接的问题，产生新的问题就是如果并发量大的时候，这种1对1的创建线程的方式就会产生大量的线程，服务器资源不久就会被耗尽。可以想到的方法就是使用线程池创建线程的方式，可以控制线程的创建数量，但是其底层仍然是BIO，不能从根本上解决问题。<br><img src="/images/nio2.png" alt=""></p>
+<h5 id="NIO-1"><a href="#NIO-1" class="headerlink" title="NIO"></a>NIO</h5><p>新的IO体系增加了Channel Buffer Seletor组件，用于实现高效的IO。<br><br>NIO中的N可以理解为Non-blocking，不单纯是New。它支持面向缓冲的，基于通道的I/O操作方法。 NIO提供了与传统BIO模型中的 Socket 和 ServerSocket 相对应的 SocketChannel和 ServerSocketChannel 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。<br>对于低负载、低并发的应用程序，可以使用同步阻塞I/O来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发。</p>
+<h6 id="NIO的特性-NIO与IO区别"><a href="#NIO的特性-NIO与IO区别" class="headerlink" title="NIO的特性/NIO与IO区别"></a>NIO的特性/NIO与IO区别</h6><p>如果是在面试中回答这个问题，我觉得首先肯定要从 NIO 流是非阻塞 IO 而 IO 流是阻塞 IO 说起。然后，可以从 NIO 的3个核心组件/特性为 NIO 带来的一些改进来分析。</p>
+<p>1)Non-blocking IO（非阻塞IO）<br>IO流是阻塞的，NIO流是不阻塞的。</p>
+<p>Java NIO使我们可以进行非阻塞IO操作。比如说，单线程中从通道读取数据到buffer，同时可以继续做别的事情，当数据读取到buffer中后，线程再继续处理数据。写数据也是一样的。另外，非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。</p>
+<p>Java IO的各种流是阻塞的。这意味着，当一个线程调用 read() 或 write() 时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情了</p>
+<p>2)Buffer(缓冲区)<br>IO 面向流(Stream oriented)，而 NIO 面向缓冲区(Buffer oriented)。</p>
+<p>Buffer是一个对象，它包含一些要写入或者要读出的数据。在NIO类库中加入Buffer对象，体现了新库与原I/O的一个重要区别。在面向流的I/O中·可以将数据直接写入或者将数据直接读到 Stream 对象中。虽然 Stream 中也有 Buffer 开头的扩展类，但只是流的包装类，还是从流读到缓冲区，而 NIO 却是直接读到 Buffer 中进行操作。</p>
+<p>在NIO厍中，所有数据都是用缓冲区处理的。在读取数据时，它是直接读到缓冲区中的; 在写入数据时，写入到缓冲区中。任何时候访问NIO中的数据，都是通过缓冲区进行操作。</p>
+<p>最常用的缓冲区是 ByteBuffer,一个 ByteBuffer 提供了一组功能用于操作 byte 数组。除了ByteBuffer,还有其他的一些缓冲区，事实上，每一种Java基本类型（除了Boolean类型）都对应有一种缓冲区。</p>
+<p>3)Channel (通道)<br>NIO 通过Channel（通道） 进行读写。</p>
+<p>通道是双向的，可读也可写，而流的读写是单向的。无论读写，通道只能和Buffer交互。因为 Buffer，通道可以异步地读写。</p>
+<p>4)Selector (选择器)<br>NIO有选择器，而IO没有。</p>
+<p>选择器用于使用单个线程处理多个通道。因此，它需要较少的线程来处理这些通道。线程之间的切换对于操作系统来说是昂贵的。 因此，为了提高系统效率选择器是有用的。<br><img src="/images/nio3.png" alt=""><br>使用选择器就是实现IO模型的多路复用模型。应用程序通过select函数返回哪些socket要求的数据内核已经准备好，然后就可以进行读写，这样不同的socket请求之间就不会阻塞。关于程序是如何知道哪些数据已经准备好了呢？ 底层是select poll epoll的调用，关于三者的区别可以看<a href="https://www.cnblogs.com/aspirant/p/9166944.html。" target="_blank" rel="noopener">https://www.cnblogs.com/aspirant/p/9166944.html。</a></p>
+<h6 id="NIO-读数据和写数据方式"><a href="#NIO-读数据和写数据方式" class="headerlink" title="NIO 读数据和写数据方式"></a>NIO 读数据和写数据方式</h6><p>通常来说NIO中的所有IO都是从 Channel（通道） 开始的。<br><br>从通道进行数据读取 ：创建一个缓冲区，然后请求通道读取数据。<br>从通道进行数据写入 ：创建一个缓冲区，填充数据，并要求通道写入数据。<br><br>如果是多路复用话，channel再注册到seletor选择其上。</p>
+<p>不错的博文地址：<a href="http://www.tianxiaobo.com/categories/foundation-of-java/NIO/" target="_blank" rel="noopener">http://www.tianxiaobo.com/categories/foundation-of-java/NIO/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">java基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/03/IO-NIO/">展开全文 >></a>
         </p>
       
 
@@ -780,158 +934,6 @@
 
 
   
-    <article id="post-Dubbo分布式项目介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/29/Dubbo%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">Dubbo分布式项目介绍</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/29/Dubbo%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-  	<time datetime="2020-06-28T23:38:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>　　目是模仿猫眼的系统，整个系统是基于Dubbo构建的分布式架构，当然还有Hystrix熔断，服务注册中心等，没有专门的第三方网关（自己实现部分功能）和服务配置，毕竟Dubbo是一个高效的RPC框架，主要解决服务之间的高效远程调用，不像SpringCloud是一个生态。主要的模块有用户模块、电影模块、影院模块、订单模块、支付模块五个业务模块，还有就是api模块作为接口定义，网关模块作为服务消费者主要相应用户请求，到调用5个服务提供者的接口。<br><br>　　Dubbo之前的文章已经介绍了Dubbo的使用（结合zookeeper和Springboot搭建），以及dubbo的底层PRC的基础。在每个模块可能会用到Dubbo的特性，会在做介绍。<br><br>  <a href="http://dubbo.apache.org/zh-cn/docs/user/quick-start.html" target="_blank" rel="noopener">Dubbo官方文档</a><br>
-        
-          <a class="article-more-a" href="/2020/06/29/Dubbo%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/29/Dubbo%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringCloud分布式项目介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/28/SpringCloud%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">SpringCloud分布式项目介绍</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/28/SpringCloud%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-  	<time datetime="2020-06-28T10:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>　　分布式有很多解决方案，比如之前介绍的Apache Dubbo，SpringCloud也是其中的解决方案之一，相比Dubbo，它的生态比较完善。包括服务发现和注册中心(Eureka)，配置中心(Config)，网关(Zuul)，熔断器(Hystrix)，负载均衡（Ribbon Feign）等。</br><br>　　下面介绍一下本项目的主要模块：用户模块、影片模块、影院模块、影厅模块。除了四个主要功能模块，还有网关模块、接口模块、功能类模块（utils）、公共模块（MybatisPlusConig,DruidConfig等）。这个项目就是前面电影项目的后台管理模块，方便管理员添加影片、影院和影厅等信息。<br>
-        
-          <a class="article-more-a" href="/2020/06/28/SpringCloud%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/28/SpringCloud%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1050,15 +1052,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1070,11 +1072,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1086,11 +1088,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
