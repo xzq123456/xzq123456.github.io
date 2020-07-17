@@ -152,6 +152,71 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-jd" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/17/jd/">jd java一面</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/17/jd/" class="archive-article-date">
+  	<time datetime="2020-07-17T14:21:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天jd java一面，是个小哥面的，填写简历的时候忘记带简历附件了，他也就没问我简历上的项目.20分钟，问得知识也比较基础。<br></p>
+<p>首先是自我介绍<br></p>
+<p>1.为什么用线程池？线程池的参数和底层运行的原理？常用的线程池有哪些？<br><br>2.hashmap底层原理？（1.7 1.8）<br><br>3.两个算法题：两个栈模拟队列，倒数第k个节点<br><br>4.秒杀项目流程，redis介绍和在项目的应用<br><br>5.装饰者模式，动态代理模式，spring里的设计模式有哪些<br><br>6.聊天，大数据(介绍它们项目组)<br><br>7.mapreduce原理介绍</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/17/jd/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-并发面试题目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -472,42 +537,9 @@
       
         <ul>
 <li><p>String StringBuffer StringBuild<br><br>String 字符串常量(不是基本数据类型)；StringBuffer 字符串变量（线程安全）；StringBuilder 字符串变量（非线程安全）<br><br>String 类型和 StringBuffer 类型的主要性能区别其实在于 String 是不可变的对象, 因此在每次对 String 类型进行改变的时候其实都等同于生成了一个新的 String 对象，然后将指针指向新的 String 对象，所以经常改变内容的字符串最好不要用 String ，因为每次生成对象都会对系统性能产生影响，特别当内存中无引用对象多了以后， JVM 的 GC 就会开始工作，那速度是一定会相当慢的。<br><br>而如果是使用 StringBuffer 类则结果就不一样了，每次结果都会对 StringBuffer 对象本身进行操作，而不是生成新的对象，再改变对象引用。所以在一般情况下我们推荐使用 StringBuffer ，特别是字符串对象经常改变的情况下。<br><br>经常问的问题：String s=new String(“abc”);创建了几个对象？如果常量池没有abc，就会在常量池中创建abc（String的构造函数 public String(String s) 你传入的字符串常量池没有就在这里创建了），另外一个在堆里（只要new的都在堆里）;常量池有了就只是在堆里创建新的。</p>
-</li>
-<li><p>Integer 和int区别<br><br><a href="https://blog.csdn.net/Nan_Feng726/article/details/91439884" target="_blank" rel="noopener">Integer 和int区别</a><br><br>int的默认值为0，而Integer的默认值为null，即Integer可以区分出未赋值和值为0的区别，int则无法表达出未赋值的情况;JDK1.5引入了自动装箱与自动拆箱功能，Java可根据上下文，实现int/Integer,double/Double,boolean/Boolean等基本类型与相应对象之间的自动转换，为开发过程带来极大便利。</p>
-</li>
-<li><p>== equals hashcode方法(集合里已经写了)</p>
-</li>
-<li><p>map的几个实现类：HashMap Hashtable LinkedHashMap 和TreeMap，具体在集合里也写了</p>
-</li>
-<li><p>final用法：类 方法 变量<br><br>ps:如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象，但是它指向的对象的内容是可变的.</p>
-</li>
-<li><p>synchronized关键字最主要有以下3种应用方式：<br></p>
-<ul>
-<li>修饰实例方法，作用于当前实例加锁，进入同步代码前要获得当前实例的锁</li>
-<li>修饰静态方法，作用于当前类对象加锁，进入同步代码前要获得当前类对象的锁</li>
-<li>修饰代码块，指定加锁对象，对给定对象加锁，进入同步代码库前要获得给定对象的锁</li>
-</ul>
-</li>
-<li><p>java语言特性：封装 继承 多态</p>
-</li>
-<li><p>请列举你所知道的Object类的方法并且做简要说明<br><br>Object()默认构造方法。clone() 创建并返回此对象的一个副本。equals(Object obj) 指示某个其他对象是否与此对象“相等”。finalize()当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。getClass()返回一个对象的运行时类。hashCode()返回该对象的哈希码值。 notify()唤醒在此对象监视器上等待的单个线程。 notifyAll()唤醒在此对象监视器上等待的所有线程。toString()返回该对象的字符串表示。wait()导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法。wait(long timeout)导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量。wait(long timeout, int nanos) 导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量</p>
-</li>
-<li><p>举例说明同步和异步<br><br>如果系统中存在临界资源（资源数量少于竞争资源的线程数量的资源），例如正在写的数据以后可能被另一个线程读到，或者正在读的数据可能已经被另一个线程写过了，那么这些数据就必须进行同步存取（数据库操作中的排他锁就是最好的例子）。当应用程序在对象上调用了一个需要花费很长时间来执行的方法，并且不希望让程序等待方法的返回时，就应该使用异步编程，在很多情况下采用异步途径往往更有效率。事实上，所谓的同步就是指阻塞式操作，而异步就是非阻塞式操作。</p>
-</li>
-<li><p>线程同步和线程调度的相关方法(wait notify notifyAll sleep )</p>
-</li>
-<li><p>请问当一个线程进入一个对象的Synchronized方法A之后，其他线程是否可以进入此对象的Synchronized方法B？<br></p>
-<ul>
-<li>当一个线程进入一个对象多个一个synchronize()方法后，其他线程是否可以进入该对象的其他方法取决于方法本身，如果该方法是非synchronized()方法，那么是可以访问的。</li>
-<li>当一个线程进入一个对象多个一个synchronize()方法后，其他线程是否可以进入该对象的其他方法取决于方法本身，如果该方法是synchronized()方法，那么是不可以访问的。</li>
-<li>如果其他方法是静态方法，它用的同步锁是当前类的字节码，与非静态的方法不能同步（因为非静态的方法用的是this），因此，静态方法可以被调用</li>
-</ul>
-</li>
-<li><p>创建线程的6种方式（<a href="https://blog.csdn.net/king_kgh/article/details/78213576）" target="_blank" rel="noopener">https://blog.csdn.net/king_kgh/article/details/78213576）</a><br><br>我知道的：继承Thread ，实现Runnable接口，实现Callable接口+FutureTask<br>线程池的方法</p>
-</li>
-<li></li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2020/07/03/java%E5%9F%BA%E7%A1%80/#more">more >></a>
+        
       
 
       
@@ -570,23 +602,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h5 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h5><p>NIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章<br><br><a href="https://mp.weixin.qq.com/s?__biz=Mzg3MjA4MTExMw==&mid=2247484746&idx=1&sn=c0a7f9129d780786cabfcac0a8aa6bb7&source=41#wechat_redirect" target="_blank" rel="noopener">&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;</a><br></p>
-<h5 id="IO的发展"><a href="#IO的发展" class="headerlink" title="IO的发展"></a>IO的发展</h5><h5 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h5><p>客户端和服务器的建立连接通信是通过Socket的手段，如果想实现多个客户端并发地访问就必须创建多个线程处理，因为服务器端的用来接收客户端请求的accept等是同步则塞的，如果已经建立连接，后来的请求就会被阻塞，只能等待之前的请求被处理完毕，达不到并发的要求，所以要创建新的线程用来处理每个请求，主线程只是负责接收连接请求。如图所示：<br><img src="/images/nio1.png" alt=""><br>解决了多客户端连接的问题，产生新的问题就是如果并发量大的时候，这种1对1的创建线程的方式就会产生大量的线程，服务器资源不久就会被耗尽。可以想到的方法就是使用线程池创建线程的方式，可以控制线程的创建数量，但是其底层仍然是BIO，不能从根本上解决问题。<br><img src="/images/nio2.png" alt=""></p>
-<h5 id="NIO-1"><a href="#NIO-1" class="headerlink" title="NIO"></a>NIO</h5><p>新的IO体系增加了Channel Buffer Seletor组件，用于实现高效的IO。<br><br>NIO中的N可以理解为Non-blocking，不单纯是New。它支持面向缓冲的，基于通道的I/O操作方法。 NIO提供了与传统BIO模型中的 Socket 和 ServerSocket 相对应的 SocketChannel和 ServerSocketChannel 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。<br>对于低负载、低并发的应用程序，可以使用同步阻塞I/O来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发。</p>
-<h6 id="NIO的特性-NIO与IO区别"><a href="#NIO的特性-NIO与IO区别" class="headerlink" title="NIO的特性/NIO与IO区别"></a>NIO的特性/NIO与IO区别</h6><p>如果是在面试中回答这个问题，我觉得首先肯定要从 NIO 流是非阻塞 IO 而 IO 流是阻塞 IO 说起。然后，可以从 NIO 的3个核心组件/特性为 NIO 带来的一些改进来分析。</p>
-<p>1)Non-blocking IO（非阻塞IO）<br>IO流是阻塞的，NIO流是不阻塞的。</p>
-<p>Java NIO使我们可以进行非阻塞IO操作。比如说，单线程中从通道读取数据到buffer，同时可以继续做别的事情，当数据读取到buffer中后，线程再继续处理数据。写数据也是一样的。另外，非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。</p>
-<p>Java IO的各种流是阻塞的。这意味着，当一个线程调用 read() 或 write() 时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情了</p>
-<p>2)Buffer(缓冲区)<br>IO 面向流(Stream oriented)，而 NIO 面向缓冲区(Buffer oriented)。</p>
-<p>Buffer是一个对象，它包含一些要写入或者要读出的数据。在NIO类库中加入Buffer对象，体现了新库与原I/O的一个重要区别。在面向流的I/O中·可以将数据直接写入或者将数据直接读到 Stream 对象中。虽然 Stream 中也有 Buffer 开头的扩展类，但只是流的包装类，还是从流读到缓冲区，而 NIO 却是直接读到 Buffer 中进行操作。</p>
-<p>在NIO厍中，所有数据都是用缓冲区处理的。在读取数据时，它是直接读到缓冲区中的; 在写入数据时，写入到缓冲区中。任何时候访问NIO中的数据，都是通过缓冲区进行操作。</p>
-<p>最常用的缓冲区是 ByteBuffer,一个 ByteBuffer 提供了一组功能用于操作 byte 数组。除了ByteBuffer,还有其他的一些缓冲区，事实上，每一种Java基本类型（除了Boolean类型）都对应有一种缓冲区。</p>
-<p>3)Channel (通道)<br>NIO 通过Channel（通道） 进行读写。</p>
-<p>通道是双向的，可读也可写，而流的读写是单向的。无论读写，通道只能和Buffer交互。因为 Buffer，通道可以异步地读写。</p>
-<p>4)Selector (选择器)<br>NIO有选择器，而IO没有。</p>
-<p>选择器用于使用单个线程处理多个通道。因此，它需要较少的线程来处理这些通道。线程之间的切换对于操作系统来说是昂贵的。 因此，为了提高系统效率选择器是有用的。<br><img src="/images/nio3.png" alt=""><br>使用选择器就是实现IO模型的多路复用模型。应用程序通过select函数返回哪些socket要求的数据内核已经准备好，然后就可以进行读写，这样不同的socket请求之间就不会阻塞。关于程序是如何知道哪些数据已经准备好了呢？ 底层是select poll epoll的调用，关于三者的区别可以看<a href="https://www.cnblogs.com/aspirant/p/9166944.html。" target="_blank" rel="noopener">https://www.cnblogs.com/aspirant/p/9166944.html。</a></p>
-<h6 id="NIO-读数据和写数据方式"><a href="#NIO-读数据和写数据方式" class="headerlink" title="NIO 读数据和写数据方式"></a>NIO 读数据和写数据方式</h6><p>通常来说NIO中的所有IO都是从 Channel（通道） 开始的。<br><br>从通道进行数据读取 ：创建一个缓冲区，然后请求通道读取数据。<br>从通道进行数据写入 ：创建一个缓冲区，填充数据，并要求通道写入数据。<br><br>如果是多路复用话，channel再注册到seletor选择其上。</p>
-<p>不错的博文地址：<a href="http://www.tianxiaobo.com/categories/foundation-of-java/NIO/" target="_blank" rel="noopener">http://www.tianxiaobo.com/categories/foundation-of-java/NIO/</a></p>
-
+        
+          <a class="article-more-a" href="/2020/07/03/IO-NIO/#more">more >></a>
+        
       
 
       
@@ -728,7 +746,7 @@
 
         
         <a href="/2020/07/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-07-02T00:02:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-02</time>
+  	<time datetime="2020-07-02T00:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-02</time>
 </a>
         
       </header>
@@ -746,6 +764,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -827,84 +856,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/01/%E5%9B%BE%E8%A7%A3HTTP%E7%AC%94%E8%AE%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-微服务实战和Docker" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E5%92%8CDocker/">Springcloud与Docker微服务架构实战 大纲</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E5%92%8CDocker/" class="archive-article-date">
-  	<time datetime="2020-06-30T11:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="springcloud和docker微服务实战-读书笔记"><a href="#springcloud和docker微服务实战-读书笔记" class="headerlink" title="springcloud和docker微服务实战 读书笔记"></a>springcloud和docker微服务实战 读书笔记</h3><p><a href="https://mp.weixin.qq.com/s/FiCWgDlwJWB8UumxzAAbOA" target="_blank" rel="noopener">springcloud 2W字介绍</a><br><br><a href="https://how2j.cn/k/springcloud/springcloud-intro/2035.html" target="_blank" rel="noopener">how2j Springcloud快速上手</a><br></p>
-<ul>
-<li>微服务概述<br><br>　　说白了微服务就是把之前单体程序的没一个模块单独开发部署，服务之间使用HTTP或者RPC进行通信，服务可以使用不同的语言进行开发，数据存储方式也可以不同。<br>
-        
-          <a class="article-more-a" href="/2020/06/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E5%92%8CDocker/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E6%88%98%E5%92%8CDocker/">展开全文 >></a>
         </p>
       
 
@@ -1052,11 +1003,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1068,6 +1019,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
@@ -1076,15 +1031,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1096,11 +1043,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">

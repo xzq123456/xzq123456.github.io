@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>NIO | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="NIONIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt; IO的发展BIO客户端和服务器的建立连接通信是通过Socket的手段，如果想实现多个客户端并发">
+  <meta name="description" content="NIONIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NIO">
 <meta property="og:url" content="http://yoursite.com/2020/07/03/IO-NIO/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="NIONIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt; IO的发展BIO客户端和服务器的建立连接通信是通过Socket的手段，如果想实现多个客户端并发">
+<meta property="og:description" content="NIONIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/images/nio1.png">
 <meta property="og:image" content="http://yoursite.com/images/nio2.png">
 <meta property="og:image" content="http://yoursite.com/images/nio3.png">
 <meta property="article:published_time" content="2020-07-03T08:58:00.000Z">
-<meta property="article:modified_time" content="2020-07-16T03:57:43.417Z">
+<meta property="article:modified_time" content="2020-07-17T13:59:40.029Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="java基础">
 <meta name="twitter:card" content="summary">
@@ -180,6 +180,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h5 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h5><p>NIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章<br><br><a href="https://mp.weixin.qq.com/s?__biz=Mzg3MjA4MTExMw==&mid=2247484746&idx=1&sn=c0a7f9129d780786cabfcac0a8aa6bb7&source=41#wechat_redirect" target="_blank" rel="noopener">&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;</a><br></p>
+<a id="more"></a>
 <h5 id="IO的发展"><a href="#IO的发展" class="headerlink" title="IO的发展"></a>IO的发展</h5><h5 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h5><p>客户端和服务器的建立连接通信是通过Socket的手段，如果想实现多个客户端并发地访问就必须创建多个线程处理，因为服务器端的用来接收客户端请求的accept等是同步则塞的，如果已经建立连接，后来的请求就会被阻塞，只能等待之前的请求被处理完毕，达不到并发的要求，所以要创建新的线程用来处理每个请求，主线程只是负责接收连接请求。如图所示：<br><img src="/images/nio1.png" alt=""><br>解决了多客户端连接的问题，产生新的问题就是如果并发量大的时候，这种1对1的创建线程的方式就会产生大量的线程，服务器资源不久就会被耗尽。可以想到的方法就是使用线程池创建线程的方式，可以控制线程的创建数量，但是其底层仍然是BIO，不能从根本上解决问题。<br><img src="/images/nio2.png" alt=""></p>
 <h5 id="NIO-1"><a href="#NIO-1" class="headerlink" title="NIO"></a>NIO</h5><p>新的IO体系增加了Channel Buffer Seletor组件，用于实现高效的IO。<br><br>NIO中的N可以理解为Non-blocking，不单纯是New。它支持面向缓冲的，基于通道的I/O操作方法。 NIO提供了与传统BIO模型中的 Socket 和 ServerSocket 相对应的 SocketChannel和 ServerSocketChannel 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。<br>对于低负载、低并发的应用程序，可以使用同步阻塞I/O来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发。</p>
 <h6 id="NIO的特性-NIO与IO区别"><a href="#NIO的特性-NIO与IO区别" class="headerlink" title="NIO的特性/NIO与IO区别"></a>NIO的特性/NIO与IO区别</h6><p>如果是在面试中回答这个问题，我觉得首先肯定要从 NIO 流是非阻塞 IO 而 IO 流是阻塞 IO 说起。然后，可以从 NIO 的3个核心组件/特性为 NIO 带来的一些改进来分析。</p>
@@ -491,11 +492,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -507,6 +508,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
@@ -515,15 +520,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -535,11 +532,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -16,7 +16,7 @@
 <meta property="og:description" content="String StringBuffer StringBuildString 字符串常量(不是基本数据类型)；StringBuffer 字符串变量（线程安全）；StringBuilder 字符串变量（非线程安全）String 类型和 StringBuffer 类型的主要性能区别其实在于 String 是不可变的对象, 因此在每次对 String 类型进行改变的时候其实都等同于生成了一个新的 Str">
 <meta property="og:locale" content="zh">
 <meta property="article:published_time" content="2020-07-03T14:26:42.000Z">
-<meta property="article:modified_time" content="2020-07-03T15:19:46.713Z">
+<meta property="article:modified_time" content="2020-07-17T13:59:33.093Z">
 <meta property="article:author" content="CodeXi">
 <meta name="twitter:card" content="summary">
   
@@ -176,7 +176,7 @@
       
         <ul>
 <li><p>String StringBuffer StringBuild<br><br>String 字符串常量(不是基本数据类型)；StringBuffer 字符串变量（线程安全）；StringBuilder 字符串变量（非线程安全）<br><br>String 类型和 StringBuffer 类型的主要性能区别其实在于 String 是不可变的对象, 因此在每次对 String 类型进行改变的时候其实都等同于生成了一个新的 String 对象，然后将指针指向新的 String 对象，所以经常改变内容的字符串最好不要用 String ，因为每次生成对象都会对系统性能产生影响，特别当内存中无引用对象多了以后， JVM 的 GC 就会开始工作，那速度是一定会相当慢的。<br><br>而如果是使用 StringBuffer 类则结果就不一样了，每次结果都会对 StringBuffer 对象本身进行操作，而不是生成新的对象，再改变对象引用。所以在一般情况下我们推荐使用 StringBuffer ，特别是字符串对象经常改变的情况下。<br><br>经常问的问题：String s=new String(“abc”);创建了几个对象？如果常量池没有abc，就会在常量池中创建abc（String的构造函数 public String(String s) 你传入的字符串常量池没有就在这里创建了），另外一个在堆里（只要new的都在堆里）;常量池有了就只是在堆里创建新的。</p>
-</li>
+<a id="more"></a></li>
 <li><p>Integer 和int区别<br><br><a href="https://blog.csdn.net/Nan_Feng726/article/details/91439884" target="_blank" rel="noopener">Integer 和int区别</a><br><br>int的默认值为0，而Integer的默认值为null，即Integer可以区分出未赋值和值为0的区别，int则无法表达出未赋值的情况;JDK1.5引入了自动装箱与自动拆箱功能，Java可根据上下文，实现int/Integer,double/Double,boolean/Boolean等基本类型与相应对象之间的自动转换，为开发过程带来极大便利。</p>
 </li>
 <li><p>== equals hashcode方法(集合里已经写了)</p>
@@ -495,11 +495,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,6 +511,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
@@ -519,15 +523,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,11 +535,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
