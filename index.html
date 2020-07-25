@@ -152,6 +152,75 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-百度一面" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/24/%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2/">百度一面</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/24/%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2/" class="archive-article-date">
+  	<time datetime="2020-07-24T12:50:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>百度一面回忆：<br>1.项目相关（主要是爬虫项目，问了得20分钟，每一部分怎么做的）<br>2.数组和链表的区别，两者增删改查的时间复杂度。<br>3.计算机网络七层 DNS在哪层 DNS市怎样工作的（迭代查询 递归查询）<br>4.mysql数据库的有哪些锁？谈一下事务的隔离界别？mysql事务怎么解决幻读的？谈一下间隙锁的工作过程<br>5.数据库二叉树了解吗？mysql底层索引的数据结构（B+树）？B+树和B树有什么区别？为什么mysql用B+树做索引的数据结构<br>6.RabbitMQ起到什么作用？了解底层吗？<br>7.怎么看待虽然syncronized是重量级锁，为什么并发还用它？说一下乐观锁与悲观锁<br>8.了解分布式事务吗（不了解，就说了说分布式锁）<br>9.算法：找中位数（自己写的借助快速排序的方法）</p>
+<h5 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h5><p>DNS是应用层协议，主要的作用就是帮我们把网址转化为ip地址。输入一个网址，它首先会到你本地的hosts文件里查找相应的映射，如果没有的话就去本地DNS服务器（离自己比较近的ISP的DNS服务器），如果还是没有查找到的话，就采取递归查询或者迭代查询的方式去DNS服务器集群去查找。<br></p>
+<ul>
+<li>递归查询就是本地DNS服务器的请求交给根服务器，然后根服务器在交给别的域名服务器进行解析，知道找到相应的ip，然后再一层层会传给本地DNS服务器的过程。</li>
+<li>迭代查询就是对于本地DNS服务器的请求，根服务器如果没有找到，它不会替本地的DNS服务器请求，他会告诉让他去找哪个顶级域名服务器，顶级域名服务器找不到，他就会返回另一个DNS服务器让本地DNS服务器去请求，直到找到。<br><img src="/images/ms1.png" alt=""></li>
+</ul>
+<p>DNS请求的报文是UDP报文。对于域名的划分，map.baidu.com， com就是顶级域名，baidu.com或者<a href="http://www.baidu.com就是二级域名，map.baidu.com就是三级域名" target="_blank" rel="noopener">www.baidu.com就是二级域名，map.baidu.com就是三级域名</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/24/%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Mysql技术内幕：InnoDB存储引擎" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -317,7 +386,7 @@
 
         
         <a href="/2020/07/17/jd/" class="archive-article-date">
-  	<time datetime="2020-07-17T14:21:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-17</time>
+  	<time datetime="2020-07-17T14:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-17</time>
 </a>
         
       </header>
@@ -335,6 +404,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -809,82 +889,6 @@
 
 
   
-    <article id="post-反射" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/03/%E5%8F%8D%E5%B0%84/">反射</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/03/%E5%8F%8D%E5%B0%84/" class="archive-article-date">
-  	<time datetime="2020-07-03T08:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="为什么使用反射"><a href="#为什么使用反射" class="headerlink" title="为什么使用反射"></a>为什么使用反射</h5><p>反射是通过class文件获取类信息，然后创建对象。是一种隐式创建对象的方法，使用Class.forName(“xxx”)，会触发类的加载并在方法区中创建class对象作为访问类元数据信息的接口。可以获取属性，方法，并且使用invoke方法调用方法。反射是动态加载类的基础。jvm在类加载的时候，会将加载的类生成一个对应的class对象，用来管理类的信息。使用反射的方法可以得到对应class对象的引用。<br><br>
-        
-          <a class="article-more-a" href="/2020/07/03/%E5%8F%8D%E5%B0%84/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/03/%E5%8F%8D%E5%B0%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1019,14 +1023,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
@@ -1035,11 +1031,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1047,11 +1047,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">

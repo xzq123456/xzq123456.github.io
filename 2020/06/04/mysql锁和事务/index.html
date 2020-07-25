@@ -24,6 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/images/63.png">
 <meta property="og:image" content="http://yoursite.com/images/52.png">
 <meta property="og:image" content="http://yoursite.com/images/50.png">
+<meta property="og:image" content="http://yoursite.com/images/QQ%E6%88%AA%E5%9B%BE20200725180629.png">
 <meta property="og:image" content="http://yoursite.com/images/53.png">
 <meta property="og:image" content="http://yoursite.com/images/54.png">
 <meta property="og:image" content="http://yoursite.com/images/55.png">
@@ -32,7 +33,7 @@
 <meta property="og:image" content="http://yoursite.com/images/58.png">
 <meta property="og:image" content="http://yoursite.com/images/65.png">
 <meta property="article:published_time" content="2020-06-04T10:07:05.000Z">
-<meta property="article:modified_time" content="2020-07-23T15:41:18.249Z">
+<meta property="article:modified_time" content="2020-07-25T10:10:57.876Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
@@ -204,9 +205,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set autocommit &#x3D; 0;&#x2F;&#x2F;窗口关了就失效,可以在配置文件设置有效,练习的话这个就可以</span><br></pre></td></tr></table></figure>
 <p>mysql的默认事务隔离级别是可重复读．关于事务的知识后面会详解<br></p>
 <ul>
-<li>对加了索引的列同时ｕｐｄａｔｅ的话，如果第一个事务没有提交，第二个事务将处于等待状态（对同一条记录无论怎样是不可能同时ｕｐｄａｔｅ的，不同的是触发了表锁还是行锁）．如图：<br><img src="/images/46.png" alt=""></li>
-<li>对加了索引的列ｕｐｄａｔｅ，如果第一个事务没有提交，第二个事务更新了另一条主键索引的列，是可以更新成功的，说明触发了行锁;<br><img src="/images/47.png" alt=""></li>
-<li>对没有加索引的列ｕｐｄａｔｅ，即使更新的不是同一条记录，第二个事务的更新操作也会被阻塞，说明第一个事务的更新语句触发了表锁，对整张表的记录都加锁了．<br><img src="/images/48.png" alt=""><br>对于存储引擎是ＭＹＩＳＡＭ的表，读和写是阻塞的，InnoDB读和写是不阻塞的，读和读才会阻塞．</li>
+<li><p>对加了索引的列同时ｕｐｄａｔｅ的话，如果第一个事务没有提交，第二个事务将处于等待状态（对同一条记录无论怎样是不可能同时ｕｐｄａｔｅ的，不同的是触发了表锁还是行锁）．如图：<br><img src="/images/46.png" alt=""></p>
+</li>
+<li><p>对加了索引的列ｕｐｄａｔｅ，如果第一个事务没有提交，第二个事务更新了另一条主键索引的列，是可以更新成功的，说明触发了行锁;<br><img src="/images/47.png" alt=""></p>
+</li>
+<li><p>对没有加索引的列ｕｐｄａｔｅ，即使更新的不是同一条记录，第二个事务的更新操作也会被阻塞，说明第一个事务的更新语句触发了表锁，对整张表的记录都加锁了．<br><img src="/images/48.png" alt=""><br>对于存储引擎是ＭＹＩＳＡＭ的表，读和写是阻塞的，InnoDB读和写是不阻塞的，读和读才会阻塞．</p>
+</li>
+<li><p>sessionA select XX where xx for update; SessionB select XX where xx 是不则塞的，如果加上lock in share mode或者 for update就会则塞。</p>
+</li>
 </ul>
 <h6 id="间隙锁"><a href="#间隙锁" class="headerlink" title="间隙锁"></a>间隙锁</h6><p>在ｍｙｓｑｌ的可重复读的事务隔离级别下，可以锁指定查询范围的索引，避免幻读现象的发生，具体在下面的幻读的例子．<br>间隙锁不好的地方:<br><br>新增索引在间隙锁的范围之内是插入失败的(即使新增的主键id在数据库中不存在,但是在间隙锁范围内)</p>
 <h6 id="乐观锁和悲观锁"><a href="#乐观锁和悲观锁" class="headerlink" title="乐观锁和悲观锁"></a>乐观锁和悲观锁</h6><ul>
@@ -227,9 +233,12 @@
 <ul>
 <li>写写并发事务产生的问题<br><ul>
 <li>第一类丢失更新<br><br>第一类丢失更新就是两个事务同时操作一条数据，Ａ修改了但是没有提交事务，这是Ｂ修改了该条数据并且提交．Ａ此时撤回事务，导致Ｂ的修改丢失．但是这种现象所有的数据库都已经解决了．<br><img src="/images/52.png" alt=""></li>
-<li>第二类丢失更新<br><br>第二类丢失更新的情况如下图：<br><img src="/images/50.png" alt=""><br>第二类情况主要依靠数据库的锁来解决，数据库在锁级别保证了不会同时两个事务更新同一条记录成功，只能第一个事务更新成功并提交事务，第二个事务才能更新，数据库的锁就是悲观锁；当然为了解决第二类丢失更新，也可以采取乐观锁解决方案；或者不考虑性能的情况下直接把数据库事务级别设置为序列化．</li>
+<li>第二类丢失更新<br><br>第二类丢失更新的情况如下图：<br><img src="/images/50.png" alt=""><br>第二类情况主要依靠数据库的锁来解决，把操作变成串行化而不是并行化，数据库在锁级别保证了不会同时两个事务更新同一条记录成功，只能第一个事务更新成功并提交事务，第二个事务才能更新，数据库的锁就是悲观锁；当然为了解决第二类丢失更新，也可以采取乐观锁解决方案；或者不考虑性能的情况下直接把数据库事务级别设置为序列化．</li>
 </ul>
 </li>
+</ul>
+<p><img src="/images/QQ%E6%88%AA%E5%9B%BE20200725180629.png" alt=""><br>其实直接update也可以，加上select … for update是为了中间还有先检查余额等操作，和转账是一个原子操作。如果不加就会导致出现丢失更新的问题，因为并行的话操作顺序是不知道的，变成串行话就没问题了。</p>
+<ul>
 <li>读写并发产生的问题<ul>
 <li>脏读　读到了还没有提交的事务里面的数据<br><img src="/images/53.png" alt=""><br>这种情况的解决就是读写互斥，读的时候发现这条记录正在被更新（该记录或者表加了写锁），就等待锁释放后读取数据．这是由数据库底层的读锁和写锁互斥解决的．</li>
 <li>不可重复读　<br><br>对于一个事务内两条相同的查询语句结果不一样，是由于A事务读取到了B事务已经提交的更改数据，在同个时间段内，两次查询的结果不一致。<br><img src="/images/54.png" alt=""><br>数据库底层还是依赖读写互斥来解决的．当一个事务要读取数据的时候，就会在该记录加读锁，如果别的事务要读是可以的，读和读不互斥；如果是写的话就会阻塞，直到读操作完毕并且提交事务．</li>
@@ -552,14 +561,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
@@ -568,11 +569,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -580,11 +585,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -25,8 +25,13 @@
 <meta property="og:image" content="http://yoursite.com/images/s13.png">
 <meta property="og:image" content="http://yoursite.com/images/s15.png">
 <meta property="og:image" content="http://yoursite.com/images/s16.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_099.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_100.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_101.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_102.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_103.png">
 <meta property="article:published_time" content="2020-07-02T00:02:00.000Z">
-<meta property="article:modified_time" content="2020-07-17T14:12:13.561Z">
+<meta property="article:modified_time" content="2020-07-25T09:29:08.000Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -195,10 +200,10 @@
 <li>TCP有拥塞控制机制;UDP没有拥塞控制，适合媒体通信；</li>
 <li>TCP首部开销(20个字节)比UDP的首部开销(8个字节)要大；UDP实际首部有20字节，多的字节是伪首部，用来计算校验和的。</li>
 </ul>
-<h5 id="TCP报文格式"><a href="#TCP报文格式" class="headerlink" title="TCP报文格式"></a>TCP报文格式</h5><p><img src="/images/s4.png" alt=""><br>序号：作为一个发送字节流最开始的字节标识。<br><br>序列号：要发送端发送的数据起始位置。<br><br>ACK,SYN,FIN:TCP建立可释放连接和对方通信的标识。当建立连接的时候会发送SYN=1,ACK=0标识想建立会话;接收方回复SYN=1,ACK=1表示同意建立会话;之后发送放在发送ACK=1消息，三次握手达成。FIN是结束会话发送的<br><br>窗口：允许接收方发送的数据大小。</p>
+<h5 id="TCP报文格式"><a href="#TCP报文格式" class="headerlink" title="TCP报文格式"></a>TCP报文格式</h5><p><img src="/images/s4.png" alt=""><br>序号：作为一个发送字节流最开始的字节标识。<br><br>序列号：要发送端发送的数据起始位置。<br><br>ACK,SYN,FIN:TCP建立可释放连接和对方通信的标识。当建立连接的时候会发送SYN=1,ACK=0标识想建立会话;接收方回复SYN=1,ACK=1表示同意建立会话;之后发送放在发送ACK=1消息，三次握手达成。FIN是结束会话发送的<br><br>窗口：自己的接收窗口的大小，是接收方设置其发送窗口大小的依据。是动态变化的。</p>
 <h5 id="TCP可靠传输"><a href="#TCP可靠传输" class="headerlink" title="TCP可靠传输"></a>TCP可靠传输</h5><ul>
 <li>停止等待协议<br><img src="/images/s1.png" alt=""><br>缺点：信道利用率低<br>解决方式：流水线传输<br><img src="/images/s2.png" alt=""></li>
-<li>对应流水线传输的连续ARQ协议<br><img src="/images/s3.png" alt=""><br>收到的数据就可以从发送缓存中清掉了。还可以累积确认，缺点是中间的丢了，即使后面的收到也要重传从中间丢失的部分开始，称为Go-back-N</li>
+<li>对应流水线传输的连续ARQ[自动重传]协议<br><img src="/images/s3.png" alt=""><br>收到的数据就可以从发送缓存中清掉了。还可以累积确认，缺点是中间的丢了，即使后面的收到也要重传从中间丢失的部分开始，称为Go-back-N</li>
 <li>选择确认SACK<br><br>对于发送方发送过来的数据如果在接收方的接收窗口范围之内，但是不连续的，接收方可以收下这些数据，然后向发送放发送数据的信息以及需要发送的数据，不需要重复发送不连续的数据。由TCP报文中的SACK字段完成。</li>
 </ul>
 <h5 id="TCP的流量控制和拥塞控制"><a href="#TCP的流量控制和拥塞控制" class="headerlink" title="TCP的流量控制和拥塞控制"></a>TCP的流量控制和拥塞控制</h5><p>对于流量控制，依赖窗口字段接收方和发送方可以调整窗口的值，来决定对方发送数据的大小，流量控制就是让发送方发送数据的速率不要太快，要让接收方有时间处理。</p>
@@ -232,6 +237,12 @@
 <p>7). 应用层（Application layer）：为用户的应用进程提供网络通信服务</p>
 <h5 id="网络层的ARP协议工作原理"><a href="#网络层的ARP协议工作原理" class="headerlink" title="网络层的ARP协议工作原理"></a>网络层的ARP协议工作原理</h5><p>网络层的ARP协议完成了IP地址与物理地址的映射。<br><br>首先，每台主机都会在自己的ARP缓冲区中建立一个ARP列表，以表示IP地址和MAC地址的对应关系。当源主机需要将一个数据包要发送到目的主机时，会首先检查自己ARP列表中是否存在该IP地址对应的MAC地址：如果有，就直接将数据包发送到这个MAC地址；如果没有，就向本地网段发起一个ARP请求的广播包，查询此目的主机对应的MAC地址。此ARP请求数据包里包括源主机的IP地址、硬件地址、以及目的主机的IP地址。网段中所有的主机收到这个ARP请求后，会检查数据包中的目的IP是否和自己的IP地址一致。如果不相同就忽略此数据包；如果相同，该主机首先将发送端的MAC地址和IP地址添加到自己的ARP列表中，如果ARP表中已经存在该IP的信息，则将其覆盖，然后给源主机发送一个ARP响应数据包，告诉对方自己是它需要查找的MAC地址；源主机收到这个ARP响应数据包后，将得到的目的主机的IP地址和MAC地址添加到自己的ARP列表中，并利用此信息开始数据的传输。如果本网段主机都不是目的主机或者没有目的主机的MAC地址映射，就把目标MAC地址设置为本网段路由器的地址，让路由器去在进行ARP。</p>
 <h5 id="HTTP1-x和HTTP2-x区别"><a href="#HTTP1-x和HTTP2-x区别" class="headerlink" title="HTTP1.x和HTTP2.x区别"></a>HTTP1.x和HTTP2.x区别</h5><p><img src="/images/s16.png" alt=""></p>
+<h5 id="网络层知识"><a href="#网络层知识" class="headerlink" title="网络层知识"></a>网络层知识</h5><p>网络层提供的是面向无连接的，尽最大努力交付的数据报服务。<br><br>路由表的信息：目标ip地址 子网掩码 下一跳<br></p>
+<h6 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h6><p>把消息传到另一台机器上，不仅要求IP地址，还需要硬件地址（MAC地址），arp协议的作用就是根据IP地址找到指定ip地址对应的主机的硬件地址。具体的过程：会首先从本地的APR 高速缓存中超找目的IP的mac地址，如果没有找到就像本网段发送广播消息，目的主机是本网段的就会响应（单播）。如果不再同网段，就先把目的mac地址设置为本网端路由器的地址，然后由路由器进行广播，最后找到后通过相同的方法找到请求的机器mac地址，把自己的mac地址交给它。<br><img src="/images/Selection_099.png" alt=""></p>
+<h5 id="路由协议"><a href="#路由协议" class="headerlink" title="路由协议"></a>路由协议</h5><p>静态路由协议（不能使用动态节点的增删）和动态路由协议。<br><br>动态路由协议主要协议RIP OSPF。<br><br>RIP协议是基于距离的度量，没经过一个路由器就+1,最大距离是15,超过就不可达了。他是选择距离最近的路由，但是没有考虑把链路的网速考虑进去。RIP协议每隔一段时间和自己相邻的路由器交换自己所知道的路由信息，经过一段时间的交换，它就可以知道到目的主机的最短路径。RIP协议发送的是UDP数据报文。<br><img src="/images/Selection_100.png" alt=""><br><img src="/images/Selection_101.png" alt=""></p>
+<p>RIP的一个缺点就是如果一个路由器出现故障，这个消息可能要经过好长一段时间才能知道，好消息传得快，坏消息传得慢。还有就是最大距离是16,适合小的网络当时不适合大的，还有就是交换的是路由器的完整路由表，网络变大后开销也变大。优点就是简单。<br></p>
+<p>OSPF是对于rip的缺点提出的改进，首选它是触发式更新，只有链路状态发生了变化，才会进行更新;其次，它不是根据距离度量最优的路径，而是可以使用带宽等作为衡量标准;还有就是通过和邻居交换链路状态，就可以知道整个自治系统的拓扑图，使用最短路径算法就可以计算到各个路由器的最短路径。ospf使用的TCP。</p>
+<h5 id="VPN和NAT"><a href="#VPN和NAT" class="headerlink" title="VPN和NAT"></a>VPN和NAT</h5><p>VPN技术是为了内部主机之间的通讯，比如学校和公司的内网，如果回家或者在外的话正常是不能使用公网访问这些私往访问的，会搭建VPN服务，使用公网的传送，里面的信息才是真正的私网信息。<br><br>内网的计算机如果想上公网的话，就需要NAT技术，把内网的地址转化为公网地址，现在是1：1的关系，但是这样优点浪费公网IP。后面又提出了PNAT，把传输层的端口号也加上，让不同的主机地址的本地计算机共用一个公网ip地址。<br><img src="/images/Selection_102.png" alt=""><br><img src="/images/Selection_103.png" alt=""></p>
 
       
 
@@ -374,7 +385,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#传输层主要的作用"><span class="toc-number">1.</span> <span class="toc-text">传输层主要的作用</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#TCP和UDP的区别"><span class="toc-number">2.</span> <span class="toc-text">TCP和UDP的区别</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP报文格式"><span class="toc-number"></span> <span class="toc-text">TCP报文格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP可靠传输"><span class="toc-number"></span> <span class="toc-text">TCP可靠传输</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP的流量控制和拥塞控制"><span class="toc-number"></span> <span class="toc-text">TCP的流量控制和拥塞控制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#慢开始和拥塞避免算法"><span class="toc-number">1.</span> <span class="toc-text">慢开始和拥塞避免算法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#快恢复和快重传算法"><span class="toc-number">2.</span> <span class="toc-text">快恢复和快重传算法</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP的连接处理"><span class="toc-number"></span> <span class="toc-text">TCP的连接处理</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#建立连接-三次握手（我要和你建立链接，你真的要和我建立链接么，我真的要和你建立链接，成功）"><span class="toc-number">1.</span> <span class="toc-text">建立连接 三次握手（我要和你建立链接，你真的要和我建立链接么，我真的要和你建立链接，成功）</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#连接的释放（我要和你断开链接；好的，断吧。我也要和你断开链接；好的，断吧）"><span class="toc-number"></span> <span class="toc-text">连接的释放（我要和你断开链接；好的，断吧。我也要和你断开链接；好的，断吧）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#从输入网址到获得页面的过程"><span class="toc-number"></span> <span class="toc-text">从输入网址到获得页面的过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Get与POST的区别"><span class="toc-number"></span> <span class="toc-text">Get与POST的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Session-与-Cookie-的对比"><span class="toc-number"></span> <span class="toc-text">Session 与 Cookie 的对比</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Http和Https的区别"><span class="toc-number"></span> <span class="toc-text">Http和Https的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#对称加密与非对称加密"><span class="toc-number"></span> <span class="toc-text">对称加密与非对称加密</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP-IP协议簇"><span class="toc-number"></span> <span class="toc-text">TCP&#x2F;IP协议簇</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#网络层的ARP协议工作原理"><span class="toc-number"></span> <span class="toc-text">网络层的ARP协议工作原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#HTTP1-x和HTTP2-x区别"><span class="toc-number"></span> <span class="toc-text">HTTP1.x和HTTP2.x区别</span></a>
+                    <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#传输层主要的作用"><span class="toc-number">1.</span> <span class="toc-text">传输层主要的作用</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#TCP和UDP的区别"><span class="toc-number">2.</span> <span class="toc-text">TCP和UDP的区别</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP报文格式"><span class="toc-number"></span> <span class="toc-text">TCP报文格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP可靠传输"><span class="toc-number"></span> <span class="toc-text">TCP可靠传输</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP的流量控制和拥塞控制"><span class="toc-number"></span> <span class="toc-text">TCP的流量控制和拥塞控制</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#慢开始和拥塞避免算法"><span class="toc-number">1.</span> <span class="toc-text">慢开始和拥塞避免算法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#快恢复和快重传算法"><span class="toc-number">2.</span> <span class="toc-text">快恢复和快重传算法</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP的连接处理"><span class="toc-number"></span> <span class="toc-text">TCP的连接处理</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#建立连接-三次握手（我要和你建立链接，你真的要和我建立链接么，我真的要和你建立链接，成功）"><span class="toc-number">1.</span> <span class="toc-text">建立连接 三次握手（我要和你建立链接，你真的要和我建立链接么，我真的要和你建立链接，成功）</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#连接的释放（我要和你断开链接；好的，断吧。我也要和你断开链接；好的，断吧）"><span class="toc-number"></span> <span class="toc-text">连接的释放（我要和你断开链接；好的，断吧。我也要和你断开链接；好的，断吧）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#从输入网址到获得页面的过程"><span class="toc-number"></span> <span class="toc-text">从输入网址到获得页面的过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Get与POST的区别"><span class="toc-number"></span> <span class="toc-text">Get与POST的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Session-与-Cookie-的对比"><span class="toc-number"></span> <span class="toc-text">Session 与 Cookie 的对比</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Http和Https的区别"><span class="toc-number"></span> <span class="toc-text">Http和Https的区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#对称加密与非对称加密"><span class="toc-number"></span> <span class="toc-text">对称加密与非对称加密</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TCP-IP协议簇"><span class="toc-number"></span> <span class="toc-text">TCP&#x2F;IP协议簇</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#网络层的ARP协议工作原理"><span class="toc-number"></span> <span class="toc-text">网络层的ARP协议工作原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#HTTP1-x和HTTP2-x区别"><span class="toc-number"></span> <span class="toc-text">HTTP1.x和HTTP2.x区别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#网络层知识"><span class="toc-number"></span> <span class="toc-text">网络层知识</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#ARP"><span class="toc-number">1.</span> <span class="toc-text">ARP</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#路由协议"><span class="toc-number"></span> <span class="toc-text">路由协议</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#VPN和NAT"><span class="toc-number"></span> <span class="toc-text">VPN和NAT</span></a>
                     </div>
                 </span>
             </div>
@@ -543,14 +554,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
@@ -559,11 +562,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -571,11 +578,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
