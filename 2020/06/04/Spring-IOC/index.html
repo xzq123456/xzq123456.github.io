@@ -16,12 +16,15 @@
 <meta property="og:description" content="前言  　　IOC(控制反转)是Spring最重要的两个特性之一,剩下的AOP下篇再写.IOC主要解决的就是创建对象的问题.以往创建对象都是new对象.你可能觉得这样也没什么不方便.可以当你的对象属性比较多,里面还依赖其他对象的时候,你就需要先创建其他对象然后set到该对象里.如果有了IOC,你就可以把一些默认对象(比如mybatis相关类配置)和它的属性以及依赖都定义到xml里,spring在加">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/images/677.png">
+<meta property="og:image" content="http://yoursite.com/images/QQ%E6%88%AA%E5%9B%BE20200727072550.png">
+<meta property="og:image" content="http://yoursite.com/images/QQ%E6%88%AA%E5%9B%BE20200727075200.png">
+<meta property="og:image" content="http://yoursite.com/images/QQ%E6%88%AA%E5%9B%BE20200727075425.png">
 <meta property="og:image" content="http://yoursite.com/images/66.png">
 <meta property="og:image" content="http://yoursite.com/images/19.jpg">
 <meta property="og:image" content="http://yoursite.com/images/67.png">
 <meta property="og:image" content="http://yoursite.com/images/20.jpg">
 <meta property="article:published_time" content="2020-06-04T13:52:00.000Z">
-<meta property="article:modified_time" content="2020-06-15T13:09:06.974Z">
+<meta property="article:modified_time" content="2020-07-27T05:39:11.258Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="spring">
 <meta name="twitter:card" content="summary">
@@ -186,9 +189,9 @@
 <ul>
 <li>创建配置文件(如xml格式),把类相关定义和默认属性定义好.</li>
 <li>读取配置文件类. 读取配置文件,对读到的类创建它并且把它的属性设置到类里(通过反射).然后保存在一个Map里.key是类名,value是对象引用.来模拟spring的容器.</li>
-<li>测试方法 读取xml,通过getBean的方式(工厂方法)创建对象.</li>
+<li>测试方法 读取xml,通过getBean的方式(工厂方法)创建对象.<br><br>IOC最终在程序里就是一个线程安全的hashmap。<h5 id="Spring-IOC的过程"><a href="#Spring-IOC的过程" class="headerlink" title="Spring IOC的过程"></a>Spring IOC的过程</h5>当然spring的源码不会这么简单,但是大体思路和上面差不是很多.不过spring考虑的东西很多:比如对象的生命周期,循环依赖,后置处理器等.<br>那Bean的存储数据结构是怎么样的?大致是下面的几个主要对象,<br><img src="/images/677.png" alt=""><br>主要过程：<br> <img src="/images/QQ%E6%88%AA%E5%9B%BE20200727072550.png" alt=""><br>   <img src="/images/QQ%E6%88%AA%E5%9B%BE20200727075200.png" alt=""><br>   <img src="/images/QQ%E6%88%AA%E5%9B%BE20200727075425.png" alt=""></li>
 </ul>
-<h5 id="Spring-IOC的过程"><a href="#Spring-IOC的过程" class="headerlink" title="Spring IOC的过程"></a>Spring IOC的过程</h5><p>  当然spring的源码不会这么简单,但是大体思路和上面差不是很多.不过spring考虑的东西很多:比如对象的生命周期,循环依赖,后置处理器等.<br>  那Bean的存储数据结构是怎么样的?大致是下面的几个主要对象,<br>   <img src="/images/677.png" alt=""><br>   BeanFactory本身不会去解析xml文件,有专门解析xml类的类去解析,然后把结果存储在上面的几个对象里.此时只是存储对象创建的基本信息,并没有创建对象.<br><br>   当这些信息收集完毕后,对于实现BeanPostProcessor接口的类,Spring会首先加载它们,这里涉及AOP的思想,AOP本质是动态代理,这些实现后置处理接口的类是用于实现切面逻辑的,所以要先于普通对象被创建(要不怎么实现切面功能,又没有显示定义在类的属性里)<br>  <br><br>  下图是spring Bean的生命周期图(实例化过程),后面会围绕它对里面的每一部分进行单独讲解.<br><br>  <img src="/images/66.png" alt=""></p>
+<p>   BeanFactory本身不会去解析xml文件,有专门解析xml类的类去解析,然后把结果存储在上面的几个对象里.此时只是存储对象创建的基本信息,并没有创建对象.<br><br>   当这些信息收集完毕后,对于实现BeanPostProcessor接口的类,Spring会首先加载它们,这里涉及AOP的思想,AOP本质是动态代理,这些实现后置处理接口的类是用于实现切面逻辑的,所以要先于普通对象被创建(要不怎么实现切面功能,又没有显示定义在类的属性里)<br>  <br><br>  <a href="https://blog.csdn.net/pythias_/article/details/82752881" target="_blank" rel="noopener">BeanFactory和ApplicationContext的区别</a><br>  <br><br>  下图是spring Bean的生命周期图(实例化过程),后面会围绕它对里面的每一部分进行单独讲解.<br><br>  <img src="/images/66.png" alt=""></p>
 <ul>
 <li><p>实例化对象(空对象,没有属性).利用反射 class.forName(“”).newInstance()</p>
 </li>
@@ -208,7 +211,7 @@
 <p>大致的过程就是这样的.在详细介绍每一部分前,还需要知晓一些spring的特性:<br></p>
 </li>
 </ul>
-<p>   1.alias 别名,给Bean起一个别名,在注解开发的时候,就是@Alias注解,默认是类名首字母小写<br><br>   2.autoware 并不是注解的@Autowire, autowire属性主要是在类的依赖(ref)比较多的情况下,自动给你完成依赖注入,主要有ByName和ByType两种,就少了很多自己手动指定的工作<br><br>   3.FactoryBean  能够创建Bean的Bean,本质还是一个Bean<br><br>   4.factory-method   工厂方法创建Bean<br><br>   5.depend-on 如果不是直接关联的依赖,加上它可以把这个依赖先初始化.<br><br>   6.BeanPostProcessor 实现切面逻辑类需要继承的接口,AOP实现的关键<br><br>   7.<em>Aware接口,获取运行时期容器或者Bean的相关信息.也是实现AOP的关键.AOP的关键类会实现BeanPostProcessor和</em>Aware的接口,前者用于提前初始化自己,后者会获取容器信息,初始化相关类(切面类)并且在被代理类调用相关方法的时候根据切面表达式判断是否要注入切面逻辑,更具体会单独在AOP中写.</p>
+<p>   1.alias 别名,给Bean起一个别名,在注解开发的时候,就是@Alias注解,默认是类名首字母小写<br><br>   2.autoware 并不是注解的@Autowire, autowire属性主要是在类的依赖(ref)比较多的情况下,自动给你完成依赖注入,主要有ByName和ByType两种,就少了很多自己手动指定的工作<br><br>   3.FactoryBean  能够创建Bean的Bean,本质还是一个Bean。在使用getBean方法获取的时候，如果对象是FactoryBean，还会里面的方法获取真正的对象（factoryBean.getObject()）。<br><br>   4.factory-method   工厂方法创建Bean,静态工厂方法创建<br><br>   5.depend-on 如果不是直接关联的依赖,加上它可以把这个依赖先初始化.<br><br>   6.BeanPostProcessor 实现切面逻辑类需要继承的接口,AOP实现的关键<br><br>   7.<em>Aware接口,获取运行时期容器或者Bean的相关信息.也是实现AOP的关键.AOP的关键类会实现BeanPostProcessor和</em>Aware的接口,前者用于提前初始化自己,后者会获取容器信息,初始化相关类(切面类)并且在被代理类调用相关方法的时候根据切面表达式判断是否要注入切面逻辑,更具体会单独在AOP中写.</p>
 <h6 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h6><ul>
 <li><p>对别名和&amp;开头的BeanName进行处理,替换成在Map缓存的beanName</p>
 </li>
@@ -233,6 +236,7 @@
 <ul>
 <li>剩余的工作<br><br>后置处理会在AOP讲,剩下的销毁和自定义销毁用到估计也不多,就没仔细看.<br></li>
 </ul>
+<p>Spring在获取bean的时候，如果类的作用域是singleton，那么在获取的时候（去缓存中）会加锁，使用的就是JUC的线程安全的hashmap。</p>
 <h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>　　我所了解到的IOC就到这些,IOC并不是有多先进,只是它的理念是很好的,由程序来帮我们来生成对象,自己在哪里用到直接取就可以.最核心的就是反射的思想.<br><br>  <a href="http://www.tianxiaobo.com/2018/05/30/Spring-IOC-%E5%AE%B9%E5%99%A8%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%AF%BC%E8%AF%BB/" target="_blank" rel="noopener">Spring IOC 容器源码分析系列文章导读</a></p>
 
       
@@ -549,15 +553,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -569,11 +569,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">

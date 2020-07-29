@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://yoursite.com/images/58.png">
 <meta property="og:image" content="http://yoursite.com/images/65.png">
 <meta property="article:published_time" content="2020-06-04T10:07:05.000Z">
-<meta property="article:modified_time" content="2020-07-25T10:10:57.876Z">
+<meta property="article:modified_time" content="2020-07-27T08:16:05.882Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
@@ -247,7 +247,7 @@
 </li>
 </ul>
 <p>总结：<br><br>　　了解决并发事务之间的问题，数据库设置了不同的隔离级别适应不同的要求．隔离级别不是越高越好，越高代表性能不行，但是安全，安全性的要求取决于具体的业务，ｍｙｓｑｌ默认的隔离级别是可重复读.msyql的可重复读不会产生幻读,因为间隙锁的存在<br><br>  隔离级别: 读未提交 读已提交 可重复读 序列化<br> <img src="/images/58.png" alt=""></p>
-<h5 id="事务的隔离级别-Spring"><a href="#事务的隔离级别-Spring" class="headerlink" title="事务的隔离级别(Spring)"></a>事务的隔离级别(Spring)</h5><p>spring事务隔离级别与传播机制<br>隔离级别：<br>1、ISOLOCATION_DEFAULT:  数据库默认级别<br>2、ISOLOCATION_READ_UNCOMMITTED: 允许读取未提交的读， 可能导致脏读，不可重复读，幻读<br>3、ISOLOCATION_READ_COMMITTED:  允许读取已提交的读，可能导致不可重复读，幻读<br>4、ISOLOCATION_REPEATABLE_READ : 不能能更新另一个事务修改单尚未提交(回滚)的数据，可能引起幻读<br>5、ISOLOCATION_SERIALIZABLE: 序列执行效率低<br><br>其实底层还是数据库的隔离级别.关于spring事务的隔离级别包括传播机制会单独写一篇博客.</p>
+<h5 id="事务的隔离级别-Spring"><a href="#事务的隔离级别-Spring" class="headerlink" title="事务的隔离级别(Spring)"></a>事务的隔离级别(Spring)</h5><p>spring事务隔离级别与传播方式<br>隔离级别：<br>1、ISOLOCATION_DEFAULT:  数据库默认级别<br>2、ISOLOCATION_READ_UNCOMMITTED: 允许读取未提交的读， 可能导致脏读，不可重复读，幻读<br>3、ISOLOCATION_READ_COMMITTED:  允许读取已提交的读，可能导致不可重复读，幻读<br>4、ISOLOCATION_REPEATABLE_READ : 不能能更新另一个事务修改单尚未提交(回滚)的数据，可能引起幻读<br>5、ISOLOCATION_SERIALIZABLE: 序列执行效率低<br><br>其实底层还是数据库的隔离级别.关于spring事务的隔离级别包括传播机制会单独写一篇博客.<br><br>传播方式：<br><br>用的比较多的Requreid和Required_New（事务中创建新的事务）</p>
 <h5 id="数据库恢复"><a href="#数据库恢复" class="headerlink" title="数据库恢复"></a>数据库恢复</h5><p> <img src="/images/65.png" alt=""><br> 实现恢复的技术：数据转储和log日志文件（undo日志：数据之前的历史数据   redo日志：数据更新后内容（但还没写到磁盘））. MVCC的版本就写在undo日志.<br><br> 利用数据转储可以使得数据库恢复到某一时刻的状态，再利用日志文件就可以保证恢复到出故障时候数据的状态<br>日志文件的记录要严格按照事务的发生时间；必须先写日志文件，后更新数据库<br><br>具体的数据库恢复策略等有空写.<br></p>
 <p>一些知识和图的参考链接:<a href="https://segmentfault.com/a/1190000015738121#item-3-14" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015738121#item-3-14</a></p>
 
@@ -565,15 +565,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -585,11 +581,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>SpringMVC | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言SpringMVC是我们进行web开发最重要的组件,它的底层就是servlet.只不过它在servlet的基础上封装了很多,使得我们在使用的时候很方便.">
+  <meta name="description" content="前言SpringMVC是我们进行web开发最重要的组件,它的底层就是servlet.只不过它在servlet的基础上封装了很多,使得我们在使用的时候很方便.比如加入了注解的url映射，http参数自动转化，拦截器，过滤器，全局异常等等。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringMVC">
 <meta property="og:url" content="http://yoursite.com/2020/06/04/SpringMVC/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前言SpringMVC是我们进行web开发最重要的组件,它的底层就是servlet.只不过它在servlet的基础上封装了很多,使得我们在使用的时候很方便.">
+<meta property="og:description" content="前言SpringMVC是我们进行web开发最重要的组件,它的底层就是servlet.只不过它在servlet的基础上封装了很多,使得我们在使用的时候很方便.比如加入了注解的url映射，http参数自动转化，拦截器，过滤器，全局异常等等。">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/images/22.jpg">
 <meta property="og:image" content="http://yoursite.com/images/70.png">
 <meta property="og:image" content="http://yoursite.com/images/71.png">
 <meta property="article:published_time" content="2020-06-04T14:46:37.000Z">
-<meta property="article:modified_time" content="2020-06-16T05:13:32.643Z">
+<meta property="article:modified_time" content="2020-07-27T08:49:20.422Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="spring">
 <meta name="twitter:card" content="summary">
@@ -179,7 +179,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>SpringMVC是我们进行web开发最重要的组件,它的底层就是servlet.只不过它在servlet的基础上封装了很多,使得我们在使用的时候很方便.<br>  <a id="more"></a></p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>SpringMVC是我们进行web开发最重要的组件,它的底层就是servlet.只不过它在servlet的基础上封装了很多,使得我们在使用的时候很方便.比如加入了注解的url映射，http参数自动转化，拦截器，过滤器，全局异常等等。<br>  <a id="more"></a></p>
 <h5 id="SpringMVC如何处理一次请求"><a href="#SpringMVC如何处理一次请求" class="headerlink" title="SpringMVC如何处理一次请求"></a>SpringMVC如何处理一次请求</h5><p><img src="/images/22.jpg" alt=""><br>上图就详细介绍了spring处理一次请求的过程以及它的组成部分<br><br>(1)客户端发送request请求.<br><br>(2)DispatcherServlet接收到请求,去handerleMapping查找映射的是哪一个controller(处理器).就是servlet配置的映射,如果在spring代码里,就是在对应controller上面的@RequestMapping.还返回了执行链<br><br>(3)收到handlerMapping的信息,然后调用对用的HandleAddapter.并不是和controller直接交互.因为在是springmvc里Controller有基于注解的,有基于xml等配置方法,在DispatcherServle如果还要判断那就代码太多了,所以它交给了HandlerAdapter(使用了适配器的设计模式)来处理一些和controller交互的逻辑,最后把数据返回就行<br><br>(4)适配器收到请求会调用对应Controller里的放方法,controller执行完毕后会返回一个ModelAndView的对象,包含数据和数据要显示在哪个前端页面上.<br><br>(5)前端控制器收到modelandview对象,调用视图解析器,它分析是调用哪一个页面,并把页面传给控制器,控制器将数据渲染到页面然后返回给用户.<br></p>
 <p>这里面需要注意,这是@Controller注解的渲染过程,如果开发使用@RestController开发,上面就没有第五步.直接将json数据返回给前端,这就是前后端开发.前后端开发在我看来就是ajax+@RestController.前端ajax请求后端业务json数据,前端收到数据后就使用前端框架自己对应解析.没有开发前后端之前就是jsp,thymeLeaf后端程序员在前端把数据代码注入进去,十分麻烦.<br><img src="/images/70.png" alt=""><br>@Controller<br><img src="/images/71.png" alt="">@RestController</p>
 <h5 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h5><p>拦截器在上图前端控制器请求HandlerMapping的时候会返回一个执行链,里面就有拦截器.拦截器是在请求controller前后做一些事情,思想还是AOP<br></p>
@@ -549,15 +549,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -569,11 +565,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">

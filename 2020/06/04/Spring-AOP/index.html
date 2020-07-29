@@ -17,7 +17,7 @@
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/images/21.jpg">
 <meta property="article:published_time" content="2020-06-04T13:51:50.000Z">
-<meta property="article:modified_time" content="2020-06-16T05:14:58.819Z">
+<meta property="article:modified_time" content="2020-07-27T05:28:59.822Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="spring">
 <meta name="twitter:card" content="summary">
@@ -184,7 +184,7 @@
 <li><p>切点<br><br>切点是用来选择连接点的.用户调用哪些方法的时候会被拦截,你希望执行哪些方法的时候需要AOP帮你做点什么.会定义一个切点的表达式来选择连接点</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">execution(* *.find*(..))  &#x2F;&#x2F;用于选择find方法开头的方法(连接点)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>通知(Advice)<br><br>通过切点选好了哪些方法会被拦截.通知就是具体的逻辑,你要在这些方法之前(beforeAdice)还是之后(凡Advice)或者出现异常等后执行AOP帮你执行的代码.</p>
+<li><p>通知(Advice)<br><br>通过切点选好了哪些方法会被拦截.通知就是具体的逻辑,你要在这些方法之前(beforeAdice)还是之后(afterAdvice)或者出现异常等后执行AOP帮你执行的代码.</p>
 </li>
 <li><p>切面<br><br>前面所说的通知和切点现在还是分开的,切面就是切点+通知(逻辑代码).切点解决了 where 问题，通知解决了 when 和 how 问题。切面把两者整合起来，就可以解决 对什么方法（where）在何时（when - 前置还是后置，或者环绕）执行什么样的横切逻辑（how）的三连发问题在真正使用过程我们会定义一个切面类,里面的方法都是这样的,以注解方式来讲<br></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BeforeAdvice</span>(execution(* *.find*(..)))</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeMethod</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
@@ -215,8 +215,15 @@
 
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/aop/spring-aop.xsd"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--目标对象 孩子类(controller使用springbbot自动注入,这里就不用再注入了)--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;bean id="indexController" class="com.example.springdemo.controller.IndexController"/&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--切面类--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"logerAspect2"</span> <span class="attr">class</span>=<span class="string">"com.example.springdemo.aop.LogerAspect2"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--面向切面编程--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--定义切面--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"logerAspect2"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--定义切点--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">"action"</span> <span class="attr">expression</span>=<span class="string">"execution(* com.example.springdemo.controller.*.*(..))"</span>/&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 声明前置通知 (在切点方法被执行前调用)--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">aop:before</span> <span class="attr">method</span>=<span class="string">"before2"</span> <span class="attr">pointcut-ref</span>=<span class="string">"action"</span>/&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 声明后置通知 (在切点方法被执行后调用)--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">aop:after</span> <span class="attr">method</span>=<span class="string">"after2"</span> <span class="attr">pointcut-ref</span>=<span class="string">"action"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>当然可以使用通知做很多事情,比如还可以获取参数列表,把返回值返回,指令拦截异常等等,治理只是介绍aop的简单使用.<br><br>ps:springboot环境如果想指定加载xml的文件,使用@ImportResource(value = “xx.xml”)加载主启动类上就可以.不过现在都是avaConfig的方式(@Configuratin+@Bean)完成可xml相同的功能,就基本永不到xml了.</p>
-<h5 id="Spring事务"><a href="#Spring事务" class="headerlink" title="Spring事务"></a>Spring事务</h5><p> spring事务是AOP的应用之一.可以采用基于注解和基于xml的配置方式,大致和上图相似.一般我们都使用基于注解的方式,只需要在指定方法上添加@Transactional注解就可以实现方法中的操作放在一个事务里面.spring的事务依赖于底层数据库的事务隔离级别,当然这个注解可以配置一些参数,比如指定异常回滚,超时设置等等,大呢该具体使用在详看就可以.<br><br> 另一个比较重要的知识点是spring事务的传播级别,我只记住最重要的两个Require和Requied_new.前者是在事务代码里,如果调用的方法又是被@Transactional修饰,那么它不会创建新的事务;后者会新创建一个事务.<br> 如果整个事务操作一个出现异常,即使成功的操作也会被回滚,但是如果新创建的事务就不会收到影响到.</p>
+<p>当然可以使用通知做很多事情,比如还可以获取参数列表,把返回值返回,指令拦截异常等等,这里只是介绍aop的简单使用.<br><br>ps:springboot环境如果想指定加载xml的文件,使用@ImportResource(value = “xx.xml”)加载主启动类上就可以.不过现在都是javaConfig的方式(@Configuratin+@Bean)完成可xml相同的功能,就基本永不到xml了.</p>
+<h5 id="Spring事务"><a href="#Spring事务" class="headerlink" title="Spring事务"></a>Spring事务</h5><p> spring事务是AOP的应用之一.可以采用基于注解和基于xml的配置方式,大致和上图相似.一般我们都使用基于注解的方式,只需要在指定方法上添加@Transactional注解就可以实现方法中的操作放在一个事务里面.spring的事务依赖于底层数据库的事务隔离级别,当然这个注解可以配置一些参数,比如指定异常回滚,超时设置等等,大呢该具体使用在详看就可以.<br><br> 另一个比较重要的知识点是spring事务的传播级别,我只记住最重要的两个Required和Requied_new.前者是在事务代码里,如果调用的方法又是被@Transactional修饰,那么它不会创建新的事务;后者会新创建一个事务.如果整个事务操作一个出现异常,即使成功的操作也会被回滚,但是如果新创建的事务就不会收到影响到.</p>
+<h6 id="transactional注解在什么情况下会失效，为什么？"><a href="#transactional注解在什么情况下会失效，为什么？" class="headerlink" title="@transactional注解在什么情况下会失效，为什么？"></a>@transactional注解在什么情况下会失效，为什么？</h6><p><a href="https://www.cnblogs.com/eryun/p/12017262.html" target="_blank" rel="noopener">https://www.cnblogs.com/eryun/p/12017262.html</a></p>
+<h5 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h5><ul>
+<li>AOP是什么</li>
+<li>AOP的应用场景（日志 权限 事务。。）</li>
+<li>springAOP和AspectJ的区别<br><br>二者都是用来实现AOP的手段。</li>
+<li>AOP的切面逻辑是在代码编译期间织入的，是在对象初始化的时候增强类代码逻辑就已经加入到对象里[是applicationcontext加载的时候，而不是getBean使用的时候]，这时候的对象其实就是代理对象，当调用相应的方法的时候就会触发相应的切面逻辑。 </li>
+</ul>
 <p>参考链接:<br><br><a href="http://www.tianxiaobo.com/2018/06/17/Spring-AOP-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%AF%BC%E8%AF%BB/" target="_blank" rel="noopener">Spring AOP 源码分析系列文章导读</a><br><br>小型的spring实现,主要是实现了AOP和IOC并且把二者结合起来:<br><br><a href="https://github.com/code4wt/toy-spring" target="_blank" rel="noopener">top-spring github源码</a></p>
 
       
@@ -360,7 +367,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#AOP中的术语"><span class="toc-number">1.1.</span> <span class="toc-text">AOP中的术语</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#核心实现"><span class="toc-number">1.2.</span> <span class="toc-text">核心实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#切面逻辑的执行"><span class="toc-number">1.3.</span> <span class="toc-text">切面逻辑的执行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自己实现AOP思路"><span class="toc-number">1.4.</span> <span class="toc-text">自己实现AOP思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AOP在spring中的使用"><span class="toc-number">1.5.</span> <span class="toc-text">AOP在spring中的使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring事务"><span class="toc-number">1.6.</span> <span class="toc-text">Spring事务</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#AOP中的术语"><span class="toc-number">1.1.</span> <span class="toc-text">AOP中的术语</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#核心实现"><span class="toc-number">1.2.</span> <span class="toc-text">核心实现</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#切面逻辑的执行"><span class="toc-number">1.3.</span> <span class="toc-text">切面逻辑的执行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自己实现AOP思路"><span class="toc-number">1.4.</span> <span class="toc-text">自己实现AOP思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AOP在spring中的使用"><span class="toc-number">1.5.</span> <span class="toc-text">AOP在spring中的使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring事务"><span class="toc-number">1.6.</span> <span class="toc-text">Spring事务</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#transactional注解在什么情况下会失效，为什么？"><span class="toc-number">1.6.1.</span> <span class="toc-text">@transactional注解在什么情况下会失效，为什么？</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#常见面试题"><span class="toc-number">1.7.</span> <span class="toc-text">常见面试题</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -533,15 +540,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -553,11 +556,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
