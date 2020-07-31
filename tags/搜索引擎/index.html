@@ -6,23 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>秒杀项目介绍 | Hexo</title>
+  <title>Tag: 搜索引擎 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="介绍　　本文主要是介绍我根据网上视频学习的java秒杀项目.这个项目整体并不复杂，主要是包含登录和秒杀功能，登录是为了秒杀操作提供用于登录验证的。主要是秒杀的不断优化的过程，从原始的访问事务+访问数据库，加入redis作为缓存，最后加入消息队列进一步优化，其中还涉及页面静态化，前后端分离，验证码等技术来实现用户限流，总体来讲还是比较全面，里面的具体细节在每一部分单独介绍。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="秒杀项目介绍">
-<meta property="og:url" content="http://yoursite.com/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="介绍　　本文主要是介绍我根据网上视频学习的java秒杀项目.这个项目整体并不复杂，主要是包含登录和秒杀功能，登录是为了秒杀操作提供用于登录验证的。主要是秒杀的不断优化的过程，从原始的访问事务+访问数据库，加入redis作为缓存，最后加入消息队列进一步优化，其中还涉及页面静态化，前后端分离，验证码等技术来实现用户限流，总体来讲还是比较全面，里面的具体细节在每一部分单独介绍。">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="http://yoursite.com/images/Selection_093.png">
-<meta property="og:image" content="http://yoursite.com/images/66.png">
-<meta property="article:published_time" content="2020-06-27T10:23:00.000Z">
-<meta property="article:modified_time" content="2020-07-04T09:03:58.750Z">
 <meta property="article:author" content="CodeXi">
-<meta property="article:tag" content="项目">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/Selection_093.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -158,263 +150,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-并发项目介绍" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      秒杀项目介绍
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/07/30/salE/" class="archive-article-date">
+  	<time datetime="2020-07-30T02:51:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-30</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/07/30/salE/">ElasticSearch</a>
     </h1>
   
 
-        
-        <a href="/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-  	<time datetime="2020-06-27T10:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>　　本文主要是介绍我根据网上视频学习的java秒杀项目.这个项目整体并不复杂，主要是包含登录和秒杀功能，登录是为了秒杀操作提供用于登录验证的。主要是秒杀的不断优化的过程，从原始的访问事务+访问数据库，加入redis作为缓存，最后加入消息队列进一步优化，其中还涉及页面静态化，前后端分离，验证码等技术来实现用户限流，总体来讲还是比较全面，里面的具体细节在每一部分单独介绍。<br>   <a id="more"></a><br>   <br><br>  这篇写秒杀架构的文章也很好，<a href="https://zhuanlan.zhihu.com/p/92307325" target="_blank" rel="noopener">《吊打面试官》系列-秒杀系统设计</a></p>
-<h5 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h5><p>准备阶段主要是编写一些工具类和引入第三方插件等。</p>
-<ul>
-<li>自定义返回实体<br><br>虽然也可以使用ResponseEntity来封装返回对象，但是实际开发往往我们需要自己地拿以返回的数据格式。</li>
-<li>全局异常处理<br><br>负责各种异常的捕获功能，还要结合上面的自定义返回实体。</li>
-<li>自定义参数校验功能<br><br>对于传过来的数据不能仅仅依赖前端，还要后端进行校验。自动校验就是根据spring提供的一些参数实现注解校验，还可以自定义参数校验功能。这里比如在登录的时候传过来的vo对象自动校验其手机号是否符合规定。</li>
-<li>redis的相关配置引入<br><br>redis作为第三方类引入springboot工程，配置连接池并做好redis工具类的编写（当然也可以使用springboot-redis中的redisTempalte,这里是自定义的，因为后面在key的定义方面自定义的类灵活性较大。</li>
-<li>RabbitMQ的引入和相关配置<br><br>消息队列采用的是RabbotMQ，引入并做好配置类的编写。</li>
-<li>数据层<br><br>数据库的设计和数据库连接(mybatis Druid)相关类编写。如果使用Mybatis-plus,这些和数据库一一对应的对象和Mapper文件等可以使用代码生成，这里使用的就是传统的mybatis。<br><img src="/images/Selection_093.png" alt=""><br>数据库类的关系图可以在idea里查看。</li>
-</ul>
-<h5 id="登录操作"><a href="#登录操作" class="headerlink" title="登录操作"></a>登录操作</h5><p>登录操作其实业务没有什么好讲的，这里主要是借它来介绍下SpringMVC的一些配置和加密的知识<br><br>登录的主要过程就是登录请求发出，服务端接收并对数据进行校验，校验完毕后先从缓存中根据id或者token获取用户信息，没有就从数据库查询后放入缓存，校验通过就返回成功。为了安全，可以对密码进行两次的md5加密，第一次在使用前端js进行加密，加密的数据再进行md5加密就可以保证安区。第一步加密是防止传输阶段密码泄漏，第二步加密是为了防止数据库泄漏。<br></p>
-<h6 id="自定义参数解析"><a href="#自定义参数解析" class="headerlink" title="自定义参数解析"></a>自定义参数解析</h6><p>在一些页面需要用户操作才能进行，我们往往会加入拦截器对相应的url进行拦截，然后判断用户是否登录。在用户登录登录后放行。如果我们在操作过程需要这个用户的信息，可以在拦截器判断用户登录后把用户信息放在ThreadLocal里，然后在方法里得到就可以<br><br>另一种方法可以自定义参数解析，不需要拦截器器。在平时方法中我们可以使用Model Request等对象，我们并没有创建它们，但是可以直接使用。我们可以把User对象放在参数列表里，然后就可以直接使用，不用在方法逻辑里判断这个对象有没有登录，具体的逻辑可以放在自定义参数类型里面。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserArgumentResolver</span> <span class="keyword">implements</span> <span class="title">HandlerMethodArgumentResolver</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    MiaoshaUserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supportsParameter</span><span class="params">(MethodParameter parameter)</span> </span>&#123;</span><br><span class="line">        Class&lt;?&gt; clazz = parameter.getParameterType();</span><br><span class="line">        <span class="keyword">return</span> clazz== MiaoshaUser<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">resolveArgument</span><span class="params">(MethodParameter parameter, ModelAndViewContainer mavContainer,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        HttpServletResponse response = webRequest.getNativeResponse(HttpServletResponse<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">        String paramToken = request.getParameter(MiaoshaUserService.COOKIE_NAME_TOKEN);</span><br><span class="line">        String cookieToken = getCookieValue(request, MiaoshaUserService.COOKIE_NAME_TOKEN);</span><br><span class="line">        <span class="keyword">if</span>(StringUtils.isEmpty(cookieToken) &amp;&amp; StringUtils.isEmpty(paramToken)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;</span><br><span class="line">        <span class="keyword">return</span> userService.getByToken(token);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getCookieValue</span><span class="params">(HttpServletRequest request, String cookiName)</span> </span>&#123;</span><br><span class="line">        Cookie[]  cookies = request.getCookies();</span><br><span class="line">        <span class="keyword">if</span>(cookies==<span class="keyword">null</span>||cookies.length&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">for</span>(Cookie cookie : cookies) &#123;</span><br><span class="line">            <span class="keyword">if</span>(cookie.getName().equals(cookiName)) &#123;</span><br><span class="line">                <span class="keyword">return</span> cookie.getValue();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>加入springmvc的配置，这个类就是对springmvc进行扩展的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//spring2.x  使用的是implements webmvcConfigurer</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfig</span>  <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span></span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserArgumentResolver userArgumentResolver;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addArgumentResolvers</span><span class="params">(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers)</span> </span>&#123;</span><br><span class="line">        argumentResolvers.add(userArgumentResolver);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当然这只是一种方式，用拦截器+ThreadLocal也是很方便的。</p>
-<h5 id="秒杀"><a href="#秒杀" class="headerlink" title="秒杀"></a>秒杀</h5><h6 id="基本实现"><a href="#基本实现" class="headerlink" title="基本实现"></a>基本实现</h6><p>　　秒杀的基本实现：判断库存数目、判断用户是否已经秒杀到了（每个用户最多每个产品只能买一次）、秒杀操作（事务控制减库存，生成订单 是原子操作）.其中对于判断用户是否秒杀到了，可以把商品id和用户id作为条件进行查询，或者在数据库把二者设置为联合索引且唯一。<br><br>　　秒杀肯定要问如何实现”超卖问题“？这里是使用的是数据库底层的锁，数据库不允许多个update一起执行，会把执行行记录或者表锁住，然后一条条执行update，所以在update加上条件判断当前的库存数量是不是最新的（取是快照的最新数据），如果更新成功返回影响行数1,更近不成功返回0,根据这两个就可以判断是否更新成功了。这是悲观锁的解决方案，乐观锁不适合这种写操作比较多的场景。还有就是如果你不在update语句上加判断条件的话，就加for update，这样别的事务就只有当前事务提交才会执行update，上面是执行完update别的事务就可以update，而不需要等到事务提交完毕，因为数据本来就可以保证不超卖，但是后面你不加for update，别的事务就会因为你没有提交事务仍然读到你没更新的数据，造成超卖。事务的底层就是myql的事务隔离，说白了就是锁。<br><br>　　在没有加验证码的时候，可以使用Jemter压测工具测试秒杀业务，看是否出现超卖和有剩下的情况（乐观锁可能会剩下）。最重要的是看下秒杀业务的QPS（每秒处理的请求数目）的值，由于我们没有加redis缓存，所有的操作直接访问数据库，这个值肯定小一些。还有就是看一下普通页面（秒杀商品页面）的QPS，由于我们使用的是ThymeLeaf模板引擎渲染（和jsp没有什么大的区别），者一块是后台做的，每次请求都渲染，对服务器也是有压力，所以后面也会引入缓存页面和前后端分离的方法。<br><br>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在<span class="number">5000</span>个用户<span class="number">10</span>次loop下，（<span class="number">50000</span>的并发） </span><br><span class="line">goods_list(秒杀商品列表):<span class="number">1000</span></span><br><span class="line">miaosha（秒杀接口）: <span class="number">800</span>多</span><br></pre></td></tr></table></figure></p>
-<h6 id="页面访问改进"><a href="#页面访问改进" class="headerlink" title="页面访问改进"></a>页面访问改进</h6><p>上面基于ThymeLeaf模板引擎会导致后端渲染次数过多，我们解决的方法主要就是页面缓存和前后端分离的思路。</p>
-<h6 id="页面缓存"><a href="#页面缓存" class="headerlink" title="页面缓存"></a>页面缓存</h6><p>第一次访问的时候由服务器渲染页面，将页面缓存到redis，下一次该页面的时候从缓存中取，适合页面变化不太大的（秒杀商品列表界面），缓存时间也不是很长。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/to_list"</span>,produces = <span class="string">"text/html"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">list</span><span class="params">(Model model, MiaoshaUser user, HttpServletRequest request,HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">    model.addAttribute(<span class="string">"user"</span>, user);</span><br><span class="line">    String html = redisService.get(GoodsKey.getGoodsList, <span class="string">""</span>, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    <span class="keyword">if</span>(!StringUtils.isEmpty(html))&#123;</span><br><span class="line">        <span class="keyword">return</span> html;</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;GoodsVo&gt; goodsList = goodsService.listGoodsVo();</span><br><span class="line">    model.addAttribute(<span class="string">"goodsList"</span>, goodsList);</span><br><span class="line">    <span class="comment">//渲染页面生成的html代码</span></span><br><span class="line">    SpringWebContext ctx=<span class="keyword">new</span> SpringWebContext(request,response,request.getServletContext(),</span><br><span class="line">            request.getLocale(),model.asMap(),applicationContext);</span><br><span class="line">    html=thymeleafViewResolver.getTemplateEngine().process(<span class="string">"goods_list"</span>,ctx);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(!StringUtils.isEmpty(html))&#123;</span><br><span class="line">        redisService.set(GoodsKey.getGoodsList,<span class="string">""</span>,html);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h6 id="URL缓存"><a href="#URL缓存" class="headerlink" title="URL缓存"></a>URL缓存</h6><p>URL缓存就是页面缓存，只不过就是对页面缓存进行区分（不同的秒杀商品页面都会缓存，根据商品的id区分）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//取缓存</span></span><br><span class="line">       String html = redisService.get(GoodsKey.getGoodsDetail, <span class="string">""</span>+goodsId, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">       <span class="keyword">if</span>(!StringUtils.isEmpty(html)) &#123;</span><br><span class="line">           <span class="keyword">return</span> html;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//redis缓存，key就是商品id，之前的商品列表没有key</span></span><br></pre></td></tr></table></figure>
-
-<h6 id="页面静态化（前后端分离）"><a href="#页面静态化（前后端分离）" class="headerlink" title="页面静态化（前后端分离）"></a>页面静态化（前后端分离）</h6><p>前端通过ajax来访问接口API获取数据，后端只需要写好接口就行，这样前后端就可以独立的开发;另外浏览器会把第一次访问的静态页面缓存下来，下次访问只是通过接口获取服务器的动态数据，在火狐浏览器使用页面静态化你会发现很多页面（图片 js css）都会缓存在浏览器（而且服务发先页面没有变 会发送304 ）<br>关于304：<a href="https://blog.csdn.net/Dongguabai/article/details/84323511" target="_blank" rel="noopener">https://blog.csdn.net/Dongguabai/article/details/84323511</a><br>秒杀商品详情页： ajax调用接口动态数据<br></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDetail</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> goodsId = g_getQueryString(<span class="string">"goodsId"</span>);</span><br><span class="line">	$.ajax(&#123;</span><br><span class="line">		url:<span class="string">"/goods/detail/"</span>+goodsId,</span><br><span class="line">		type:<span class="string">"GET"</span>,</span><br><span class="line">		success:<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(data.code == <span class="number">0</span>)&#123;</span><br><span class="line">				render(data.data);</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				layer.msg(data.msg);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		error:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			layer.msg(<span class="string">"客户端请求有误"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>获取到服务器接口数据，然后通过js渲染页面 .但是真正做一般都用VUEjs 双向绑定  不需要这么复杂.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function <span class="title">render</span><span class="params">(detail)</span></span>&#123;</span><br><span class="line">	<span class="keyword">var</span> miaoshaStatus = detail.miaoshaStatus;</span><br><span class="line">	<span class="keyword">var</span>  remainSeconds = detail.remainSeconds;</span><br><span class="line">	<span class="keyword">var</span> goods = detail.goods;</span><br><span class="line">	<span class="keyword">var</span> user = detail.user;</span><br><span class="line">	<span class="keyword">if</span>(user)&#123;</span><br><span class="line">		$(<span class="string">"#userTip"</span>).hide();</span><br><span class="line">	&#125;</span><br><span class="line">	$(<span class="string">"#goodsName"</span>).text(goods.goodsName);</span><br><span class="line">	$(<span class="string">"#goodsImg"</span>).attr(<span class="string">"src"</span>, goods.goodsImg);</span><br><span class="line">	$(<span class="string">"#startTime"</span>).text(<span class="keyword">new</span> Date(goods.startDate).format(<span class="string">"yyyy-MM-dd hh:mm:ss"</span>));</span><br><span class="line">	$(<span class="string">"#remainSeconds"</span>).val(remainSeconds);</span><br><span class="line">	$(<span class="string">"#goodsId"</span>).val(goods.id);</span><br><span class="line">	$(<span class="string">"#goodsPrice"</span>).text(goods.goodsPrice);</span><br><span class="line">	$(<span class="string">"#miaoshaPrice"</span>).text(goods.miaoshaPrice);</span><br><span class="line">	$(<span class="string">"#stockCount"</span>).text(goods.stockCount);</span><br><span class="line">	countDown();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="对象缓存"><a href="#对象缓存" class="headerlink" title="对象缓存"></a>对象缓存</h6><p>对象缓存： user对象就是一直缓存到redis中，随时用随时取<br><br>另外的思路就是将静态文件压缩  使用CDN方式<br><br>good_list使用缓存后 在相同并发的情况下QPS达到了5000(原1000)，另外秒杀的QPS提高了一点，因为我们并没有明显减少数据库的访问。</p>
-<h5 id="秒杀改善"><a href="#秒杀改善" class="headerlink" title="秒杀改善"></a>秒杀改善</h5><p>　　上面的操作并没有明显改善访问数据库的次数，所以下面的改善都是从如何减少数据数据库的访问下手的。</p>
-<h6 id="redis-预减库存"><a href="#redis-预减库存" class="headerlink" title="redis 预减库存"></a>redis 预减库存</h6><p>首先看秒杀流程：<br><br>　　第一步是去数据库获取秒杀商品的库存，不做改善的话所有的请求都会去db，所以这里可以把秒杀商品的库存都先加载到redis中，用户去访问redis，由于redis读写速度都很快，对于预见库存小于数量的时候，程序就直接返回错误码了。<br><br>　　实现的方式：implements InitializingBean 重写afterPropertiesSet ()方法，在Miaosha Controller初始化的时候就会调用这里面的方法，把秒杀的商品的数量加载到redis中，那么在刚开始秒杀的时候就直接从redis获取，减少了对数据库的访问<br>这不就是springBean的生命流程中一直不知道的流程： <img src="/images/66.png" alt=""></p>
-<h6 id="内存标记"><a href="#内存标记" class="headerlink" title="内存标记"></a>内存标记</h6><p>虽然上面的操作减少了对数据库的访问，但是库存不够的话剩下的请求还是会继续访问redis，一直减（虽然返回错误），为了减少对redis的访问，采取内存标记</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> HashMap&lt;Long, Boolean&gt; localOverMap =  <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"> <span class="comment">////内存标记，减少redis访问</span></span><br><span class="line">      Boolean over = localOverMap.get(goodsId);</span><br><span class="line">     <span class="keyword">if</span>(over)</span><br><span class="line">          <span class="keyword">return</span> Result.error(CodeMsg.MIAO_SHA_OVER);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//预减库存</span></span><br><span class="line">      <span class="keyword">long</span> stock = redisService.decr(GoodsKey.getMiaoshaGoodsStock, <span class="string">""</span>+goodsId);<span class="comment">//10</span></span><br><span class="line">      <span class="keyword">if</span>(stock &lt; <span class="number">0</span>) &#123;</span><br><span class="line">           localOverMap.put(goodsId, <span class="keyword">true</span>);</span><br><span class="line">           <span class="keyword">return</span> Result.error(CodeMsg.MIAO_SHA_OVER);</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-<h6 id="redis存储订单信息"><a href="#redis存储订单信息" class="headerlink" title="redis存储订单信息"></a>redis存储订单信息</h6><p>秒杀的第二步是判断用户是否之前秒杀到过商品，之前是根据商品id和userid去miaoshaOrder里查，现在直接可以从redis获取，key就是商品id+userid，值就是order。这样在判断的时候直接从redis获取，那么什么时候创建呢？在秒杀写订单完成后创建.</p>
-<h6 id="RabbitMq实现异步下单"><a href="#RabbitMq实现异步下单" class="headerlink" title="RabbitMq实现异步下单"></a>RabbitMq实现异步下单</h6><p>秒杀的第三步骤是真正的秒杀逻辑，使用RabbitMQ请求入队，然后对每一个请求进行秒杀操作。使用rabbitMQ入对后会立即返回下单中，然后客户端每隔一段时间去轮寻结果，结果是0说明正在秒杀，-1就是没有秒杀到，1就是秒杀到了，然后查看订单支付.使用消息队列直观上就是提升用户的体验，将消息数据放到消息队列立即返回给用户正在排队，前端每一次就判断用户是否购买成功（缓存里有没有订单信息）。这样不至于用户不至于在等着结果（返回成功或者失败），其实这就是消息队列的异步调用的作用。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//消息对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MiaoshaMessage</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> MiaoshaUser user;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> goodsId;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> MiaoshaUser <span class="title">getUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> user;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUser</span><span class="params">(MiaoshaUser user)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.user = user;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getGoodsId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> goodsId;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setGoodsId</span><span class="params">(<span class="keyword">long</span> goodsId)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.goodsId = goodsId;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//发送消息</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MQSender</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    AmqpTemplate amqpTemplate;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    RedisService redisService;</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendMiaoshaMessage</span><span class="params">(MiaoshaMessage mm)</span> </span>&#123;</span><br><span class="line">		String msg = RedisService.beanToString(mm);</span><br><span class="line">		System.out.println(<span class="string">"send message:"</span>+msg);</span><br><span class="line">		amqpTemplate.convertAndSend(MQConfig.MIAOSHA_QUEUE, msg);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//消息消费</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MQReceiver</span> </span>&#123;</span><br><span class="line">	<span class="meta">@RabbitListener</span>(queues=MQConfig.MIAOSHA_QUEUE)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receive</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">		MiaoshaMessage mm  = RedisService.stringToBean(message, MiaoshaMessage<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">		MiaoshaUser user = mm.getUser();</span><br><span class="line">		<span class="keyword">long</span> goodsId = mm.getGoodsId();</span><br><span class="line">		<span class="comment">//减库存 下订单 写入秒杀订单</span></span><br><span class="line">		miaoshaService.miaosha(user, goods);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//前端轮寻</span></span><br><span class="line">           <span class="keyword">var</span> result = data.data;</span><br><span class="line">                    <span class="keyword">if</span>(result &lt; <span class="number">0</span>)&#123;</span><br><span class="line">                        layer.msg(<span class="string">"对不起，秒杀失败"</span>);</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(result == <span class="number">0</span>)&#123;</span><br><span class="line">                        <span class="comment">//继续轮询</span></span><br><span class="line">                        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                            getMiaoshaResult(goodsId);</span><br><span class="line">                        &#125;, <span class="number">200</span>);</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(result==<span class="number">1</span>)&#123;</span><br><span class="line">                        layer.confirm(<span class="string">"恭喜你，秒杀成功！查看订单？"</span>, &#123;<span class="attr">btn</span>:[<span class="string">"确定"</span>,<span class="string">"取消"</span>]&#125;,</span><br><span class="line">                            <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                                <span class="built_in">window</span>.location.href=<span class="string">"/static/order_detail.htm?orderId="</span>+result;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                                layer.closeAll();</span><br><span class="line">                            &#125;);</span><br><span class="line">                    &#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="nigix横向扩展（没有做）"><a href="#nigix横向扩展（没有做）" class="headerlink" title="nigix横向扩展（没有做）"></a>nigix横向扩展（没有做）</h6><p>经过上面的优化秒杀的QPS达到了4000</p>
-<h5 id="安全优化"><a href="#安全优化" class="headerlink" title="安全优化"></a>安全优化</h5><p>上面的操作从减少访问数据库次数的思路已经优化的差不多了，安全优化主要有：</p>
-<ul>
-<li><p>秒杀接口地址隐藏<br><br>在秒杀的开始之前用户是不清楚秒杀的实际地址的，秒杀接口隐藏可以防止一些用户使用工具刷，可以在用户点击秒杀的时候，会先从服务器获取UUID生成的path，然后把uuid作为值存储在redis中（key是userId+good_id），用户获取秒杀地址后访问，如果秒杀的地址中的uuid和redis中的uuid相同，就进入秒杀，实现了接口地址的隐藏.</p>
-</li>
-<li><p>验证码<br><br> 真正的把1s的请求分担到好几秒。</p>
-</li>
-<li><p>接口防刷<br><br>用户对一个接口在一个时间段访问超过次数就不让他访问</p>
-<ul>
-<li>方式：绑定用户userid和uri ，定义一个时间段的访问次数，<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> String uri = request.getRequestURI();</span><br><span class="line">String key=uri+<span class="string">"_"</span>+user.getId();</span><br><span class="line">Integer count=redisService.get(AccessKey.access,key,Integer<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"><span class="keyword">if</span>(count==<span class="keyword">null</span>)</span><br><span class="line">    redisService.set(AccessKey.access,key,<span class="number">1</span>);</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(count&lt;<span class="number">5</span>)</span><br><span class="line">    redisService.incr(AccessKey.access,key);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> Result.error(CodeMsg.ACCESS_LIMIT_REACHED);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span>  AccessKey access=<span class="keyword">new</span> AccessKey(<span class="number">5</span>,<span class="string">"go"</span>);<span class="comment">//redis的key只保存5秒</span></span><br></pre></td></tr></table></figure></li>
-<li>方式2：自定义注解（对需要防刷的接口加上注解即可）<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">//定义注解</span></span><br><span class="line">  <span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(METHOD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AccessLimit &#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">seconds</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">maxCount</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">needLogin</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//在拦截器的方法中找到有注解标识的方法，执行相应的操作</span></span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span></span></span><br><span class="line"><span class="function">		<span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(handler <span class="keyword">instanceof</span> HandlerMethod) &#123;</span><br><span class="line">		MiaoshaUser user = getUser(request);</span><br><span class="line">		UserContext.setUser(user);</span><br><span class="line">		HandlerMethod hm = (HandlerMethod)handler;</span><br><span class="line">		<span class="comment">//获取方法上的注解（反射）</span></span><br><span class="line">		AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">		<span class="keyword">if</span>(accessLimit == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//对于注解上的参数相应的操作 （注解解析）</span></span><br><span class="line">		<span class="keyword">int</span> seconds = accessLimit.seconds();</span><br><span class="line">		<span class="keyword">int</span> maxCount = accessLimit.maxCount();</span><br><span class="line">		<span class="keyword">boolean</span> needLogin = accessLimit.needLogin();</span><br><span class="line">		String key = request.getRequestURI();</span><br><span class="line">		<span class="keyword">if</span>(needLogin) &#123;</span><br><span class="line">			<span class="keyword">if</span>(user == <span class="keyword">null</span>) &#123;</span><br><span class="line">				render(response, CodeMsg.SESSION_ERROR);</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			key += <span class="string">"_"</span> + user.getId();</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">//do nothing</span></span><br><span class="line">		&#125;</span><br><span class="line">		AccessKey ak = AccessKey.withExpire(seconds);</span><br><span class="line">		Integer count = redisService.get(ak, key, Integer<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    	<span class="keyword">if</span>(count  == <span class="keyword">null</span>) &#123;</span><br><span class="line">    		 redisService.set(ak, key, <span class="number">1</span>);</span><br><span class="line">    	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(count &lt; maxCount) &#123;</span><br><span class="line">    		 redisService.incr(ak, key);</span><br><span class="line">    	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    		render(response, CodeMsg.ACCESS_LIMIT_REACHED);</span><br><span class="line">    		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">搜索引擎</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2020/06/28/SpringCloud%E5%88%86%E5%B8%83%E5%BC%8F%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          SpringCloud分布式项目介绍
-        
-      </div>
-    </a>
   
   
-    <a href="/2020/06/27/%E5%89%91%E6%8C%87offer%E9%A2%98%E7%9B%AE%E6%80%9D%E8%B7%AF%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">剑指offer题目思路简单总结</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#准备工作"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#登录操作"><span class="toc-number">3.</span> <span class="toc-text">登录操作</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#自定义参数解析"><span class="toc-number">3.1.</span> <span class="toc-text">自定义参数解析</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#秒杀"><span class="toc-number">4.</span> <span class="toc-text">秒杀</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#基本实现"><span class="toc-number">4.1.</span> <span class="toc-text">基本实现</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#页面访问改进"><span class="toc-number">4.2.</span> <span class="toc-text">页面访问改进</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#页面缓存"><span class="toc-number">4.3.</span> <span class="toc-text">页面缓存</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#URL缓存"><span class="toc-number">4.4.</span> <span class="toc-text">URL缓存</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#页面静态化（前后端分离）"><span class="toc-number">4.5.</span> <span class="toc-text">页面静态化（前后端分离）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#对象缓存"><span class="toc-number">4.6.</span> <span class="toc-text">对象缓存</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#秒杀改善"><span class="toc-number">5.</span> <span class="toc-text">秒杀改善</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#redis-预减库存"><span class="toc-number">5.1.</span> <span class="toc-text">redis 预减库存</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#内存标记"><span class="toc-number">5.2.</span> <span class="toc-text">内存标记</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#redis存储订单信息"><span class="toc-number">5.3.</span> <span class="toc-text">redis存储订单信息</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#RabbitMq实现异步下单"><span class="toc-number">5.4.</span> <span class="toc-text">RabbitMq实现异步下单</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#nigix横向扩展（没有做）"><span class="toc-number">5.5.</span> <span class="toc-text">nigix横向扩展（没有做）</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#安全优化"><span class="toc-number">6.</span> <span class="toc-text">安全优化</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  <div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="并发项目介绍" data-title="秒杀项目介绍" data-url="http://yoursite.com/2020/06/27/%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"true"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -437,9 +226,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
