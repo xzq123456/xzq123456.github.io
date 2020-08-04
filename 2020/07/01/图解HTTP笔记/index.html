@@ -39,7 +39,7 @@
 <meta property="og:image" content="http://yoursite.com/images/h22.png">
 <meta property="og:image" content="http://yoursite.com/images/h24.png">
 <meta property="article:published_time" content="2020-07-01T10:56:00.000Z">
-<meta property="article:modified_time" content="2020-07-01T15:45:31.168Z">
+<meta property="article:modified_time" content="2020-08-03T04:16:22.120Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -201,7 +201,7 @@
       
         <p>本书的主要介绍：<br><img src="/images/h1.png" alt=""><br>对于基于以及核心部分的学习是成为一名专业技术人员的基础，以不变应万变才是立身之本。<br><br>写爬虫程序（request response）、抓包分析数据 实现HTTP服务器（基于NIO的HTTP服务器）  提供网站REST API（restful接口） 、修改后端定制框架（根据请求的是json还是text/html返回错误页面还是json数据）等都会用到http。<br> <a id="more"></a></p>
 <h5 id="第一章-web以及网络的基础"><a href="#第一章-web以及网络的基础" class="headerlink" title="第一章 web以及网络的基础"></a>第一章 web以及网络的基础</h5><p>HTTP协议最初用来解决文本传输的问题，现在web是建立在http协议上进行通信的。<br>TCP/IP协议族（HTTP属于子集）：整个网络中的协议基本上叫上名的都属于TCP/IP协议族，从电缆规格  IP选址 双方通信 到web显示，都属于。<br>TCP/IP的分层管理：<br>应用层 （向用户提供应用服务的通信）<br> 传输层（端到端服务  TCP/UDP）<br> 网络层 （IP协议 ARP协议  寻址）<br>数据链路层（网卡 硬件设备）<br><img src="/images/h2.png" alt=""><br>与HTTP协议密切相关的DNS IP TCP<br>DNS域名解析：将域名转化为IP（hashmap 字典树 实现简易的域名解析）<br>IP：负责数据在网络的寻址传输(ARP【通过ip地址反查mac地址 mac地址用于IP之间的通信】等负责寻址)<br>TCP：负责可靠传输（三次握手 四次挥手 超时重传等）<br> 在传输层加入端口号  在网络层加入mac地址<br>访问网站的经历：<br><img src="/images/h3.png" alt=""></p>
-<h5 id="第二章-简单的HTTP协议"><a href="#第二章-简单的HTTP协议" class="headerlink" title="第二章  简单的HTTP协议"></a>第二章  简单的HTTP协议</h5><p>HTTP协议用于客户端和服务端的通信<br>请求报文是由请求方法，请求URI，协议版本 、可选的请求首部字段和内容实体构成<br><img src="/images/h4.png" alt=""><br>响应报文由协议版本、状态码、解释状态码的简单短语 、可选的响应首部字段以及实体主体部分。<br><img src="/images/h5.png" alt=""><br>HTTP是无状态的，解决方法：cookie（在响应报文中设置，在请求报文中加入） 和session<br>HTTP方法：1.获取（GET） 2.提交（POST） 3.PUT  4.DELETE  <br><br>持久连接节省流量：初始版本的http每一个资源请求就要建立一次连接，还要断开，一次性处理这么多对服务器压力大。现在的一个网页有很多内容，现版本的http可以使用持久化连接，只要任何一方还没有断开tcp连接，就可以继续发送请求，持久化技术使得管线化技术成为可能，可以一次性发送多个http请求，并不需要等待上一个请求处理完毕再发下一个请求。<br><br>使用cookie进行状态管理，关于cookie和seesion的联系，在项目那一章节讲的很清楚了。</p>
+<h5 id="第二章-简单的HTTP协议"><a href="#第二章-简单的HTTP协议" class="headerlink" title="第二章  简单的HTTP协议"></a>第二章  简单的HTTP协议</h5><p>HTTP协议用于客户端和服务端的通信<br>请求报文是由请求方法，请求URI，协议版本 、可选的请求首部字段和内容实体构成<br><img src="/images/h4.png" alt=""><br>响应报文由协议版本、状态码、解释状态码的简单短语 、可选的响应首部字段以及实体主体部分。<br><img src="/images/h5.png" alt=""><br>HTTP是无状态的，解决方法：cookie（在响应报文中设置，在请求报文中加入） 和session<br>HTTP方法：1.获取（GET） 2.提交（POST） 3.PUT  4.DELETE  <br><br>持久连接节省流量：初始版本的http每一个资源请求就要建立一次连接，还要断开，一次性处理这么多对服务器压力大。现在的一个网页有很多内容，现版本的http可以使用持久化连接，只要任何一方还没有断开tcp连接，就可以继续发送请求，持久化技术使得管线化技术成为可能，可以一次性发送多个http请求，并不需要等待上一个请求处理完毕再发下一个请求。<br><br><a href="https://www.cnblogs.com/blogtech/p/10981606.html" target="_blank" rel="noopener">HTTP长短连接</a><br><br><br>使用cookie进行状态管理，关于cookie和seesion的联系，在项目那一章节讲的很清楚了。<br><a href="https://www.cnblogs.com/l199616j/p/11195667.html" target="_blank" rel="noopener">cookie和Session的联系</a></p>
 <h5 id="第三章-HTTP报文内的HTTP信息"><a href="#第三章-HTTP报文内的HTTP信息" class="headerlink" title="第三章 HTTP报文内的HTTP信息"></a>第三章 HTTP报文内的HTTP信息</h5><p>HTTP报文分为报文首部和报文主体（数据部分 可无）<br><br>获取部分请求范围（range request）<br><br>多部分对象集合（发送的内容可以包含图片 视频 文本等内容）<br><br>内容协商  对数据进行压缩发送</p>
 <h5 id="第四章-返回的HTTP状态码"><a href="#第四章-返回的HTTP状态码" class="headerlink" title="第四章  返回的HTTP状态码"></a>第四章  返回的HTTP状态码</h5><p>借助状态码就可以在程序编写的情况下知道错误在哪个地方<br><img src="/images/h6.png" alt=""><br>200 OK  ；204 NO Content  ; 206  Patical  Content<br>400： bad request (语法错误)<br>401：权限认证   403：Forbidden （服务器禁止访问，可能是因为没有权限）<br>404：NOT FOUND(服务器没有请求的资源)</p>
 <p>302：临时性跳转（客户端跳转）</p>
@@ -511,15 +511,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -531,7 +531,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,11 +539,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -555,7 +559,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color5">搜索引擎</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -567,11 +571,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">搜索引擎</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+                <a href="javascript:void(0)" class="js-tag color5">手撕代码</a>
               </li>
             
             <div class="clearfix"></div>

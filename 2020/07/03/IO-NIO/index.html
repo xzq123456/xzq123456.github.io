@@ -8,18 +8,24 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>NIO | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="NIONIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;">
+  <meta name="description" content="NIONIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;马士并NIO">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NIO">
 <meta property="og:url" content="http://yoursite.com/2020/07/03/IO-NIO/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="NIONIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;">
+<meta property="og:description" content="NIONIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;马士并NIO">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://yoursite.com/images/nio1.png">
 <meta property="og:image" content="http://yoursite.com/images/nio2.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_120.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_117.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_119.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_122.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_123.png">
+<meta property="og:image" content="http://yoursite.com/images/Selection_121.png">
 <meta property="og:image" content="http://yoursite.com/images/nio3.png">
 <meta property="article:published_time" content="2020-07-03T08:58:00.000Z">
-<meta property="article:modified_time" content="2020-07-17T13:59:40.029Z">
+<meta property="article:modified_time" content="2020-08-04T04:49:23.953Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="java基础">
 <meta name="twitter:card" content="summary">
@@ -179,15 +185,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h5><p>NIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章<br><br><a href="https://mp.weixin.qq.com/s?__biz=Mzg3MjA4MTExMw==&mid=2247484746&idx=1&sn=c0a7f9129d780786cabfcac0a8aa6bb7&source=41#wechat_redirect" target="_blank" rel="noopener">&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;</a><br></p>
+        <h5 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h5><p>NIO对于java层面是NEW IO（新的IO体系），对于操作系统层面是Non-blocking IO（非阻塞IO）。java的NOP的API是建立在操作系统上的IO模型，关于Linux的5中IO模型可以参考文章<br><br><a href="https://mp.weixin.qq.com/s?__biz=Mzg3MjA4MTExMw==&mid=2247484746&idx=1&sn=c0a7f9129d780786cabfcac0a8aa6bb7&source=41#wechat_redirect" target="_blank" rel="noopener">&lt;&lt;漫话：如何给女朋友解释什么是Linux的五种IO模型？&gt;&gt;</a><br><br><br><br><a href="https://www.bilibili.com/video/BV1Af4y117ZK?p=5" target="_blank" rel="noopener">马士并NIO</a></p>
 <a id="more"></a>
 <h5 id="IO的发展"><a href="#IO的发展" class="headerlink" title="IO的发展"></a>IO的发展</h5><h5 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h5><p>客户端和服务器的建立连接通信是通过Socket的手段，如果想实现多个客户端并发地访问就必须创建多个线程处理，因为服务器端的用来接收客户端请求的accept等是同步则塞的，如果已经建立连接，后来的请求就会被阻塞，只能等待之前的请求被处理完毕，达不到并发的要求，所以要创建新的线程用来处理每个请求，主线程只是负责接收连接请求。如图所示：<br><img src="/images/nio1.png" alt=""><br>解决了多客户端连接的问题，产生新的问题就是如果并发量大的时候，这种1对1的创建线程的方式就会产生大量的线程，服务器资源不久就会被耗尽。可以想到的方法就是使用线程池创建线程的方式，可以控制线程的创建数量，但是其底层仍然是BIO，不能从根本上解决问题。<br><img src="/images/nio2.png" alt=""></p>
-<h5 id="NIO-1"><a href="#NIO-1" class="headerlink" title="NIO"></a>NIO</h5><p>新的IO体系增加了Channel Buffer Seletor组件，用于实现高效的IO。<br><br>NIO中的N可以理解为Non-blocking，不单纯是New。它支持面向缓冲的，基于通道的I/O操作方法。 NIO提供了与传统BIO模型中的 Socket 和 ServerSocket 相对应的 SocketChannel和 ServerSocketChannel 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。<br>对于低负载、低并发的应用程序，可以使用同步阻塞I/O来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发。</p>
+<p>BIO的根源就是accept和接收的socket客户端的io请求这两个方法是阻塞的，为了不阻塞才开辟新的线程来处理。如果使用NIO的话，accept不会阻塞，会继续往下执行，不需要而外创建线程处理。NIO的优势就是规避了一请求一线程的问题。<br><img src="/images/Selection_120.png" alt=""></p>
+<h5 id="NIO-1"><a href="#NIO-1" class="headerlink" title="NIO"></a>NIO</h5><p>新的IO体系增加了Channel Buffer Seletor组件，用于实现高效的IO。<br><br>NIO中的N可以理解为Non-blocking，不单纯是New。它支持面向缓冲的，基于通道的I/O操作方法。 NIO提供了与传统BIO模型中的 Socket 和 ServerSocket 相对应的 SocketChannel和 ServerSocketChannel 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。<br>对于低负载、低并发的应用程序，可以使用同步阻塞I/O来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发。<br><br>NIO的弊端就是如果很多的请求，循环里每次都要遍历所有客户端，看有没有数据进来，如果只有很少的客户端发来数据，每次遍历操作都要对操作系统进行系统调用recv，但是这里面很多都是无意义的。<br><img src="/images/Selection_117.png" alt=""><br>所以后来就有了多路复用IO模型。解决方案就是可以把客户端缓连接存在内核，如果有数据传入，就通知程序读取，减少调用内核的次数。所以内核就得提供相应的多路复用器，于是就有了select poll epoll<br><br>select poll epoll<br><br><img src="/images/Selection_119.png" alt=""><br>select poll没有利用到多核cpu。<br>select有文件描述符的限制（1024），poll没有 且多路复用器只能给你状态，epoll是linux的io模型，所以NIO的选择器会根据操作系统选择多路复用器的模式，linux会优先选择epoll。 <br><br>epoll:<br><img src="/images/Selection_122.png" alt=""><br>epoll的步骤:<br><img src="/images/Selection_123.png" alt=""><br>epoll_wait是阻塞的，但是可以设置超时时间，过了就继续执行代码，等下一次再来询问。</p>
 <h6 id="NIO的特性-NIO与IO区别"><a href="#NIO的特性-NIO与IO区别" class="headerlink" title="NIO的特性/NIO与IO区别"></a>NIO的特性/NIO与IO区别</h6><p>如果是在面试中回答这个问题，我觉得首先肯定要从 NIO 流是非阻塞 IO 而 IO 流是阻塞 IO 说起。然后，可以从 NIO 的3个核心组件/特性为 NIO 带来的一些改进来分析。</p>
 <p>1)Non-blocking IO（非阻塞IO）<br>IO流是阻塞的，NIO流是不阻塞的。</p>
 <p>Java NIO使我们可以进行非阻塞IO操作。比如说，单线程中从通道读取数据到buffer，同时可以继续做别的事情，当数据读取到buffer中后，线程再继续处理数据。写数据也是一样的。另外，非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。</p>
-<p>Java IO的各种流是阻塞的。这意味着，当一个线程调用 read() 或 write() 时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情了</p>
-<p>2)Buffer(缓冲区)<br>IO 面向流(Stream oriented)，而 NIO 面向缓冲区(Buffer oriented)。</p>
+<p>Java IO的各种流是阻塞的。这意味着，当一个线程调用 read() 或 write() 时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情了<br><img src="/images/Selection_121.png" alt=""><br>2)Buffer(缓冲区)<br>IO 面向流(Stream oriented)，而 NIO 面向缓冲区(Buffer oriented)。</p>
 <p>Buffer是一个对象，它包含一些要写入或者要读出的数据。在NIO类库中加入Buffer对象，体现了新库与原I/O的一个重要区别。在面向流的I/O中·可以将数据直接写入或者将数据直接读到 Stream 对象中。虽然 Stream 中也有 Buffer 开头的扩展类，但只是流的包装类，还是从流读到缓冲区，而 NIO 却是直接读到 Buffer 中进行操作。</p>
 <p>在NIO厍中，所有数据都是用缓冲区处理的。在读取数据时，它是直接读到缓冲区中的; 在写入数据时，写入到缓冲区中。任何时候访问NIO中的数据，都是通过缓冲区进行操作。</p>
 <p>最常用的缓冲区是 ByteBuffer,一个 ByteBuffer 提供了一组功能用于操作 byte 数组。除了ByteBuffer,还有其他的一些缓冲区，事实上，每一种Java基本类型（除了Boolean类型）都对应有一种缓冲区。</p>
@@ -196,7 +202,8 @@
 <p>4)Selector (选择器)<br>NIO有选择器，而IO没有。</p>
 <p>选择器用于使用单个线程处理多个通道。因此，它需要较少的线程来处理这些通道。线程之间的切换对于操作系统来说是昂贵的。 因此，为了提高系统效率选择器是有用的。<br><img src="/images/nio3.png" alt=""><br>使用选择器就是实现IO模型的多路复用模型。应用程序通过select函数返回哪些socket要求的数据内核已经准备好，然后就可以进行读写，这样不同的socket请求之间就不会阻塞。关于程序是如何知道哪些数据已经准备好了呢？ 底层是select poll epoll的调用，关于三者的区别可以看<a href="https://www.cnblogs.com/aspirant/p/9166944.html。" target="_blank" rel="noopener">https://www.cnblogs.com/aspirant/p/9166944.html。</a></p>
 <h6 id="NIO-读数据和写数据方式"><a href="#NIO-读数据和写数据方式" class="headerlink" title="NIO 读数据和写数据方式"></a>NIO 读数据和写数据方式</h6><p>通常来说NIO中的所有IO都是从 Channel（通道） 开始的。<br><br>从通道进行数据读取 ：创建一个缓冲区，然后请求通道读取数据。<br>从通道进行数据写入 ：创建一个缓冲区，填充数据，并要求通道写入数据。<br><br>如果是多路复用话，channel再注册到seletor选择其上。</p>
-<p>不错的博文地址：<a href="http://www.tianxiaobo.com/categories/foundation-of-java/NIO/" target="_blank" rel="noopener">http://www.tianxiaobo.com/categories/foundation-of-java/NIO/</a></p>
+<h6 id="一些概念的重新解释"><a href="#一些概念的重新解释" class="headerlink" title="一些概念的重新解释"></a>一些概念的重新解释</h6><p>socket(套接字  <a href="ip1:port1">ip1:port1</a>  <a href="ip2:port2">ip2:port2</a> 成对出现，不能只看一半)，<br>socket会在操作系统里映射成一个文件描述fd，会绑定一个进程或者线程，然后进程或者线程对他进行对写完成io操作。一般都是一个线程或者进程对应一个socket连接（natstat -antp的每一条就是一个socket），但是多路复用io就实现了多个socket对应一个线程。<br><br>内存分为用户空间和内核空间，内核进行资源分配，怎么防止资源竞争等，这些都不用用户程序考虑，内核都帮你做好了，防止造轮子。还有一层是为了安全，防止不良程序把计算机搞崩溃。<br><br>线程的上下文切换就会保护现场和恢复现场，设计数据在用户空间和内核的频繁复制，导致程序性能受到影响。基于时间片轮寻的话，如果程序越多，整体上cpu花在与内核交互的时间变长，真正执行用户程序的时间就变短。<br><br>NIO从java讲，NEW IO 新的io体系;从操作系统将，NON-BLOCKING IO非阻塞IO<br></p>
+<p>不错的博文地址：<br><br><a href="http://www.tianxiaobo.com/categories/foundation-of-java/NIO/" target="_blank" rel="noopener">http://www.tianxiaobo.com/categories/foundation-of-java/NIO/</a><br><a href="https://blog.csdn.net/bird73/article/details/79792548" target="_blank" rel="noopener">redis是单线程还是多线程</a></p>
 
       
 
@@ -339,7 +346,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#NIO"><span class="toc-number">1.</span> <span class="toc-text">NIO</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#IO的发展"><span class="toc-number">2.</span> <span class="toc-text">IO的发展</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#BIO"><span class="toc-number">3.</span> <span class="toc-text">BIO</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#NIO-1"><span class="toc-number">4.</span> <span class="toc-text">NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#NIO的特性-NIO与IO区别"><span class="toc-number">4.1.</span> <span class="toc-text">NIO的特性&#x2F;NIO与IO区别</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#NIO-读数据和写数据方式"><span class="toc-number">4.2.</span> <span class="toc-text">NIO 读数据和写数据方式</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#NIO"><span class="toc-number">1.</span> <span class="toc-text">NIO</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#IO的发展"><span class="toc-number">2.</span> <span class="toc-text">IO的发展</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#BIO"><span class="toc-number">3.</span> <span class="toc-text">BIO</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#NIO-1"><span class="toc-number">4.</span> <span class="toc-text">NIO</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#NIO的特性-NIO与IO区别"><span class="toc-number">4.1.</span> <span class="toc-text">NIO的特性&#x2F;NIO与IO区别</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#NIO-读数据和写数据方式"><span class="toc-number">4.2.</span> <span class="toc-text">NIO 读数据和写数据方式</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#一些概念的重新解释"><span class="toc-number">4.3.</span> <span class="toc-text">一些概念的重新解释</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -492,15 +499,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">并发与多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -512,7 +519,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -520,11 +527,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,7 +547,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color5">搜索引擎</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -548,11 +559,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">搜索引擎</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+                <a href="javascript:void(0)" class="js-tag color5">手撕代码</a>
               </li>
             
             <div class="clearfix"></div>
