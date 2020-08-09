@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://yoursite.com/images/58.png">
 <meta property="og:image" content="http://yoursite.com/images/65.png">
 <meta property="article:published_time" content="2020-06-04T10:07:05.000Z">
-<meta property="article:modified_time" content="2020-07-27T08:16:05.882Z">
+<meta property="article:modified_time" content="2020-08-07T04:38:27.241Z">
 <meta property="article:author" content="CodeXi">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
@@ -218,12 +218,13 @@
 <h6 id="乐观锁和悲观锁"><a href="#乐观锁和悲观锁" class="headerlink" title="乐观锁和悲观锁"></a>乐观锁和悲观锁</h6><ul>
 <li>乐观锁<br><br>乐观锁是一种思想，具体实现是，表中有一个版本字段，第一次读的时候，获取到这个字段(version)。处理完业务逻辑开始更新的时候，需要再次查看该字段的值是否和第一次的一样。如果一样更新，反之拒绝。之所以叫乐观，因为这个模式没有从数据库加锁，等到更新的时候再判断是否可以更新<br><br>缺点：产生的问题ABA问题，就是预期值为A  但是这时候有事务操作改为B,然后又改为A,这时候事务以为没问题，但是其实中间已经修改了两次。<br><br>解决方法有：<br><br>1.加版本号。每次操作版本号加1.<br><br>2.加时间戳。新提交的时候检查当前数据库中数据的时间戳和自己更新前取到的时间戳进行对比，如果一致则OK，否则就是版本冲突<br></li>
 </ul>
+<p>MVCC其实就是一种乐观锁的思想。</p>
 <ul>
 <li>悲观锁<br><br>悲观锁就是数据库底层锁的机制(行锁　表锁)，对整张表或者某一行在ｕｐｄａｔｅ的时候进行加锁．任何其余的ｕｐｄａｔｅ操作都会阻塞<br><br>乐观锁适用于写操作不是很大的情况，如果写并发比较大就会导致重试的次数比较多，可以采取重入的机制，就是失败了不马上结束，而是尝试重试，可以限定一个时间段内重入几次或者限制重入的次数，来减少对数据库的访问；相反，悲观锁就适用于写操作比较大的情况<br>现在的应用都是使用ｒｅｄｉｓ作为中间件，把高并发的数据放在ｒｅｄｉｓ中，ｒｅｄｉｓ处理完毕后才走数据库．<br><br>显示加锁的情况(S锁就是读锁　Ｘ锁是写锁)<br></li>
 <li>select … for update（加Ｘ锁）<br>读和读操作是可以的，读和写是互斥的．默认mysql如果事务开启select的话加的是X锁,在没有提交的情况下由于MVCC其他事务可以修改,这在并发情况下是不可以的.思考一个场景,就好剩下一个商品,如果你for update,读取完别的事务读取并且下单完毕,你在下单就会超发,所以这行必须加for update,不加的话就在update语句上判断库存是否&gt;0,当你update判断的库存MVCC读取的是最新快照的数据.</li>
 <li>select … lock in share mode(加Ｓ锁)<br>关于这两者的区别，可以看这篇博:<br><br><a href="https://blog.csdn.net/cug_jiang126com/article/details/50544728" target="_blank" rel="noopener">深入理解SELECT … LOCK IN SHARE MODE和SELECT … FOR UPDATE</a><br><br>结论：lock in share mode适用于两张表存在业务关系时的一致性要求，for  update适用于操作同一张表时的一致性要求</li>
 </ul>
-<h5 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h5><p>MVCC(多版本并发控制),它出现主要是为了解决读写阻塞的问题,就是在不使用MVCC的情况下,如果一个事务正在读取且还没有提交(select xx from table),另一个事务要修改该行的记录的时候,由于读写锁的阻塞,事务B会阻塞;MVCC是不用加锁就完成读写操作,即B可以更新成功,它主要作用于读已提交和可重复读的级别.<br></p>
+<h5 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h5><p>MVCC(多版本并发控制),它出现主要是为了解决读写阻塞的问题（两个写操作一定会阻塞）,就是在不使用MVCC的情况下,如果一个事务正在读取且还没有提交(select xx from table),另一个事务要修改该行的记录的时候,由于读写锁的阻塞,事务B会阻塞;MVCC是不用加锁就完成读写操作,即B可以更新成功,它主要作用于读已提交和可重复读的级别.<br></p>
 <p><img src="/images/61.png" alt=""><br>上图记录了不同事务对某一行数据的操作记录,(只有更新操作才才会产生事务,读取不会)<br></p>
 <p>MVCC对于某一行数据每次的更新操作会生成一个事务,维护一个对该数据操作的版本链.<br><img src="/images/62.png" alt=""><br>然后根据版本链和产生的readview(select产生 []里是存活的事务id,外面是当前这行的最大事务id)来读取自己应该读到的数据版本.<br><br><img src="/images/63.png" alt=""><br>对于可重复读：保存的是所有的快照历史版本，readView沿用第一次使用的readView<br><br>对于读已提交：保存的是当前最新的快照,生成最新的readView<br></p>
 <p><a href="https://www.bilibili.com/video/av83518115?from=search&seid=1831310497745668994" target="_blank" rel="noopener">B站MVCC学习链接</a><br><br>update insert 和delete都会读取最新的版本,select在可重复读的情况下会根据readview判断应该显示的版本，select 语句如果加锁，也是当前读最新版本。最重要的是MVCC是读和写不阻塞，但是读和读还是阻塞的（针对索引的行，行锁要在事务提交后才会释放，保证两个update如果一个没有提交，另一个update是阻塞的）。<br></p>
@@ -250,6 +251,7 @@
 <h5 id="事务的隔离级别-Spring"><a href="#事务的隔离级别-Spring" class="headerlink" title="事务的隔离级别(Spring)"></a>事务的隔离级别(Spring)</h5><p>spring事务隔离级别与传播方式<br>隔离级别：<br>1、ISOLOCATION_DEFAULT:  数据库默认级别<br>2、ISOLOCATION_READ_UNCOMMITTED: 允许读取未提交的读， 可能导致脏读，不可重复读，幻读<br>3、ISOLOCATION_READ_COMMITTED:  允许读取已提交的读，可能导致不可重复读，幻读<br>4、ISOLOCATION_REPEATABLE_READ : 不能能更新另一个事务修改单尚未提交(回滚)的数据，可能引起幻读<br>5、ISOLOCATION_SERIALIZABLE: 序列执行效率低<br><br>其实底层还是数据库的隔离级别.关于spring事务的隔离级别包括传播机制会单独写一篇博客.<br><br>传播方式：<br><br>用的比较多的Requreid和Required_New（事务中创建新的事务）</p>
 <h5 id="数据库恢复"><a href="#数据库恢复" class="headerlink" title="数据库恢复"></a>数据库恢复</h5><p> <img src="/images/65.png" alt=""><br> 实现恢复的技术：数据转储和log日志文件（undo日志：数据之前的历史数据   redo日志：数据更新后内容（但还没写到磁盘））. MVCC的版本就写在undo日志.<br><br> 利用数据转储可以使得数据库恢复到某一时刻的状态，再利用日志文件就可以保证恢复到出故障时候数据的状态<br>日志文件的记录要严格按照事务的发生时间；必须先写日志文件，后更新数据库<br><br>具体的数据库恢复策略等有空写.<br></p>
 <p>一些知识和图的参考链接:<a href="https://segmentfault.com/a/1190000015738121#item-3-14" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015738121#item-3-14</a></p>
+<h6 id="间隙锁（再谈）"><a href="#间隙锁（再谈）" class="headerlink" title="间隙锁（再谈）"></a>间隙锁（再谈）</h6><p>间隙锁（gap lock）是锁住索引的一个范围，不锁当前记录，next-key lock(行锁+间隙锁)。<br><br>对于唯一索引，next-lock key只是锁这一行记录（目的是提高插入的性能），还是可以插入的;对于普通索引，锁的就是前面索引到当前行的索引+当前行到下一个索引值这两段区间，对于其他的区间还是可以插入的。还有间隙锁是在可重复读和序列化事务等级才有，使用的话select xx for update.</p>
 
       
 
@@ -392,7 +394,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mysql中的锁"><span class="toc-number">1.</span> <span class="toc-text">Mysql中的锁</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#表级锁和行级锁"><span class="toc-number">1.0.1.</span> <span class="toc-text">表级锁和行级锁</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#间隙锁"><span class="toc-number">1.0.2.</span> <span class="toc-text">间隙锁</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#乐观锁和悲观锁"><span class="toc-number">1.0.3.</span> <span class="toc-text">乐观锁和悲观锁</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MVCC"><span class="toc-number">1.1.</span> <span class="toc-text">MVCC</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#事务"><span class="toc-number">2.</span> <span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#事务的ACID特性"><span class="toc-number">2.1.</span> <span class="toc-text">事务的ＡＣＩＤ特性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#事务的隔离级别-Spring"><span class="toc-number">2.2.</span> <span class="toc-text">事务的隔离级别(Spring)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数据库恢复"><span class="toc-number">2.3.</span> <span class="toc-text">数据库恢复</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mysql中的锁"><span class="toc-number">1.</span> <span class="toc-text">Mysql中的锁</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#表级锁和行级锁"><span class="toc-number">1.0.1.</span> <span class="toc-text">表级锁和行级锁</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#间隙锁"><span class="toc-number">1.0.2.</span> <span class="toc-text">间隙锁</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#乐观锁和悲观锁"><span class="toc-number">1.0.3.</span> <span class="toc-text">乐观锁和悲观锁</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MVCC"><span class="toc-number">1.1.</span> <span class="toc-text">MVCC</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#事务"><span class="toc-number">2.</span> <span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#事务的ACID特性"><span class="toc-number">2.1.</span> <span class="toc-text">事务的ＡＣＩＤ特性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#事务的隔离级别-Spring"><span class="toc-number">2.2.</span> <span class="toc-text">事务的隔离级别(Spring)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数据库恢复"><span class="toc-number">2.3.</span> <span class="toc-text">数据库恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#间隙锁（再谈）"><span class="toc-number">2.3.1.</span> <span class="toc-text">间隙锁（再谈）</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -545,7 +547,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -553,11 +559,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -569,11 +571,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">

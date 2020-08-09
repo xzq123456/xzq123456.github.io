@@ -152,6 +152,296 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mysql面试题目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/07/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">mysql面试题目</a>
+    </h1>
+  
+
+        
+        <a href="/2020/08/07/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/" class="archive-article-date">
+  	<time datetime="2020-08-07T12:13:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>小表驱动大表<br><a href="https://blog.csdn.net/qq_38011415/article/details/103304189" target="_blank" rel="noopener">https://blog.csdn.net/qq_38011415/article/details/103304189</a><br><br>使用exists 和 in的区别就在这</p>
+</li>
+<li><p>说一下大表查询的优化方案<BR><br>优化shema、sql语句+索引；<br>可以考虑加缓存，memcached, redis，或者JVM本地缓存；<br>主从复制，读写分离；<br>分库分表；</p>
+</li>
+<li><p>InnoDB引擎中的索引策略<br><br>覆盖索引  最左匹配</p>
+</li>
+<li><p>锁的分类<br><img src="/images/xxxx.png" alt=""></p>
+</li>
+</ul>
+<p>索引有哪些优缺点？<br><br><br>优点：</p>
+<p>唯一索引可以保证数据库表中每一行的数据的唯一性<br>索引可以加快数据查询速度，减少查询时间<br>缺点：</p>
+<p>创建索引和维护索引要耗费时间<br>索引需要占物理空间，除了数据表占用数据空间之外，每一个索引还要占用一定的物理空间<br>以表中的数据进行增、删、改的时候，索引也要动态的维护</p>
+<ul>
+<li><p>创建索引的三种方式<br></p>
+<ul>
+<li>创建表的过程（key(xxx) using bitree）</li>
+<li>alter table add index index_name(column)</li>
+<li>create index index_name on table(column)</li>
+</ul>
+</li>
+<li><p>mysql的行锁如何实现<br><br>基于索引来完成行锁的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from t where id &#x3D; 666 for update;</span><br></pre></td></tr></table></figure>
+<p>for update 可以根据条件来完成行锁锁定，并且 id 是有索引键的列，如果 id 不是索引键那么InnoDB将实行表锁。注意锁的是索引，mysql的索引和数据是放在一个文件的。</p>
+</li>
+<li><p>mysql死锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">死锁有四个必要条件：互斥条件，请求和保持条件，环路等待条件，不剥夺条件。</span><br><span class="line"></span><br><span class="line">解决死锁思路，一般就是切断环路，尽量避免并发形成环路。</span><br><span class="line"></span><br><span class="line">如果不同程序会并发存取多个表，尽量约定以相同的顺序访问表，可以大大降低死锁机会。</span><br><span class="line">在同一个事务中，尽可能做到一次锁定所需要的所有资源，减少死锁产生概率；</span><br><span class="line">对于非常容易产生死锁的业务部分，可以尝试使用升级锁定颗粒度，通过表级锁定来减少死锁产生的概率；</span><br><span class="line">如果业务处理不好可以用分布式事务锁或者使用乐观锁</span><br><span class="line">死锁与索引密不可分，解决索引问题，需要合理优化你的索引，</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li>视图<br><br>VIEW是已经编译存放在数据库中，相对于直接SQL省去了语法检查和解析阶段的开销,<a href="https://www.cnblogs.com/yangyi9343/p/7147374.html" target="_blank" rel="noopener">表和视图的区别</a></li>
+</ul>
+<ul>
+<li>count(1)、count(*) 与 count(列名) 的区别？</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">count(*)包括了所有的列，相当于行数，在统计结果的时候，不会忽略列值为NULL</span><br><span class="line">count(1)包括了忽略所有列，用1代表代码行，在统计结果的时候，不会忽略列值为NULL</span><br><span class="line">count(列名)只包括列名那一列，在统计结果的时候，会忽略列值为空（这里的空不是只空字符串或者0，而是表示null）的计数，即某个字段值为NULL时，不统计。</span><br><span class="line">count（1）和count(*)也没什么大的区别，对于count(*)sql也会优化。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>存储过程和触发器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">存储过程，就是一些编译好了的SQL语句，这些SQL语句代码像一个方法一样实现一些功能（对单表或多表的增删改查），然后给这些代码块取一个名字，在用到这个功能的时候调用即可。</span><br><span class="line"></span><br><span class="line">优点：</span><br><span class="line"></span><br><span class="line">存储过程是一个预编译的代码块，执行效率比较高</span><br><span class="line">存储过程在服务器端运行，减少客户端的压力</span><br><span class="line">允许模块化程序设计，只需要创建一次过程，以后在程序中就可以调用该过程任意次，类似方法的复用</span><br><span class="line">一个存储过程替代大量T_SQL语句 ，可以降低网络通信量，提高通信速率</span><br><span class="line">可以一定程度上确保数据安全</span><br><span class="line">缺点：</span><br><span class="line"></span><br><span class="line">调试麻烦</span><br><span class="line">可移植性不灵活</span><br><span class="line">重新编译问题</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">触发器，指一段代码，当触发某个事件时，自动执行这些代码。</span><br><span class="line"></span><br><span class="line">使用场景：</span><br><span class="line"></span><br><span class="line">可以通过数据库中的相关表实现级联更改。</span><br><span class="line">实时监控某张表中的某个字段的更改而需要做出相应的处理。</span><br><span class="line">例如可以生成某些业务的编号。</span><br><span class="line">注意不要滥用，否则会造成数据库及应用程序的维护困难。</span><br><span class="line">MySQL 数据库中有六种触发器：</span><br><span class="line">Before Insert</span><br><span class="line">After Insert</span><br><span class="line">Before Update</span><br><span class="line">After Update</span><br><span class="line">Before Delete</span><br><span class="line">After Delete</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SQL 约束有哪几种呢？</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NOT NULL: 约束字段的内容一定不能为NULL。</span><br><span class="line">UNIQUE: 约束字段唯一性，一个表允许有多个 Unique 约束。</span><br><span class="line">PRIMARY KEY: 约束字段唯一，不可重复，一个表只允许存在一个。</span><br><span class="line">FOREIGN KEY: 用于预防破坏表之间连接的动作，也能防止非法数据插入外键。</span><br><span class="line">CHECK: 用于控制字段的值范围。</span><br></pre></td></tr></table></figure>
+
+<p>剩下的从这里看吧：<a href="https://github.com/whx123/JavaHome/blob/master/Java%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86%E7%BB%93%E5%8F%B7/%E6%95%B0%E6%8D%AE%E5%BA%93/100Mysql%E7%AD%94%E6%A1%88.md" target="_blank" rel="noopener">https://github.com/whx123/JavaHome/blob/master/Java%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86%E7%BB%93%E5%8F%B7/%E6%95%B0%E6%8D%AE%E5%BA%93/100Mysql%E7%AD%94%E6%A1%88.md</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/07/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-面经（2021收集）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/05/%E9%9D%A2%E7%BB%8F%EF%BC%882021%E6%94%B6%E9%9B%86%EF%BC%89/">面经（2021收集）</a>
+    </h1>
+  
+
+        
+        <a href="/2020/08/05/%E9%9D%A2%E7%BB%8F%EF%BC%882021%E6%94%B6%E9%9B%86%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2020-08-05T13:51:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>快手一面：<br><br>1.hashtable hashmap concurrenthashmap 区别，线程安全，锁的区别（1.7 1.8）put 底层实现</p>
+<p>2.sychronized volatile 作用 可重入锁</p>
+<p>3.ThreadLocal 作用，会出现什么问题</p>
+<p>4.Full GC 发生条件</p>
+<p>5.垃圾回收器 CMS  ，什么时候会stop the world</p>
+<p>6.标记整理算法 中 整理过程会不会发生stop the world</p>
+<p>7.30亿个不同的long整形的数，最大数不超过70亿，全部排序要怎么做，内存只有4G；</p>
+<p>8.面试官定义一个图，问题一：求图的每个结点的高度，问题二：求每个结点的深度</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/05/%E9%9D%A2%E7%BB%8F%EF%BC%882021%E6%94%B6%E9%9B%86%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-美团-Android二面" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/05/%E7%BE%8E%E5%9B%A2-Android%E4%BA%8C%E9%9D%A2/">美团 Android二面</a>
+    </h1>
+  
+
+        
+        <a href="/2020/08/05/%E7%BE%8E%E5%9B%A2-Android%E4%BA%8C%E9%9D%A2/" class="archive-article-date">
+  	<time datetime="2020-08-05T13:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>美团Android二面：<br><br>1.自我介绍</p>
+<p>2.设计模式了解吗？说说你常用的设计模式？ 手写单例代码怎么优化？ 设计模式的主要原则（开闭原则 里氏替换）</p>
+<p>3.线程池了解吗？主要的参数和工作流程</p>
+<p>4.线程和进程的区别？说说进程之间怎么通信（socket【tcp】  HTTP）</p>
+<p>5.TCP的三次握手 为什么三次，两次不行吗</p>
+<p>6.JVM的内存结构？说一下内存泄漏，举个例子</p>
+<p>7.java的四种引用，每种引用的在实际开发的使用场景</p>
+<p>8.二叉树了解吗？平衡二叉树和二叉排序树区别？ 编程：给你一个数组，判断是不是二叉树的后序遍历结果</p>
+<p>9.Android的问题，啥也不会（你为什么投Android岗）</p>
+<p>10.我问：Android的主要工作</p>
+<p>11.你认为Android和后端的主要区别</p>
+<p>12.整个GC的过程，为什么划分老年代和青年代</p>
+<p>13 Object里有哪些方法？wait和sleep的区别</p>
+<p>14  hashcode和equals方法的联系</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/05/%E7%BE%8E%E5%9B%A2-Android%E4%BA%8C%E9%9D%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-编程题目（数据结构和java）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -682,230 +972,9 @@
 
 
   
-    <article id="post-百度一面" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/24/%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2/">百度一面</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/24/%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2/" class="archive-article-date">
-  	<time datetime="2020-07-24T12:50:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>百度一面回忆：<br>1.项目相关（主要是爬虫项目，问了得20分钟，每一部分怎么做的）<br>2.数组和链表的区别，两者增删改查的时间复杂度。<br>3.计算机网络七层 DNS在哪层 DNS市怎样工作的（迭代查询 递归查询）<br>4.mysql数据库的有哪些锁？谈一下事务的隔离界别？mysql事务怎么解决幻读的？谈一下间隙锁的工作过程<br>5.数据库二叉树了解吗？mysql底层索引的数据结构（B+树）？B+树和B树有什么区别？为什么mysql用B+树做索引的数据结构<br>6.RabbitMQ起到什么作用？了解底层吗？<br>7.怎么看待虽然syncronized是重量级锁，为什么并发还用它？说一下乐观锁与悲观锁<br>8.了解分布式事务吗（不了解，就说了说分布式锁）<br>9.算法：找中位数（自己写的借助快速排序的方法）</p>
-<h5 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h5><p>DNS是应用层协议，主要的作用就是帮我们把网址转化为ip地址。输入一个网址，它首先会到你本地的hosts文件里查找相应的映射，如果没有的话就去本地DNS服务器（离自己比较近的ISP的DNS服务器），如果还是没有查找到的话，就采取递归查询或者迭代查询的方式去DNS服务器集群去查找。<br></p>
-<ul>
-<li>递归查询就是本地DNS服务器的请求交给根服务器，然后根服务器在交给别的域名服务器进行解析，知道找到相应的ip，然后再一层层会传给本地DNS服务器的过程。</li>
-<li>迭代查询就是对于本地DNS服务器的请求，根服务器如果没有找到，它不会替本地的DNS服务器请求，他会告诉让他去找哪个顶级域名服务器，顶级域名服务器找不到，他就会返回另一个DNS服务器让本地DNS服务器去请求，直到找到。<br><img src="/images/ms1.png" alt=""></li>
-</ul>
-<p>DNS请求的报文是UDP报文。对于域名的划分，map.baidu.com， com就是顶级域名，baidu.com或者<a href="http://www.baidu.com就是二级域名，map.baidu.com就是三级域名" target="_blank" rel="noopener">www.baidu.com就是二级域名，map.baidu.com就是三级域名</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/24/%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Mysql技术内幕：InnoDB存储引擎" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/23/Mysql%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%EF%BC%9AInnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">Mysql技术内幕：InnoDB存储引擎</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/23/Mysql%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%EF%BC%9AInnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" class="archive-article-date">
-  	<time datetime="2020-07-23T01:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="第一章-Mysql体系结构与存储引擎"><a href="#第一章-Mysql体系结构与存储引擎" class="headerlink" title="第一章 Mysql体系结构与存储引擎"></a>第一章 Mysql体系结构与存储引擎</h5><p>mysql主要组件：连接池组件、 管理服务和工具组件、 sql接口组件、查询分析器组件、优化器组件 缓冲组件 插件式存储引擎 以及最底层的物理文件组成。尤其是可插件式的存储引擎，对于不同的表可以指定不同的存储引擎，来适应业务需求（存储引擎是基于表的）。大分的话可以分成连接层 sql层 存储引擎层（包括下面的磁盘文件）。<br><br>一条sql语句的执行过程：<br><img src="/images/mq1.png" alt=""><br>sql优化器是mysql为我们优化的，不过NB的公司可以重写里面的代码，按照更好的优化思路来进行优化。</p>
-        
-          <a class="article-more-a" href="/2020/07/23/Mysql%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%EF%BC%9AInnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/23/Mysql%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%EF%BC%9AInnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JUC-AQS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/21/JUC-AQS/">JUC AQS</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/21/JUC-AQS/" class="archive-article-date">
-  	<time datetime="2020-07-21T11:15:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>　　AQS（抽象队列同步器），是ReentrantLock和其他JUC工具类的基础，可以实现和Syncronized一样的功能，说白了就是锁，不过它不像Syncronized一样是借助原生语法，而是直接使用java代码实现了锁的功能。在syncronized还没有优化的时候，由于大部分程序是交替执行，使用AQS支持的ReentrantLock可以不使用底层语法实现线程安全（在不是交替执行情况加会使用park/unpark，会使用底层从C++语法.不过在syncronized锁优化，引入锁升级等策略，两者并没有什么区别了。<br><br><a href="https://www.yuque.com/books/share/c5692525-ea89-4571-82bd-fae4b816039d/fp8r6q#sMEGy" target="_blank" rel="noopener">(JDK)ReentrantLock手撕AQS</a></p>
-        
-          <a class="article-more-a" href="/2020/07/21/JUC-AQS/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">并发与多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/21/JUC-AQS/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1021,7 +1090,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1029,11 +1102,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">项目</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
+                <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1045,11 +1114,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
